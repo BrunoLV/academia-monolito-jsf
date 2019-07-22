@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<h:panelGroup id="dadosEndereco">
+
+		<div class="row">
+			<div class="col-md-3">
+				<div class="form-group">
+					<label>Tipo do Endereço</label>
+					<h:selectOneMenu styleClass="form-control"
+						value="#{alunoController.endereco.tipoEndereco}">
+						<f:selectItem itemValue="#{null}" itemLabel="" />
+						<f:selectItems value="#{alunoController.tiposEnderecos}"
+							var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.descricao}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-2">
+				<div class="form-group">
+					<label> Tipo de Logradouro </label>
+					<h:selectOneMenu styleClass="form-control"
+						value="#{alunoController.endereco.tipoLogradouro}">
+						<f:selectItem itemValue="#{null}" itemLabel="" />
+						<f:selectItems value="#{alunoController.tiposLogradouros}"
+							var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.descricao}" />
+						<f:converter converterId="tipoLogradouroConverter" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="form-group">
+					<label> Logradouro </label> <input type="text" class="form-control"
+						jsf:value="#{alunoController.endereco.logradouro}" />
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div class="form-group">
+					<label>Número</label> <input type="text" class="form-control"
+						jsf:value="#{alunoController.endereco.numero}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-2">
+				<div class="form-group">
+					<label>Complemento</label> <input type="text" class="form-control"
+						jsf:value="#{alunoController.endereco.complemento}" />
+				</div>
+			</div>
+
+			<div class="col-md-2">
+				<div class="form-group">
+					<label>CEP</label> <input type="text" class="form-control cep"
+						jsf:value="#{alunoController.endereco.cep}" />
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<div class="form-group">
+					<label>Bairro</label> <input type="text" class="form-control"
+						jsf:value="#{alunoController.endereco.bairro}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-2">
+				<div class="form-group">
+					<label> UF </label>
+					<h:selectOneMenu styleClass="form-control"
+						value="#{alunoController.ufSelecionado}">
+						<f:selectItem itemValue="#{null}" itemLabel="" />
+						<f:selectItems value="#{alunoController.ufs}" var="uf"
+							itemValue="#{uf}" itemLabel="#{uf}" />
+						<f:ajax event="change" execute="@this" render="estado municipio"
+							listener="#{alunoController.onChangeUf}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>Estado</label>
+					<h:inputText value="#{alunoController.estado.nome}" id="estado"
+						disabled="true" styleClass="form-control" />
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label> Município </label>
+					<h:selectOneMenu styleClass="form-control" id="municipio"
+						value="#{alunoController.endereco.municipio}"
+						disabled="#{alunoController.ufSelecionado eq null}">
+						<f:selectItem itemValue="#{null}" itemLabel="" />
+						<f:selectItems value="#{alunoController.estado.municipios}"
+							var="municipio" itemValue="#{municipio}"
+							itemLabel="#{municipio.nome}" />
+						<f:converter converterId="municipioConverter" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<button jsf:actionListener="#{alunoController.adicionaEndereco()}"
+					class="btn btn-primary">
+					<i class="fa fa-plus" /> Adicionar
+					<f:ajax execute="dadosEndereco" render="dadosEndereco enderecos" />
+				</button>
+			</div>
+		</div>
+
+	</h:panelGroup>
+
+	<hr />
+
+	<h:panelGroup id="enderecos">
+
+		<p:dataTable styleClass="table table-bordered"
+			value="#{alunoController.aluno.enderecos}" var="endereco"
+			rendered="#{not empty alunoController.aluno.enderecos}">
+			<p:column style="text-align:center; width: 5%;">
+				<h:commandLink id="btnEditar"
+					actionListener="#{alunoController.editaEndereco(endereco)}"
+					class="btn btn-primary">
+					<span> <i class="fa fa-pencil" />
+					</span>
+					<f:ajax execute="@this" render="form:dadosEndereco form:enderecos" />
+				</h:commandLink>
+				<p:tooltip id="toolTipEditar" for="btnEditar" value="Editar"
+					position="top" />
+			</p:column>
+			<p:column style="text-align:center; width: 5%;">
+				<h:commandLink id="btnRemover"
+					actionListener="#{alunoController.removeEndereco(endereco)}"
+					class="btn btn-danger">
+					<span> <i class="fa fa-trash" />
+					</span>
+					<f:ajax execute="@this" render="form:enderecos" />
+				</h:commandLink>
+				<p:tooltip id="toolTipRemover" for="btnRemover" value="Remover"
+					position="top" />
+			</p:column>
+			<p:column style="text-align:center; width: 20%">
+				<f:facet name="header">
+					<h:outputText value="Tipo de Endereço" />
+				</f:facet>
+				<h:outputText value="#{endereco.tipoEndereco.descricao}" />
+			</p:column>
+			<!--
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Tipo Logradouro" />
+				</f:facet>
+				<h:outputText value="#{endereco.tipoLogradouro.abreviatura}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Logradouro" />
+				</f:facet>
+				<h:outputText value="#{endereco.logradouro}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Número" />
+				</f:facet>
+				<h:outputText value="#{endereco.numero}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Complemento" />
+				</f:facet>
+				<h:outputText value="#{endereco.complemento}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="CEP" />
+				</f:facet>
+				<h:outputText value="#{endereco.cep}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Município" />
+				</f:facet>
+				<h:outputText value="#{endereco.municipio.nome}" />
+			</p:column>
+			-->
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Endereço" />
+				</f:facet>
+				<h:outputText value="#{endereco.enderecoFormatado()}" />
+			</p:column>
+		</p:dataTable>
+
+	</h:panelGroup>
+
+</ui:composition>
+
+</html>

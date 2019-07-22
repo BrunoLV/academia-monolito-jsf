@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<h:panelGroup rendered="#{alunoController.aluno.id ne null}">
+		<div class="row">
+			<div class="col-md-2">
+				<div class="form-group">
+					<label>Id</label>
+					<h:inputText disabled="true" styleClass="form-control"
+						value="#{alunoController.aluno.id}" />
+				</div>
+			</div>
+			<div class="col-md-2">
+				<h2>
+					<h:outputText
+						styleClass="#{listaAlunoController.defineEstiloSituacao(alunoController.aluno.situacao)}"
+						value="#{alunoController.aluno.situacao.descricao}" />
+				</h2>
+			</div>
+		</div>
+	</h:panelGroup>
+
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+				<label>Nome</label> <input type="text" class="form-control"
+					jsf:value="#{alunoController.aluno.nome}" />
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+				<label>CPF</label> <input type="text" class="form-control documento"
+					jsf:value="#{alunoController.aluno.cpf}" />
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+				<label>Data de Nascimento</label>
+				<div class="input-group date">
+					<div class="input-group-addon">
+						<i class="fa fa-calendar"></i>
+					</div>
+					<input type="text"
+						jsf:value="#{alunoController.aluno.dataNascimento}"
+						class="form-control pull-right calendario">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+					</input>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="form-group">
+				<label>Sexo</label>
+				<h:selectOneMenu class="form-control"
+					value="#{alunoController.aluno.sexo}">
+					<f:selectItems value="#{alunoController.listaSexo()}" var="sexo"
+						itemValue="#{sexo}" itemLabel="#{sexo.descricao}" />
+				</h:selectOneMenu>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+				<label>E-Mail</label> <input type="email" class="form-control"
+					jsf:value="#{alunoController.aluno.email}" />
+			</div>
+		</div>
+	</div>
+
+</ui:composition>
+
+</html>

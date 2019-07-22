@@ -1,0 +1,296 @@
+databaseChangeLog:
+-  changeSet:
+      id: v1-1
+      author: Bruno Luiz Viana
+      comment: Criacao da tabela de estados
+      changes:
+      -  createSequence:
+            sequenceName: seq_id_estado
+            incrementBy: 1
+      -  createTable:
+            tableName: tb_estado
+            columns:
+            -  column:
+                  name: id
+                  type: bigint
+                  defaultValueSequenceNext: seq_id_estado
+                  constraints:
+                     primaryKey: true
+                     nullable: false
+            -  column:
+                  name: codigo
+                  type: smallint
+                  constraints:
+                     nullable: false
+                     unique: true
+            -  column:
+                  name: nome
+                  type: varchar(150)
+                  constraints:
+                     nullable: false
+                     unique: true
+            -  column:
+                  name: uf
+                  type: char(2)
+                  constraints:
+                     nullable: false
+                     unique: true
+      -  loadData:
+            file: /liquibase/v1/estados.csv
+            tableName: tb_estado
+-  changeSet:
+      id: v1-2
+      author: Bruno Luiz Viana
+      comment: Criacao da tabela de municipios
+      changes:
+      -  createSequence:
+            sequenceName: seq_id_municipio
+            incrementBy: 1
+      -  createTable:
+            tableName: tb_municipio
+            columns:
+            -  column:
+                  name: id
+                  type: bigint
+                  defaultValueSequenceNext: seq_id_municipio
+                  constraints:
+                     primaryKey: true
+                     nullable: false
+            -  column:
+                  name: nome
+                  type: varchar(100)
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: codigo_ibge
+                  type: int
+                  constraints:
+                     nullable: false
+                     unique: true
+            -  column:
+                  name: uf
+                  type: char(2)
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: id_estado
+                  type: bigint
+                  constraints:
+                     foreignKeyName: fk_municipio_id_estado
+                     references: tb_estado(id)
+      -  loadData:
+            file: /liquibase/v1/municipios.csv
+            tableName: tb_municipio
+      -  sql:
+            dbms: postgresql
+            sql: update tb_municipio m set id_estado = e.id from tb_estado e where e.uf = m.uf;
+      -  addNotNullConstraint:
+            tableName: tb_municipio
+            columnName: id_estado
+            columnDataType: bigint
+-  changeSet:
+      id: v1-3
+      author: Bruno Luiz Viana
+      comment: Criacao da tabela de alunos
+      changes:
+      -  createSequence:
+            sequenceName: seq_id_aluno
+            incrementBy: 1
+      -  createTable:
+            tableName: tb_aluno
+            columns:
+            -  column:
+                  name: id
+                  type: bigint
+                  defaultValueSequenceNext: seq_id_aluno
+                  constraints:
+                     primaryKey: true
+                     nullable: false
+            -  column:
+                  name: nome
+                  type: varchar(150)
+                  constraints:
+                     unique: true
+                     nullable: false
+            -  column:
+                  name: cpf
+                  type: varchar(20)
+                  constraints:
+                     unique: true
+                     nullable: false
+            -  column:
+                  name: email
+                  type: varchar(320)
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: data_nascimento
+                  type: date
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: situacao
+                  type: varchar(30)
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: sexo
+                  type: varchar(30)
+                  constraints:
+                     nullable: false
+-  changeSet:
+      id: v1-4
+      author: Bruno Luiz Viana
+      comment: criacao da tabela de tipos de logradouro
+      changes:
+      -  createSequence:
+            sequenceName: seq_id_tipo_logradouro
+            incrementBy: 1
+      -  createTable:
+            tableName: tb_tipo_logradouro
+            columns:
+            -  column:
+                  name: id
+                  type: bigint
+                  defaultValueSequenceNext: seq_id_tipo_logradouro
+                  constraints:
+                     primaryKey: true
+                     nullable: false
+            -  column:
+                  name: abreviatura
+                  type: varchar(5)
+                  constraints:
+                     unique: true
+                     nullable: false
+            -  column:
+                  name: descricao
+                  type: varchar(40)
+                  constraints:
+                     unique: true
+                     nullable: false
+      -  loadData:
+            file: /liquibase/v1/tipos_logradouros.csv
+            tableName: tb_tipo_logradouro
+-  changeSet:
+      id: v1-5
+      author: Bruno Luiz Viana
+      comment: criacao da tabela de enderecos
+      changes:
+      -  createSequence:
+            sequenceName: seq_id_endereco
+            incrementBy: 1
+      -  createTable:
+            tableName: tb_endereco
+            columns:
+            -  column:
+                  name: id
+                  type: bigint
+                  defaultValueSequenceNext: seq_id_endereco
+                  constraints:
+                     primaryKey: true
+                     nullable: false
+            -  column:
+                  name: id_tipo_logradouro
+                  type: bigint
+                  constraints:
+                     nullable: false
+                     foreignKeyName: fk_endereco_id_tipo_logradouro
+                     references: tb_tipo_logradouro(id)
+            -  column:
+                  name: logradouro
+                  type: varchar(255)
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: numero
+                  type: varchar(6)
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: complemento
+                  type: varchar(60)
+                  constraints:
+                     nullable: true
+            -  column:
+                  name: bairro
+                  type: varchar(100)
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: cep
+                  type: varchar(10)
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: tipo_endereco
+                  type: varchar(60)
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: id_municipio
+                  type: bigint
+                  constraints:
+                     nullable: false
+                     foreignKeyName: fk_endereco_id_municipio
+                     references: tb_municipio(id)
+-  changeSet:
+      id: v1-6
+      author: Bruno Luiz Viana
+      comment: criacao da tabela de relacionamento entre aluno e endereco
+      changes:
+      -  createTable:
+            tableName: tb_aluno_endereco
+            columns:
+            -  column:
+                  name: id_aluno
+                  type: bigint
+                  constraints:
+                     nullable: false
+                     foreignKeyName: fk_relacao_id_aluno
+                     references: tb_aluno(id)
+            -  column:
+                  name: id_endereco
+                  type: bigint
+                  constraints:
+                     nullable: nullable
+                     foreignKeyName: fk_relacao_id_endereco
+                     references: tb_endereco(id)
+-  changeSet:
+      id: v1-7
+      author: Bruno Luiz Viana
+      comment: criacao da tabela de telefone de alunos
+      changes:
+      -  createSequence:
+            sequenceName: seq_telefone_id
+            incrementBy: 1
+      -  createTable:
+            tableName: tb_telefone
+            columns:
+            -  column:
+                  name: id
+                  type: bigint
+                  constraints:
+                     nullable: false
+                     primaryKey: true
+            -  column:
+                  name: ddd
+                  type: varchar(3)
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: numero
+                  type: varchar(10)
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: tipo
+                  type: varchar(60)
+                  constraints:
+                     nullable: false
+            -  column:
+                  name: id_aluno
+                  type: bigint
+                  constraints:
+                     nullable: false
+                     foreignKeyName: fk_telefone_id_aluno
+                     references: tb_aluno(id)
