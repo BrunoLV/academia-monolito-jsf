@@ -16,7 +16,6 @@
 			<f:viewAction action="#{alunoController.carregaAluno()}" />
 		</f:metadata>
 
-		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
 				Alunos <small>Cadastro</small>
@@ -29,7 +28,6 @@
 				-->
 		</section>
 
-		<!-- Main content -->
 		<section class="content container-fluid">
 
 			<div class="box box-default">
@@ -37,62 +35,75 @@
 				<div class="box-header with-border">
 
 					<form role="form" jsf:id="form">
+						<f:validateBean disabled="true">
 
-						<h:inputHidden value="#{alunoController.aluno.id}" />
+							<p:messages showDetail="false" showSummary="true" showIcon="true"
+								closable="true" id="messages" />
 
-						<div class="box-body">
+							<h:inputHidden value="#{alunoController.aluno.id}" />
 
-							<!-- Custom Tabs -->
-							<div class="nav-tabs-custom">
-								<ul class="nav nav-tabs">
-									<li class="active"><a href="#tab_dados_principais"
-										data-toggle="tab">Dados Principais</a></li>
-									<li><a href="#tab_dados_endereco" data-toggle="tab">Endereços</a>
-									</li>
-									<li><a href="#tab_dados_telefone" data-toggle="tab">Telefones</a>
-									</li>
-								</ul>
+							<div class="box-body">
 
-								<div class="tab-content">
-									<div class="tab-pane active" id="tab_dados_principais">
-										<ui:include src="/ui/alunos/aluno_dados_principais.xhtml" />
+								<div class="nav-tabs-custom">
+									<ul class="nav nav-tabs">
+										<li class="active"><a href="#tab_dados_principais"
+											data-toggle="tab"> Dados Principais </a></li>
+
+										<li><a href="#tab_dados_endereco" data-toggle="tab">
+												Endereços </a></li>
+
+										<li><a href="#tab_dados_telefone" data-toggle="tab">
+												Telefones </a></li>
+									</ul>
+
+									<div class="tab-content">
+										<div class="tab-pane active" id="tab_dados_principais">
+											<ui:include src="/ui/alunos/aluno_dados_principais.xhtml" />
+										</div>
+
+										<div class="tab-pane" id="tab_dados_endereco">
+											<ui:include src="/ui/alunos/aluno_dados_endereco.xhtml" />
+										</div>
+
+										<div class="tab-pane" id="tab_dados_telefone">
+											<ui:include src="/ui/alunos/aluno_dados_telefone.xhtml" />
+										</div>
 									</div>
-									<div class="tab-pane" id="tab_dados_endereco">
-										<ui:include src="/ui/alunos/aluno_dados_endereco.xhtml" />
+
+								</div>
+
+								<div class="box-footer">
+									<div class="row">
+										<div class="col-md-1">
+											<button class="btn btn-primary"
+												jsf:action="#{alunoController.salva()}">
+												<i class="fa fa-save" /> Salvar
+											</button>
+										</div>
+
+										<div class="col-md-1">
+											<button class="btn btn-danger"
+												jsf:action="alunos?faces-redirect=true">
+												<i class="fa fa-step-backward" /> Retornar
+											</button>
+										</div>
 									</div>
-									<div class="tab-pane" id="tab_dados_telefone">
-										<ui:include src="/ui/alunos/aluno_dados_telefone.xhtml" />
-									</div>
+
 								</div>
 
 							</div>
 
-							<div class="box-footer">
-								<div class="row">
-									<div class="col-md-1">
-										<button class="btn btn-primary"
-											jsf:action="#{alunoController.salva()}">
-											<i class="fa fa-save" /> Salvar
-										</button>
-									</div>
-									<div class="col-md-1">
-										<button class="btn btn-danger"
-											jsf:action="alunos?faces-redirect=true">
-											<i class="fa fa-step-backward"></i> Retornar
-										</button>
-									</div>
-								</div>
-
-							</div>
-
-						</div>
-
+						</f:validateBean>
 					</form>
 				</div>
 			</div>
 
 		</section>
 
+	</ui:define>
+
+	<ui:define name="scripts">
+		<h:outputScript library="academia" name="js/aluno.js" />
 	</ui:define>
 
 </ui:composition>

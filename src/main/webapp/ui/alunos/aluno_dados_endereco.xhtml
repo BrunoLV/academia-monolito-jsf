@@ -28,7 +28,7 @@
 		<div class="row">
 			<div class="col-md-2">
 				<div class="form-group">
-					<label> Tipo de Logradouro </label>
+					<label>Tipo de Logradouro</label>
 					<h:selectOneMenu styleClass="form-control"
 						value="#{alunoController.endereco.tipoLogradouro}">
 						<f:selectItem itemValue="#{null}" itemLabel="" />
@@ -40,7 +40,7 @@
 			</div>
 			<div class="col-md-8">
 				<div class="form-group">
-					<label> Logradouro </label> <input type="text" class="form-control"
+					<label>Logradouro</label> <input type="text" class="form-control"
 						jsf:value="#{alunoController.endereco.logradouro}" />
 				</div>
 			</div>
@@ -117,7 +117,8 @@
 				<button jsf:actionListener="#{alunoController.adicionaEndereco()}"
 					class="btn btn-primary">
 					<i class="fa fa-plus" /> Adicionar
-					<f:ajax execute="dadosEndereco" render="dadosEndereco enderecos" />
+					<f:ajax execute="dadosEndereco" render="dadosEndereco enderecos messages"
+						onevent="usuario.usuarioController.resetaMascaraEndereco(this);" />
 				</button>
 			</div>
 		</div>

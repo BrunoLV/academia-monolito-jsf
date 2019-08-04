@@ -25,4 +25,28 @@ public class RequisicaoRelatorio implements Serializable {
 		this.json = json;
 	}
 
+	public static class Builder {
+
+		private String nomeRelatorio;
+		private String json;
+
+		public Builder nomeRelatorio(final String nomeRelatorio) {
+			this.nomeRelatorio = nomeRelatorio;
+			return this;
+		}
+
+		public Builder json(final String json) {
+			this.json = json;
+			return this;
+		}
+
+		public RequisicaoRelatorio build() {
+			RequisicaoRelatorio requisicao = new RequisicaoRelatorio();
+			requisicao.setNomeRelatorio(this.nomeRelatorio);
+			requisicao.setJson(this.json);
+			return requisicao;
+		}
+
+	}
+
 }

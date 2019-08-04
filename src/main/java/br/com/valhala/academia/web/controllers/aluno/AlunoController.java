@@ -3,6 +3,7 @@ package br.com.valhala.academia.web.controllers.aluno;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -11,12 +12,13 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.primefaces.PrimeFaces;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import br.com.valhala.academia.db.modelo.Aluno;
 import br.com.valhala.academia.db.modelo.Endereco;
@@ -73,29 +75,36 @@ public class AlunoController implements Serializable {
 	public AlunoController() {
 		super();
 	}
-	
+
 	public void adicionaEndereco() {
+
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+
+		Set<ConstraintViolation<Endereco>> constraints = validator.validate(endereco);
+
+		if (CollectionUtils.isNotEmpty(constraints)) {
+			constraints.stream().forEach(v -> FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, v.getMessage(), null)));
+			return;
+		}
+
 		aluno.adicionaEndereco(endereco);
 		endereco = new Endereco();
+		ufSelecionado = null;
+		estado = null;
+		PrimeFaces.current().executeScript("aluno.controller.resetaMascarasDadosEndereco();");
 	}
 
 	public void adicionaTelefone() {
 		aluno.adicionaTelefone(telefone);
 		telefone = new Telefone();
-		PrimeFaces.current().executeScript("$('.ddd').inputmask('99'); $('.telefone').inputmask('9999[9]-9999');");
+		PrimeFaces.current().executeScript("aluno.controller.resetaMascarasDadosTelefone();");
 	}
 
 	public void carregaAluno() {
 		if (id != null) {
 			aluno = servicoAluno.buscaPorId(id);
-			ObjectMapper mapper = new ObjectMapper();
-			mapper.enable(SerializationFeature.INDENT_OUTPUT);
-			try {
-				String json = mapper.writeValueAsString(aluno);
-				System.out.println("JSON: " + json);
-			} catch (JsonProcessingException e) {
-				System.out.println("DEU ERRO");
-			}
 		}
 	}
 
@@ -174,6 +183,7 @@ public class AlunoController implements Serializable {
 		endereco.setMunicipio(new Municipio());
 
 		telefone = new Telefone();
+
 	}
 
 	public EnumSexoAluno[] listaSexo() {

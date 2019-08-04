@@ -74,9 +74,11 @@ public class ServicoAluno implements Serializable {
 			ObjectMapper mapper = new ObjectMapper();
 			String json = mapper.writeValueAsString(aluno);
 
-			RequisicaoRelatorio requisicao = new RequisicaoRelatorio();
-			requisicao.setNomeRelatorio("detalhe-aluno");
-			requisicao.setJson(Base64.getEncoder().encodeToString(json.getBytes()));
+			RequisicaoRelatorio requisicao = new RequisicaoRelatorio
+					.Builder()
+					.nomeRelatorio("detalhe-aluno")
+					.json(Base64.getEncoder().encodeToString(json.getBytes()))
+					.build();
 
 			Relatorio relatorio = clienteEmissaoRelatorio.emitiRelatorio(requisicao);
 			return relatorio;

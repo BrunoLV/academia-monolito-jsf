@@ -14,6 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -32,29 +36,37 @@ public class Endereco implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_endereco")
 	private Long id;
 
+	@NotBlank
 	@Column(name = "logradouro", length = 255, nullable = false)
 	private String logradouro;
 
+	@NotBlank
 	@Column(name = "numero", length = 5, nullable = false)
 	private String numero;
 
+	@Size(min = 2, max = 20)
 	@Column(name = "complemento", length = 20, nullable = false)
 	private String complemento;
 
+	@NotBlank
 	@Column(name = "bairro", length = 100, nullable = false)
 	private String bairro;
 
+	@NotBlank
 	@Column(name = "cep", length = 10, nullable = false)
 	private String cep;
 
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_endereco", nullable = false, length = 60)
 	private EnumTipoEndereco tipoEndereco;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_tipo_logradouro", nullable = false, foreignKey = @ForeignKey(name = "fk_endereco_id_tipo_logradouro"))
 	private TipoLogradouro tipoLogradouro;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_municipio", nullable = false, foreignKey = @ForeignKey(name = "fk_endereco_id_municipio"))
 	private Municipio municipio;
