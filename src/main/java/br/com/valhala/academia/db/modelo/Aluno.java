@@ -21,6 +21,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -41,34 +48,45 @@ public class Aluno implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_aluno")
 	private Long id;
 
-	@Column(name = "nome", unique = true, nullable = false, length = 150)
+	@NotBlank(message = "{aluno.nome.notnull}")
+	@Size(min = 3, max = 100, message = "{aluno.nome.size}")
+	@Column(name = "nome", unique = true, nullable = false, length = 100)
 	private String nome;
 
+	@CPF(message = "{aluno.cpf.invalido}")
+	@NotBlank(message = "{aluno.cpf.notnull}")
 	@Column(name = "cpf", unique = true, nullable = false, length = 20)
 	private String cpf;
 
+	@Email(message = "{aluno.email.invalido}")
+	@NotBlank(message = "{aluno.email.notnull}")
 	@Column(name = "email", nullable = false, length = 320)
 	private String email;
 
+	@NotNull(message = "{aluno.data_nascimento.notnull}")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_nascimento", nullable = false)
 	private Date dataNascimento;
 
+	@NotNull(message = "{aluno.situacao.notnull}")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "situacao", nullable = false, length = 30)
 	private EnumSituacaoAluno situacao = EnumSituacaoAluno.ATIVO;
 
+	@NotNull(message = "{aluno.sexo.notnull}")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "sexo", nullable = false, length = 30)
 	private EnumSexoAluno sexo = EnumSexoAluno.NAO_INFORMADO;
 
+	@Valid
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "tb_aluno_endereco", joinColumns = {
 			@JoinColumn(name = "id_aluno", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "id_endereco", referencedColumnName = "id") })
 	private Set<Endereco> enderecos;
 
+	@Valid
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno", orphanRemoval = true)
 	private Set<Telefone> telefones;
 

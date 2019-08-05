@@ -36,37 +36,37 @@ public class Endereco implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_endereco")
 	private Long id;
 
-	@NotBlank
+	@NotBlank(message = "{endereco.logradouro.notnull}")
 	@Column(name = "logradouro", length = 255, nullable = false)
 	private String logradouro;
 
-	@NotBlank
+	@NotBlank(message = "{endereco.numero.notnull}")
 	@Column(name = "numero", length = 5, nullable = false)
 	private String numero;
 
-	@Size(min = 2, max = 20)
+	@Size(min = 2, max = 20, message = "{endereco.complemento.size}")
 	@Column(name = "complemento", length = 20, nullable = false)
 	private String complemento;
 
-	@NotBlank
+	@NotBlank(message = "{endereco.bairro.notnull}")
 	@Column(name = "bairro", length = 100, nullable = false)
 	private String bairro;
 
-	@NotBlank
+	@NotBlank(message = "{endereco.cep.notnull}")
 	@Column(name = "cep", length = 10, nullable = false)
 	private String cep;
 
-	@NotNull
+	@NotNull(message = "{endereco.tipo.notnul}")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_endereco", nullable = false, length = 60)
 	private EnumTipoEndereco tipoEndereco;
 
-	@NotNull
+	@NotNull(message = "{endereco.tipo_logradouro.notnull}")
 	@ManyToOne
 	@JoinColumn(name = "id_tipo_logradouro", nullable = false, foreignKey = @ForeignKey(name = "fk_endereco_id_tipo_logradouro"))
 	private TipoLogradouro tipoLogradouro;
 
-	@NotNull
+	@NotNull(message = "{endereco.municipio.notnull}")
 	@ManyToOne
 	@JoinColumn(name = "id_municipio", nullable = false, foreignKey = @ForeignKey(name = "fk_endereco_id_municipio"))
 	private Municipio municipio;
