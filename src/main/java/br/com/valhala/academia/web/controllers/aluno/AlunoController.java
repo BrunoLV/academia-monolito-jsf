@@ -97,6 +97,18 @@ public class AlunoController implements Serializable {
 	}
 
 	public void adicionaTelefone() {
+
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+
+		Set<ConstraintViolation<Telefone>> constraints = validator.validate(telefone);
+
+		if (CollectionUtils.isNotEmpty(constraints)) {
+			constraints.stream().forEach(v -> FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, v.getMessage(), null)));
+			return;
+		}
+
 		aluno.adicionaTelefone(telefone);
 		telefone = new Telefone();
 		PrimeFaces.current().executeScript("aluno.controller.resetaMascarasDadosTelefone();");
@@ -209,6 +221,18 @@ public class AlunoController implements Serializable {
 	}
 
 	public String salva() {
+		
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+
+		Set<ConstraintViolation<Aluno>> constraints = validator.validate(aluno);
+
+		if (CollectionUtils.isNotEmpty(constraints)) {
+			constraints.stream().forEach(v -> FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, v.getMessage(), null)));
+			return null;
+		}
+		
 		servicoAluno.salva(aluno);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Aluno salvo com sucesso!", null));
