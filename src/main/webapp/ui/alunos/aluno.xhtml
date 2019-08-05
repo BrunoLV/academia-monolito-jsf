@@ -37,8 +37,7 @@
 					<form role="form" jsf:id="form">
 						<f:validateBean disabled="true">
 
-							<p:messages showDetail="false" showSummary="true" showIcon="true"
-								closable="true" id="messages" />
+							<p:growl showDetail="false" showSummary="true" id="messages" />
 
 							<h:inputHidden value="#{alunoController.aluno.id}" />
 
