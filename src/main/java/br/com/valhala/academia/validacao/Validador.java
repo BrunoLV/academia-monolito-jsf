@@ -4,8 +4,8 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
-public interface Validador<T> {
+public interface Validador {
 
-	Set<ConstraintViolation<T>> validar(T obj);
+	<T> Set<ConstraintViolation<T>> validar(T obj);
 
 }

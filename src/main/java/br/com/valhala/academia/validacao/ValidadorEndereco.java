@@ -1,22 +1,31 @@
 package br.com.valhala.academia.validacao;
 
+import java.io.Serializable;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import br.com.valhala.academia.db.modelo.Endereco;
-
 @Named
-public class ValidadorEndereco implements Validador<Endereco> {
+@ValidaEndereco
+public class ValidadorEndereco implements Validador, Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private Validator validator;
+
+	@PostConstruct
+	public void setup() {
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		validator = factory.getValidator();
+	}
 
 	@Override
-	public Set<ConstraintViolation<Endereco>> validar(Endereco obj) {
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		Validator validator = factory.getValidator();
+	public <Endereco> Set<ConstraintViolation<Endereco>> validar(Endereco obj) {
 		Set<ConstraintViolation<Endereco>> constraints = validator.validate(obj);
 		return constraints;
 	}

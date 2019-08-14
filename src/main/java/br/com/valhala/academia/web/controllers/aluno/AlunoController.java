@@ -33,6 +33,8 @@ import br.com.valhala.academia.db.modelo.enums.EnumUnidadeFederacao;
 import br.com.valhala.academia.servicos.ServicoAluno;
 import br.com.valhala.academia.servicos.ServicoEstado;
 import br.com.valhala.academia.servicos.ServicoTipoLogradouro;
+import br.com.valhala.academia.validacao.ValidaEndereco;
+import br.com.valhala.academia.validacao.Validador;
 
 @Named
 @ViewScoped
@@ -61,6 +63,10 @@ public class AlunoController implements Serializable {
 	@Inject
 	private ServicoEstado servicoEstado;
 
+	@Inject
+	@ValidaEndereco
+	private Validador validadorEndereco;
+
 	private Long id;
 
 	private Aluno aluno;
@@ -78,10 +84,7 @@ public class AlunoController implements Serializable {
 
 	public void adicionaEndereco() {
 
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		Validator validator = factory.getValidator();
-
-		Set<ConstraintViolation<Endereco>> constraints = validator.validate(endereco);
+		Set<ConstraintViolation<Endereco>> constraints = validadorEndereco.validar(endereco);
 
 		if (CollectionUtils.isNotEmpty(constraints)) {
 			constraints.stream().forEach(v -> FacesContext.getCurrentInstance().addMessage(null,
@@ -221,7 +224,7 @@ public class AlunoController implements Serializable {
 	}
 
 	public String salva() {
-		
+
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		Validator validator = factory.getValidator();
 
@@ -232,7 +235,7 @@ public class AlunoController implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_WARN, v.getMessage(), null)));
 			return null;
 		}
-		
+
 		servicoAluno.salva(aluno);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Aluno salvo com sucesso!", null));
