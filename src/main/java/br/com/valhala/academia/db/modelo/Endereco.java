@@ -43,8 +43,9 @@ public class Endereco implements Serializable {
 	@Column(name = "numero", length = 5, nullable = false)
 	private String numero;
 
-	@Size(min = 2, max = 20, message = "{endereco.complemento.size}")
-	@Column(name = "complemento", length = 20, nullable = false)
+	@Size(min = 2, message = "{endereco.complemento.tamanho.invalido.min}")
+	@Size(max = 20, message = "{endereco.complemento.tamanho.invalido.max}")
+	@Column(name = "complemento", length = 20)
 	private String complemento;
 
 	@NotBlank(message = "{endereco.bairro.notnull}")
@@ -224,14 +225,9 @@ public class Endereco implements Serializable {
 	}
 
 	public String enderecoFormatado() {
-		return String.format("%s %s, nº %s - %s - Bairro: %s, Cep: %s - %s / %s", 
-				tipoEndereco != null ? tipoLogradouro.getDescricao() : null,
-				logradouro, 
-				numero, 
-				complemento, 
-				bairro, 
-				cep, 
-				municipio != null ? municipio.getNome() : null, 
+		return String.format("%s %s, nº %s - %s - Bairro: %s, Cep: %s - %s / %s",
+				tipoEndereco != null ? tipoLogradouro.getDescricao() : null, logradouro, numero, complemento, bairro,
+				cep, municipio != null ? municipio.getNome() : null,
 				municipio != null && municipio.getUf() != null ? municipio.getUf().name() : null);
 	}
 
