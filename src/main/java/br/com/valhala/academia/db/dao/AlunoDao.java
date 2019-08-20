@@ -32,5 +32,5 @@ public class AlunoDao extends DaoBase<Aluno, Long> {
 		Aluno aluno = query.getSingleResult();
 		return aluno;
 	}
-	
+
 }

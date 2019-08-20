@@ -108,11 +108,11 @@ public class ListaAlunoController implements Serializable {
 
 	public void imprimeDetalhesAlunos(Long id) {
 		Relatorio relatorio = this.servico.emitiRelatorioDetalheAluno(id);
-		if (relatorio != null) {			
-			arquivo = new DefaultStreamedContent(new ByteArrayInputStream(relatorio.getArquivo()), relatorio.getFormato(),
-					relatorio.getNomeArquivo());
+		if (relatorio != null) {
+			arquivo = new DefaultStreamedContent(new ByteArrayInputStream(relatorio.getArquivo()),
+					relatorio.getFormato(), relatorio.getNomeArquivo());
 		}
-		
+
 	}
 
 }

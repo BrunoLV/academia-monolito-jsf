@@ -34,7 +34,7 @@ public class Relatorio implements Serializable {
 	public void setArquivo(byte[] arquivo) {
 		this.arquivo = arquivo;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Relatorio [formato=" + formato + ", nomeArquivo=" + nomeArquivo + ", arquivo="

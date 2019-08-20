@@ -129,7 +129,7 @@ public class Telefone implements Serializable {
 	public String toString() {
 		return "Telefone [id=" + id + ", ddd=" + ddd + ", numero=" + numero + ", tipo=" + tipo + "]";
 	}
-	
+
 	public String telefoneFormatado() {
 		return String.format("(%s) %s", ddd, numero);
 	}
