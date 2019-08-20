@@ -84,11 +84,11 @@ public class AlunoController implements Serializable {
 
 	public void adicionaEndereco() {
 
-		Set<ConstraintViolation<Endereco>> constraints = validadorEndereco.validar(endereco);
+		Set<String> constraints = validadorEndereco.validar(endereco);
 
 		if (CollectionUtils.isNotEmpty(constraints)) {
-			constraints.stream().forEach(v -> FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, v.getMessage(), null)));
+			constraints.stream().forEach(mensagem -> FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, mensagem, null)));
 			return;
 		}
 

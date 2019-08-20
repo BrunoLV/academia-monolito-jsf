@@ -1,7 +1,9 @@
 package br.com.valhala.academia.validacao;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
@@ -25,9 +27,13 @@ public class ValidadorEndereco implements Validador, Serializable {
 	}
 
 	@Override
-	public <Endereco> Set<ConstraintViolation<Endereco>> validar(Endereco obj) {
+	public <Endereco> Set<String> validar(Endereco obj) {
+		Set<String> validacoes = new HashSet<>();
 		Set<ConstraintViolation<Endereco>> constraints = validator.validate(obj);
-		return constraints;
+		if (constraints != null) {
+			validacoes = constraints.stream().map(c -> c.getMessage()).collect(Collectors.toSet());
+		}
+		return validacoes;
 	}
 
 }
