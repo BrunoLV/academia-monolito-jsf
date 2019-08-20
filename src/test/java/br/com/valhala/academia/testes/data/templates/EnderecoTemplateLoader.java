@@ -35,7 +35,18 @@ public class EnderecoTemplateLoader implements TemplateLoader {
 				add("tipoEndereco", EnumTipoEndereco.RESIDENCIAL);
 				add("tipoLogradouro", one(TipoLogradouro.class, "cenario_rua"));
 			}
-		});
+		})
+                .addTemplate("cenario_sem_tipo_logradouro", new Rule(){
+                    {
+                        add("logradouro", "Romeu José Vieira");
+                        add("numero", "90");
+			add("complemento", "5º andar Bloco B");
+			add("bairro", "Nossa Senhora do Rosário");
+			add("cep", "88110-914");
+			add("tipoEndereco", EnumTipoEndereco.RESIDENCIAL);
+			add("municipio", one(Municipio.class, "cenario_sao_jose"));
+                    }
+                });
 	}
 
 }

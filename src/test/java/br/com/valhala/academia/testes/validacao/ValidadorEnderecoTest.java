@@ -52,7 +52,17 @@ public class ValidadorEnderecoTest {
 		Set<ConstraintViolation<Endereco>> validacoes = validador.validar(endereco);
 		Assertions.assertFalse(validacoes.isEmpty());
 		Assertions.assertEquals(1, validacoes.size());
-		Assertions.assertEquals("Informe o munícipio.", validacoes.iterator().next().getMessage());
+		Assertions.assertEquals("Informe o munícipio.", validacoes.stream().findFirst().get().getMessage());
 	}
+        
+        @Test
+        @DisplayName("deve validar quando o endereco nao possuir tipo de logradouro informado") 
+        public void deveValidarEnderecoSemTipoLogradouro() {
+            Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_sem_tipo_logradouro");
+            Set<ConstraintViolation<Endereco>> validacoes = validador.validar(endereco);
+            Assertions.assertFalse(validacoes.isEmpty());
+            Assertions.assertEquals(1, validacoes.size());
+            Assertions.assertEquals("Informe o tipo de logradouro do endereço.", validacoes.stream().findFirst().get().getMessage());
+        }
 
 }

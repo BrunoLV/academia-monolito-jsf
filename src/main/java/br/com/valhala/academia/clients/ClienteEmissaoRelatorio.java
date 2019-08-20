@@ -31,7 +31,6 @@ public class ClienteEmissaoRelatorio implements Serializable {
 			props.load(stream);
 			urlEmissaoRelatorio = props.getProperty("emissor.relatorio.url");
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
