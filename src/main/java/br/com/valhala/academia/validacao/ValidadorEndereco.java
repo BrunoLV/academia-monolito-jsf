@@ -12,6 +12,8 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import br.com.valhala.academia.validacao.marcadores.ValidaEndereco;
+
 @Named
 @ValidaEndereco
 public class ValidadorEndereco implements Validador, Serializable {
