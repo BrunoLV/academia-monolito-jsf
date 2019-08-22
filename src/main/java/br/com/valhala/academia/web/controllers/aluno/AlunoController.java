@@ -33,8 +33,9 @@ import br.com.valhala.academia.db.modelo.enums.EnumUnidadeFederacao;
 import br.com.valhala.academia.servicos.ServicoAluno;
 import br.com.valhala.academia.servicos.ServicoEstado;
 import br.com.valhala.academia.servicos.ServicoTipoLogradouro;
-import br.com.valhala.academia.validacao.ValidaEndereco;
 import br.com.valhala.academia.validacao.Validador;
+import br.com.valhala.academia.validacao.marcadores.ValidaEndereco;
+import br.com.valhala.academia.validacao.marcadores.ValidaTelefone;
 
 @Named
 @ViewScoped
@@ -66,6 +67,10 @@ public class AlunoController implements Serializable {
 	@Inject
 	@ValidaEndereco
 	private Validador validadorEndereco;
+
+	@Inject
+	@ValidaTelefone
+	private Validador validadorTelefone;
 
 	private Long id;
 
@@ -101,14 +106,11 @@ public class AlunoController implements Serializable {
 
 	public void adicionaTelefone() {
 
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		Validator validator = factory.getValidator();
+		Set<String> validacoes = validadorTelefone.validar(telefone);
 
-		Set<ConstraintViolation<Telefone>> constraints = validator.validate(telefone);
-
-		if (CollectionUtils.isNotEmpty(constraints)) {
-			constraints.stream().forEach(v -> FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, v.getMessage(), null)));
+		if (CollectionUtils.isNotEmpty(validacoes)) {
+			validacoes.stream().forEach(mensagem -> FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, mensagem, null)));
 			return;
 		}
 
