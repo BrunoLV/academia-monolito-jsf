@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -35,6 +36,7 @@ public class Telefone implements Serializable {
 	private Long id;
 
 	@NotBlank(message = "{telefone.ddd.notnull}")
+	@Size(min = 2, max = 2, message = "{telefone.ddd.tamanho.invalido}")
 	@Column(name = "ddd", nullable = false)
 	private String ddd;
 
