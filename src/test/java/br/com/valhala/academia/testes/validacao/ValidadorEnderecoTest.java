@@ -25,9 +25,9 @@ import org.junit.jupiter.api.Test;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import br.com.valhala.academia.db.modelo.Endereco;
-import br.com.valhala.academia.validacao.ValidaEndereco;
 import br.com.valhala.academia.validacao.Validador;
 import br.com.valhala.academia.validacao.ValidadorEndereco;
+import br.com.valhala.academia.validacao.marcadores.ValidaEndereco;
 
 @EnableWeld
 @DisplayName("Teste do validador de Endereço")
