@@ -1,4 +1,4 @@
-package br.com.valhala.academia.validacao;
+package br.com.valhala.academia.validacao.marcadores;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
