@@ -69,6 +69,16 @@ public class ValidadorEnderecoTest {
 		assertThat(validacoes.size(), equalTo(1));
 		assertThat(validacoes, hasItem("Informe o munícipio."));
 	}
+	
+	@Test
+	@DisplayName("Deve validar quando o endereço tiver um municipio informado que não pertença ao estado atrelado a ele")
+	public void deveValidarEnderecoComMunicipioPartencenteAoEstado() {
+		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_endereco_municipio_nao_pertencente_estado");
+		Set<String> validacoes = validador.validar(endereco);
+		assertThat(validacoes, is(not(empty())));
+		assertThat(validacoes.size(), equalTo(1));
+		assertThat(validacoes, hasItem("O municipio não pertence ao estado informado."));
+	}
 
 	@Test
 	@DisplayName("Deve validar quando o endereço não possuir tipo de logradouro informado")

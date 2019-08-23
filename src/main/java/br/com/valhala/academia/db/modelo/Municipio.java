@@ -19,10 +19,12 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.com.valhala.academia.db.modelo.enums.EnumUnidadeFederacao;
+import br.com.valhala.academia.validacao.marcadores.ValidaMunicipioNaoPertencenteEstado;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "tb_municipio")
+@ValidaMunicipioNaoPertencenteEstado
 public class Municipio implements Serializable {
 
 	private static final long serialVersionUID = 1L;

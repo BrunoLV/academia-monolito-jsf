@@ -16,6 +16,12 @@ public class EstadoTemplateLoader implements TemplateLoader {
 				add("nome", "Santa Catarina");
 				add("uf", EnumUnidadeFederacao.SC);
 			}
+		}).addTemplate("cenario_sao_paulo", new Rule() {
+			{
+				add("codigo", (short) 35);
+				add("nome", "São Paulo");
+				add("uf", EnumUnidadeFederacao.SP);
+			}
 		});
 	}
 

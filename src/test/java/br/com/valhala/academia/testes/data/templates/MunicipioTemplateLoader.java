@@ -18,6 +18,13 @@ public class MunicipioTemplateLoader implements TemplateLoader {
 				add("uf", EnumUnidadeFederacao.SC);
 				add("estado", one(Estado.class, "cenario_santa_catarina"));
 			}
+		}).addTemplate("cenario_municipio_nao_pertence_estado", new Rule() {
+			{
+				add("nome", "São José");
+				add("codigoIbge", 4216602);
+				add("uf", EnumUnidadeFederacao.SC);
+				add("estado", one(Estado.class, "cenario_sao_paulo"));
+			}
 		});
 	}
 

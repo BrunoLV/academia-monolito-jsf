@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -66,6 +67,7 @@ public class Endereco implements Serializable {
 	@JoinColumn(name = "id_tipo_logradouro", nullable = false, foreignKey = @ForeignKey(name = "fk_endereco_id_tipo_logradouro"))
 	private TipoLogradouro tipoLogradouro;
 
+	@Valid
 	@NotNull(message = "{endereco.municipio.notnull}")
 	@ManyToOne
 	@JoinColumn(name = "id_municipio", nullable = false, foreignKey = @ForeignKey(name = "fk_endereco_id_municipio"))
