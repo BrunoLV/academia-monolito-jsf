@@ -94,6 +94,7 @@ public class AlunoController implements Serializable {
 		if (CollectionUtils.isNotEmpty(constraints)) {
 			constraints.stream().forEach(mensagem -> FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN, mensagem, null)));
+			PrimeFaces.current().executeScript("aluno.controller.resetaMascarasDadosEndereco();");
 			return;
 		}
 
@@ -111,6 +112,7 @@ public class AlunoController implements Serializable {
 		if (CollectionUtils.isNotEmpty(validacoes)) {
 			validacoes.stream().forEach(mensagem -> FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN, mensagem, null)));
+			PrimeFaces.current().executeScript("aluno.controller.resetaMascarasDadosEndereco();");
 			return;
 		}
 
