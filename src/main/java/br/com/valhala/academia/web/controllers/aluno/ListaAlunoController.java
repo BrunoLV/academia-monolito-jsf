@@ -1,8 +1,12 @@
 package br.com.valhala.academia.web.controllers.aluno;
 
-import java.io.ByteArrayInputStream;
-import java.io.Serializable;
-import java.util.Collection;
+import br.com.valhala.academia.clients.wrapper.Relatorio;
+import br.com.valhala.academia.modelo.Aluno;
+import br.com.valhala.academia.modelo.enums.EnumSituacaoAluno;
+import br.com.valhala.academia.servicos.ServicoAluno;
+import org.primefaces.PrimeFaces;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -10,109 +14,98 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.primefaces.PrimeFaces;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-
-import br.com.valhala.academia.clients.wrapper.Relatorio;
-import br.com.valhala.academia.db.modelo.Aluno;
-import br.com.valhala.academia.db.modelo.enums.EnumSituacaoAluno;
-import br.com.valhala.academia.servicos.ServicoAluno;
+import java.io.ByteArrayInputStream;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collection;
 
 @Named
 @ViewScoped
-public class ListaAlunoController implements Serializable {
+public class ListaAlunoController extends BaseController implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Aluno alunoSelecionado;
+    private Aluno alunoSelecionado;
 
-	@Inject
-	private ServicoAluno servico;
+    @Inject
+    private ServicoAluno servico;
 
-	private Collection<Aluno> alunos;
+    private Collection<Aluno> alunos;
 
-	private StreamedContent arquivo;
+    private StreamedContent arquivo;
 
-	public StreamedContent getArquivo() {
-		return arquivo;
-	}
+    public StreamedContent getArquivo() {
+        return arquivo;
+    }
 
-	public String defineEstiloSituacao(EnumSituacaoAluno situacao) {
-		String estilo = "label label-success";
-		switch (situacao) {
-		case ATIVO:
-			estilo = "label label-success";
-			break;
-		case INATIVO:
-			estilo = "label label-danger";
-			break;
-		case INADIMPLENTE:
-			estilo = "label label-warning";
-			break;
-		default:
-			break;
-		}
-		return estilo;
-	}
+    public String defineEstiloSituacao(EnumSituacaoAluno situacao) {
+        String estilo = "label label-success";
+        switch (situacao) {
+            case ATIVO:
+                estilo = "label label-success";
+                break;
+            case INATIVO:
+                estilo = "label label-danger";
+                break;
+            case INADIMPLENTE:
+                estilo = "label label-warning";
+                break;
+            default:
+                break;
+        }
+        return estilo;
+    }
 
-	public String edita(Aluno aluno) {
-		String url = "/ui/alunos/aluno.xhtml?faces-redirect=true&id=" + aluno.getId();
-		return url;
-	}
+    public String edita(Aluno aluno) {
+        String url = "/ui/alunos/aluno.xhtml?faces-redirect=true&id=" + aluno.getId();
+        return url;
+    }
 
-	public void exclui(Aluno aluno) {
-		servico.exclui(aluno);
-		alunos.remove(aluno);
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Excluído com sucesso", null));
-	}
+    public void exclui(Aluno aluno) {
+        servico.exclui(aluno);
+        alunos.remove(aluno);
+        adicionaMensagensInformativas(Arrays.asList("Excluído com sucesso!"));
+    }
 
-	public void excluiAluno() {
-		servico.exclui(alunoSelecionado);
-		alunos.remove(alunoSelecionado);
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Excluído com sucesso", null));
-		PrimeFaces.current().executeScript("$('#modal-default').modal('hide');");
-	}
+    public void excluiAluno() {
+        servico.exclui(alunoSelecionado);
+        alunos.remove(alunoSelecionado);
+        adicionaMensagensInformativas(Arrays.asList("Excluído com sucesso!"));
+        executaScript("$('#modal-default').modal('hide')");
+    }
 
-	public Collection<Aluno> getAlunos() {
-		return alunos;
-	}
+    public Collection<Aluno> getAlunos() {
+        return alunos;
+    }
 
-	public Aluno getAlunoSelecionado() {
-		return alunoSelecionado;
-	}
+    public void setAlunos(Collection<Aluno> alunos) {
+        this.alunos = alunos;
+    }
 
-	@PostConstruct
-	public void inicializa() {
-		alunos = servico.buscaTodos();
-	}
+    public Aluno getAlunoSelecionado() {
+        return alunoSelecionado;
+    }
 
-	public void preparaExclusao(Aluno aluno) {
-		alunoSelecionado = aluno;
-		PrimeFaces.current().executeScript("$('#modal-default').modal('show');");
-	}
+    public void setAlunoSelecionado(Aluno alunoSelecionado) {
+        this.alunoSelecionado = alunoSelecionado;
+    }
 
-	public void setAlunos(Collection<Aluno> alunos) {
-		this.alunos = alunos;
-	}
+    @PostConstruct
+    public void inicializa() {
+        alunos = servico.buscaTodos();
+    }
 
-	public void setAlunoSelecionado(Aluno alunoSelecionado) {
-		this.alunoSelecionado = alunoSelecionado;
-	}
+    public void preparaExclusao(Aluno aluno) {
+        alunoSelecionado = aluno;
+        executaScript("$('#modal-default').modal('show')");
+    }
 
-	public void valida() {
-	}
-
-	public void imprimeDetalhesAlunos(Long id) {
-		Relatorio relatorio = this.servico.emitiRelatorioDetalheAluno(id);
-		if (relatorio != null) {
-			arquivo = new DefaultStreamedContent(new ByteArrayInputStream(relatorio.getArquivo()),
-					relatorio.getFormato(), relatorio.getNomeArquivo());
-		}
-
-	}
+    public void imprimeDetalhesAlunos(Long id) {
+        Relatorio relatorio = this.servico.emiteRelatorioDetalheAluno(id);
+        if (relatorio != null) {
+            arquivo = new DefaultStreamedContent(new ByteArrayInputStream(relatorio.getArquivo()),
+                    relatorio.getFormato(), relatorio.getNomeArquivo());
+        }
+    }
 
 }

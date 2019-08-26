@@ -1,24 +1,23 @@
 package br.com.valhala.academia.servicos;
 
-import java.io.Serializable;
-import java.util.Collection;
+import br.com.valhala.academia.db.dao.TipoLogradouroDao;
+import br.com.valhala.academia.modelo.TipoLogradouro;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import br.com.valhala.academia.db.dao.TipoLogradouroDao;
-import br.com.valhala.academia.db.modelo.TipoLogradouro;
+import java.io.Serializable;
+import java.util.Collection;
 
 @Named
 public class ServicoTipoLogradouro implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Inject
-	private TipoLogradouroDao dao;
+    @Inject
+    private TipoLogradouroDao dao;
 
-	public Collection<TipoLogradouro> listaTiposLogradouros() {
-		return dao.buscaTodos();
-	}
+    public Collection<TipoLogradouro> listaTiposLogradouros() {
+        return dao.buscaTodos();
+    }
 
 }

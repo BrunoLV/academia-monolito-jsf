@@ -1,109 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui">
+<html xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
 
 <ui:composition template="/ui/layout/layout.xhtml">
 
-	<ui:define name="content">
+    <ui:define name="content">
 
-		<f:metadata>
-			<f:viewParam name="id" value="#{alunoController.id}" required="false" />
-			<f:viewAction action="#{alunoController.carregaAluno()}" />
-		</f:metadata>
+        <f:metadata>
+            <f:viewParam name="id" value="#{alunoController.id}" required="false"/>
+            <f:viewAction action="#{alunoController.carregaAluno()}"/>
+        </f:metadata>
 
-		<section class="content-header">
-			<h1>
-				Alunos <small>Cadastro</small>
-			</h1>
-			<!--  
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-					<li class="active">Here</li>
-				</ol>
-				-->
-		</section>
+        <section class="content-header">
+            <h1>
+                Alunos <small>Cadastro</small>
+            </h1>
+            <!--
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                    <li class="active">Here</li>
+                </ol>
+                -->
+        </section>
 
-		<section class="content container-fluid">
+        <section class="content container-fluid">
 
-			<div class="box box-default">
+            <div class="box box-default">
 
-				<div class="box-header with-border">
+                <div class="box-header with-border">
 
-					<form role="form" jsf:id="form">
-						<f:validateBean disabled="true">
-						
-							<p:messages showDetail="false" showSummary="true" id="messages" showIcon="true"  />
+                    <form role="form" jsf:id="form" jsf:enctype="multipart/form-data">
+                        <f:validateBean disabled="true">
 
-							<h:inputHidden value="#{alunoController.aluno.id}" />
+                            <p:messages showDetail="false" showSummary="true" id="messages" showIcon="true"/>
 
-							<div class="box-body">
+                            <h:inputHidden value="#{alunoController.aluno.id}"/>
 
-								<div class="nav-tabs-custom">
-									<ul class="nav nav-tabs">
-										<li class="active"><a href="#tab_dados_principais"
-											data-toggle="tab"> Dados Principais </a></li>
+                            <div class="box-body">
 
-										<li><a href="#tab_dados_endereco" data-toggle="tab">
-												Endereços </a></li>
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#tab_dados_principais"
+                                                              data-toggle="tab"> Dados Principais </a></li>
 
-										<li><a href="#tab_dados_telefone" data-toggle="tab">
-												Telefones </a></li>
-									</ul>
+                                        <li><a href="#tab_dados_endereco" data-toggle="tab">
+                                            Endereços </a></li>
 
-									<div class="tab-content">
-										<div class="tab-pane active" id="tab_dados_principais">
-											<ui:include src="/ui/alunos/aluno_dados_principais.xhtml" />
-										</div>
+                                        <li><a href="#tab_dados_telefone" data-toggle="tab">
+                                            Telefones </a></li>
+                                    </ul>
 
-										<div class="tab-pane" id="tab_dados_endereco">
-											<ui:include src="/ui/alunos/aluno_dados_endereco.xhtml" />
-										</div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_dados_principais">
+                                            <ui:include src="/ui/alunos/aluno_dados_principais.xhtml"/>
+                                        </div>
 
-										<div class="tab-pane" id="tab_dados_telefone">
-											<ui:include src="/ui/alunos/aluno_dados_telefone.xhtml" />
-										</div>
-									</div>
+                                        <div class="tab-pane" id="tab_dados_endereco">
+                                            <ui:include src="/ui/alunos/aluno_dados_endereco.xhtml"/>
+                                        </div>
 
-								</div>
+                                        <div class="tab-pane" id="tab_dados_telefone">
+                                            <ui:include src="/ui/alunos/aluno_dados_telefone.xhtml"/>
+                                        </div>
+                                    </div>
 
-								<div class="box-footer">
-									<div class="row">
-										<div class="col-md-1">
-											<button class="btn btn-primary"
-												jsf:action="#{alunoController.salva()}">
-												<i class="fa fa-save" /> Salvar
-											</button>
-										</div>
+                                </div>
 
-										<div class="col-md-1">
-											<button class="btn btn-danger"
-												jsf:action="alunos?faces-redirect=true">
-												<i class="fa fa-step-backward" /> Retornar
-											</button>
-										</div>
-									</div>
+                                <div class="box-footer">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <button class="btn btn-primary"
+                                                    jsf:action="#{alunoController.salva()}">
+                                                <i class="fa fa-save"/> Salvar
+                                            </button>
+                                        </div>
 
-								</div>
+                                        <div class="col-md-1">
+                                            <button class="btn btn-danger"
+                                                    jsf:action="alunos?faces-redirect=true">
+                                                <i class="fa fa-step-backward"/> Retornar
+                                            </button>
+                                        </div>
+                                    </div>
 
-							</div>
+                                </div>
 
-						</f:validateBean>
-					</form>
-				</div>
-			</div>
+                            </div>
 
-		</section>
+                        </f:validateBean>
+                    </form>
+                </div>
+            </div>
 
-	</ui:define>
+        </section>
 
-	<ui:define name="scripts">
-		<h:outputScript library="academia" name="js/aluno.js" />
-	</ui:define>
+    </ui:define>
+
+    <ui:define name="scripts">
+        <h:outputScript library="academia" name="js/aluno.js"/>
+    </ui:define>
 
 </ui:composition>
 

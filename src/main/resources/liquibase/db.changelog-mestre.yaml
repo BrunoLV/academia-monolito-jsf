@@ -1,4 +1,4 @@
 databaseChangeLog:
-  
+
   - include:
-      file: /liquibase/db.changelog-v1.yaml
+      file: liquibase/db.changelog-v1.yaml
