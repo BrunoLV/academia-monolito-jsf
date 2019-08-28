@@ -63,9 +63,11 @@ public class Aluno implements Serializable {
     @Column(name = "sexo", nullable = false, length = 30)
     private EnumSexoAluno sexo = EnumSexoAluno.NAO_INFORMADO;
 
-    //@Column(name = "uuid", nullable = false, length = 255)
-    @Transient
+    @Column(name = "uuid", nullable = false, length = 255)
     private String uuid;
+
+    @Column(name = "path_foto", nullable = true, length = 255)
+    private String pathFoto;
 
     @Valid
     @ManyToMany(cascade = CascadeType.ALL)
@@ -189,5 +191,13 @@ public class Aluno implements Serializable {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getPathFoto() {
+        return pathFoto;
+    }
+
+    public void setPathFoto(String pathFoto) {
+        this.pathFoto = pathFoto;
     }
 }

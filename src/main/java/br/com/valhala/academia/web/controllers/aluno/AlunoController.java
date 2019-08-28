@@ -1,5 +1,6 @@
 package br.com.valhala.academia.web.controllers.aluno;
 
+import br.com.valhala.academia.arquivos.GerenciadorArquivos;
 import br.com.valhala.academia.modelo.*;
 import br.com.valhala.academia.modelo.enums.EnumSexoAluno;
 import br.com.valhala.academia.modelo.enums.EnumTipoEndereco;
@@ -13,6 +14,7 @@ import br.com.valhala.academia.validacao.marcadores.ValidaAluno;
 import br.com.valhala.academia.validacao.marcadores.ValidaEndereco;
 import br.com.valhala.academia.validacao.marcadores.ValidaTelefone;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -20,6 +22,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
@@ -53,6 +56,9 @@ public class AlunoController extends BaseController implements Serializable {
 
     @Inject
     private ServicoEstado servicoEstado;
+
+    @Inject
+    private GerenciadorArquivos gerenciadorArquivos;
 
     @Inject
     @ValidaEndereco
@@ -248,6 +254,15 @@ public class AlunoController extends BaseController implements Serializable {
         if (CollectionUtils.isNotEmpty(mensagens)) {
             adicionaMensagensAlerta(mensagens);
             return null;
+        }
+
+        try {
+            if (foto != null) {
+                gerenciadorArquivos.gravaArquivoAPartirDePart(foto, "Fotos");
+                aluno.setPathFoto("/Fotos/" + foto.getSubmittedFileName());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         servicoAluno.salva(aluno);

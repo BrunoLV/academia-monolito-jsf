@@ -140,9 +140,14 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: path_foto
-                  type: varchar(100)
+                  type: varchar(255)
                   constraints:
                     nullable: true
+              - column:
+                  name: uuid
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
   - changeSet:
       id: v1-4
       author: Bruno Luiz Viana

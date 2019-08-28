@@ -80,7 +80,9 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label>Foto</label>
-                <h:inputFile value="#{alunoController.foto}" styleClass="form-control"/>
+                <h:inputFile value="#{alunoController.foto}" styleClass="form-control">
+                    <f:validator validatorId="fileInputImageValidator" />
+                </h:inputFile>
             </div>
         </div>
     </div>
