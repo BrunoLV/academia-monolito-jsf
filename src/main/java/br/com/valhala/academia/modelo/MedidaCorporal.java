@@ -20,23 +20,62 @@ public class MedidaCorporal implements Serializable {
     private Long id;
 
     @Temporal(TemporalType.DATE)
-    private Date data;
+    @Column(nullable = false)
+    private Date dataMedicao;
 
+    @Column(precision = 3, scale = 2, nullable = false, columnDefinition = "decimal(3,2) not null default 0")
+    private Double altura = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(3,2) not null default 0")
+    private Double peso = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double pescoco = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double toraxSuperior = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double toraxInferior = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double busto = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double cintura = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double abdomen = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double quadril = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double coxaDireita = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double coxaEsquerda = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double panturrilhaDireita = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double panturrilhaEsquerda = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double bracoDireito = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double bracoEsquerdo = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double antebracoDireito = 0.0;
+
+    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double antebracoEsquerdo = 0.0;
+
+    @Column(length = 255, nullable = false)
+    private String uuid;
 
     @ManyToOne
     @JoinColumn(name = "id_aluno", nullable = false, foreignKey = @ForeignKey(name = "fk_medida_aluno_id_aluno"))
@@ -50,12 +89,12 @@ public class MedidaCorporal implements Serializable {
         this.id = id;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDataMedicao() {
+        return dataMedicao;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDataMedicao(Date dataMedicao) {
+        this.dataMedicao = dataMedicao;
     }
 
     public Double getPescoco() {
@@ -176,5 +215,37 @@ public class MedidaCorporal implements Serializable {
 
     public void setAntebracoEsquerdo(Double antebracoEsquerdo) {
         this.antebracoEsquerdo = antebracoEsquerdo;
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public Double getAltura() {
+        return altura;
+    }
+
+    public void setAltura(Double altura) {
+        this.altura = altura;
+    }
+
+    public Double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(Double peso) {
+        this.peso = peso;
     }
 }

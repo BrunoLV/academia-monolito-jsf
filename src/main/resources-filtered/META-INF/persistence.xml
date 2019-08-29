@@ -11,6 +11,10 @@
         <class>br.com.valhala.academia.modelo.Estado</class>
         <class>br.com.valhala.academia.modelo.Municipio</class>
         <class>br.com.valhala.academia.modelo.Aluno</class>
+        <class>br.com.valhala.academia.modelo.TipoLogradouro</class>
+        <class>br.com.valhala.academia.modelo.Endereco</class>
+        <class>br.com.valhala.academia.modelo.Telefone</class>
+        <class>br.com.valhala.academia.modelo.MedidaCorporal</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="${database.driver}"/>

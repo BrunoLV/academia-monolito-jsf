@@ -304,3 +304,140 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_telefone_id_aluno
                     references: tb_aluno(id)
+  - changeSet:
+      id: v1-8
+      author: Bruno Luiz Viana
+      comment: Criacao da tabela de medidas corporais
+      changes:
+        - createSequence:
+            sequenceName: seq_id_medida_corporal
+            incrementBy: 1
+        - createTable:
+            tableName: tb_medida_corporal
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  defaultValueSequenceNext: seq_id_medida_corporal
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: data_medicao
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: altura
+                  type: decimal(3,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: peso
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: pescoco
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: torax_superior
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: torax_inferior
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: busto
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: cintura
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: abdomen
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: quadril
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: coxa_direita
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: coxa_esquerda
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: panturrilha_direita
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: panturrilha_esquerda
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: braco_direito
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: braco_esquerdo
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: antebraco_direito
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: antebraco_esquerdo
+                  type: decimal(5,2)
+                  constraints:
+                    nullable: false
+                    defaultValueNumeric: 0.0
+              - column:
+                  name: uuid
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_aluno
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_medida_corporal_id_aluno
+                    references: tb_aluno(id)
