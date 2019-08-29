@@ -2,8 +2,9 @@ package br.com.valhala.academia.arquivos;
 
 import javax.inject.Named;
 import javax.servlet.http.Part;
-import java.io.*;
-import java.net.URI;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,7 +22,7 @@ public class GerenciadorArquivos implements Serializable {
         }
 
         if (arquivo != null && arquivo.getSize() > 0) {
-            try(InputStream is = arquivo.getInputStream()) {
+            try (InputStream is = arquivo.getInputStream()) {
                 Files.copy(is, Path.of(diretorio.toString(), arquivo.getSubmittedFileName()));
             }
         }

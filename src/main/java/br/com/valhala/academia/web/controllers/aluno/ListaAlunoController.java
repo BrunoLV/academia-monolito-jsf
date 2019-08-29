@@ -4,13 +4,10 @@ import br.com.valhala.academia.clients.wrapper.Relatorio;
 import br.com.valhala.academia.modelo.Aluno;
 import br.com.valhala.academia.modelo.enums.EnumSituacaoAluno;
 import br.com.valhala.academia.servicos.ServicoAluno;
-import org.primefaces.PrimeFaces;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

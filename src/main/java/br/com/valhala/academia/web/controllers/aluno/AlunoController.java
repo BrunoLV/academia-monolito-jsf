@@ -14,7 +14,6 @@ import br.com.valhala.academia.validacao.marcadores.ValidaAluno;
 import br.com.valhala.academia.validacao.marcadores.ValidaEndereco;
 import br.com.valhala.academia.validacao.marcadores.ValidaTelefone;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.faces.event.AjaxBehaviorEvent;
