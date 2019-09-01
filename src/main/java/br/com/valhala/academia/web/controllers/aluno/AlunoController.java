@@ -13,6 +13,7 @@ import br.com.valhala.academia.validacao.Validador;
 import br.com.valhala.academia.validacao.marcadores.ValidaAluno;
 import br.com.valhala.academia.validacao.marcadores.ValidaEndereco;
 import br.com.valhala.academia.validacao.marcadores.ValidaTelefone;
+import br.com.valhala.academia.web.controllers.BaseController;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.annotation.PostConstruct;

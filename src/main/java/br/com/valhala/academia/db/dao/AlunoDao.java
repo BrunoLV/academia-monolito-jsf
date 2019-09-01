@@ -21,16 +21,16 @@ public class AlunoDao extends DaoBase<Aluno, Long> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
 
         CriteriaQuery<Aluno> criteriaQuery = cb.createQuery(classePersistente);
-
         Root<Aluno> from = criteriaQuery.from(classePersistente);
         from.fetch("telefones", JoinType.LEFT);
         from.fetch("enderecos", JoinType.LEFT);
-
         criteriaQuery.where(cb.equal(from.get("id"), id));
 
         TypedQuery<Aluno> query = em.createQuery(criteriaQuery);
         Aluno aluno = query.getSingleResult();
+
         return aluno;
+
     }
 
 }

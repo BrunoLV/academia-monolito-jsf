@@ -1,4 +1,4 @@
-package br.com.valhala.academia.web.controllers.aluno;
+package br.com.valhala.academia.web.controllers;
 
 import org.primefaces.PrimeFaces;
 

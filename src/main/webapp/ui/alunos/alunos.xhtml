@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<html xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
 
@@ -16,12 +16,6 @@
                 <h1>
                     Alunos <small>Listagem</small>
                 </h1>
-                <!--
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                    <li class="active">Here</li>
-                </ol>
-                -->
             </section>
 
             <section class="content container-fluid">
@@ -53,7 +47,14 @@
                                              emptyMessage="Nenhum aluno cadastrado" reflow="true"
                                              resizableColumns="true" liveResize="true">
 
-                                    <p:column style="width: 5%; text-align: center;">
+                                    <p:ajax event="rowToggle" listener="#{listaAlunoController.onToggleRow}"
+                                            update="@(.medidas)" ajax="true" global="false"/>
+
+                                    <p:column style="width:3%">
+                                        <p:rowToggler/>
+                                    </p:column>
+
+                                    <p:column style="width: 6%; text-align: center;">
                                         <p:commandLink ajax="false"
                                                        actionListener="#{listaAlunoController.imprimeDetalhesAlunos(aluno.id)}"
                                                        styleClass="btn btn-default"
@@ -63,14 +64,14 @@
                                         </p:commandLink>
                                     </p:column>
 
-                                    <p:column style="width: 5%; text-align: center;">
+                                    <p:column style="width: 6%; text-align: center;">
                                         <button jsf:action="#{listaAlunoController.edita(aluno)}"
                                                 class="btn btn-primary">
                                             <i class="fa fa-pencil"/>
                                         </button>
                                     </p:column>
 
-                                    <p:column style="width: 5%; text-align: center;">
+                                    <p:column style="width: 6%; text-align: center;">
                                         <h:commandLink
                                                 actionListener="#{listaAlunoController.preparaExclusao(aluno)}"
                                                 styleClass="btn btn-danger">
@@ -88,7 +89,7 @@
                                         <h:outputText value="#{aluno.nome}"/>
                                     </p:column>
 
-                                    <p:column style="text-align: center;">
+                                    <p:column style="width: 12%; text-align: center;">
                                         <f:facet name="header">
                                             <h:outputText value="CPF"/>
                                         </f:facet>
@@ -102,7 +103,7 @@
                                         <h:outputText value="#{aluno.email}"/>
                                     </p:column>
 
-                                    <p:column style="text-align: center;">
+                                    <p:column style="width: 10%; text-align: center;">
                                         <f:facet name="header">
                                             <h:outputText value="Nascimento"/>
                                         </f:facet>
@@ -111,14 +112,14 @@
                                         </h:outputText>
                                     </p:column>
 
-                                    <p:column style="text-align: center;">
+                                    <p:column style="width: 10%; text-align: center;">
                                         <f:facet name="header">
                                             <h:outputText value="Sexo"/>
                                         </f:facet>
                                         <h:outputText value="#{aluno.sexo.descricao}"/>
                                     </p:column>
 
-                                    <p:column style="text-align: center;">
+                                    <p:column style="width: 8%; text-align: center;">
                                         <f:facet name="header">
                                             <h:outputText value="Situação"/>
                                         </f:facet>
@@ -126,6 +127,183 @@
                                                 styleClass="#{listaAlunoController.defineEstiloSituacao(aluno.situacao)}"
                                                 value="#{aluno.situacao.descricao}"/>
                                     </p:column>
+
+                                    <p:rowExpansion>
+
+                                        <p:outputPanel styleClass="medidas">
+
+                                            <p:outputPanel
+                                                    rendered="#{listaAlunoController.ultimaMedida eq null or listaAlunoController.ultimaMedida.id eq null}">
+
+                                                <div class="box">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">Ultima medição corporal</h3>
+                                                    </div>
+
+                                                    <div class="box-body" style="font-size: 12px;!important">
+                                                        <a jsf:outcome="/ui/medida-corporal/medida-corporal">
+                                                            <i class="fa fa-pencil"></i>
+                                                            Cadastrar Medidas
+                                                            <f:param name="idAluno" value="#{aluno.id}"/>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </p:outputPanel>
+
+                                            <p:outputPanel
+                                                    rendered="#{listaAlunoController.ultimaMedida ne null and listaAlunoController.ultimaMedida.id ne null}">
+
+                                                <div class="box">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">Ultima medição corporal</h3>
+                                                    </div>
+
+                                                    <div class="box-body" style="font-size: 12px;!important">
+
+                                                        <div class="row">
+
+                                                            <div class="col-md-2">
+                                                                <a jsf:outcome="/ui/medida-corporal/medida-corporal"
+                                                                   class="text-warning">
+                                                                    <i class="fa fa-pencil-square-o"></i>
+                                                                    Editar essa medida
+                                                                    <f:param name="idAluno" value="#{aluno.id}"/>
+                                                                    <f:param name="idMedida"
+                                                                             value="#{listaAlunoController.ultimaMedida.id}"/>
+                                                                </a>
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <a jsf:outcome="/ui/medida-corporal/medida-corporal"
+                                                                   class="text-success">
+                                                                    <i class="fa fa-plus-square-o"></i>
+                                                                    Cadastrar nova medida
+                                                                    <f:param name="idAluno" value="#{aluno.id}"/>
+                                                                </a>
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <a jsf:outcome="/ui/medida-corporal/medida-corporal"
+                                                                   class="text-danger">
+                                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                    Excluir essa medida
+                                                                </a>
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <a>
+                                                                    <i class="fa fa-line-chart"></i>
+                                                                    Evolução
+                                                                    <f:param name="idAluno" value="#{aluno.id}"/>
+                                                                </a>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <br/>
+
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <b>Altura: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.altura}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Peso: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.peso}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Pescoço: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.pescoco}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Tórax Superior: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.toraxSuperior}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Tórax Inferior: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.toraxInferior}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Busto: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.busto}"/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <b>Cintura: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.cintura}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Abdômen: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.abdomen}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Quadril: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.quadril}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Coxa Direita: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.coxaDireita}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Coxa Esquerda: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.coxaEsquerda}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Panturrilha Direita: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.panturrilhaDireita}"/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <b>Panturrilha Esquerda: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.panturrilhaEsquerda}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Braço Direito: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.bracoDireito}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Braço Esquerdo: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.bracoEsquerdo}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Antebraço Direito: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.antebracoDireito}"/>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <b>Antebraço Esquerdo: </b>
+                                                                <h:outputText
+                                                                        value="#{listaAlunoController.ultimaMedida.antebracoEsquerdo}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </p:outputPanel>
+
+                                        </p:outputPanel>
+
+                                    </p:rowExpansion>
 
                                 </p:dataTable>
 

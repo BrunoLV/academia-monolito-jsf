@@ -2,10 +2,15 @@ package br.com.valhala.academia.web.controllers.aluno;
 
 import br.com.valhala.academia.clients.wrapper.Relatorio;
 import br.com.valhala.academia.modelo.Aluno;
+import br.com.valhala.academia.modelo.MedidaCorporal;
 import br.com.valhala.academia.modelo.enums.EnumSituacaoAluno;
 import br.com.valhala.academia.servicos.ServicoAluno;
+import br.com.valhala.academia.servicos.ServicoMedidaCorporal;
+import br.com.valhala.academia.web.controllers.BaseController;
+import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.Visibility;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -24,8 +29,13 @@ public class ListaAlunoController extends BaseController implements Serializable
 
     private Aluno alunoSelecionado;
 
+    private MedidaCorporal ultimaMedida;
+
     @Inject
     private ServicoAluno servico;
+
+    @Inject
+    private ServicoMedidaCorporal servicoMedidaCorporal;
 
     private Collection<Aluno> alunos;
 
@@ -105,4 +115,20 @@ public class ListaAlunoController extends BaseController implements Serializable
         }
     }
 
+    public void onToggleRow(ToggleEvent event) {
+        Aluno aluno = (Aluno) event.getData();
+        if (event.getVisibility() == Visibility.VISIBLE) {
+            ultimaMedida = servicoMedidaCorporal.recuperaUltimaMedicao(aluno).orElse(new MedidaCorporal());
+        } else {
+            ultimaMedida = new MedidaCorporal();
+        }
+    }
+
+    public MedidaCorporal getUltimaMedida() {
+        return ultimaMedida;
+    }
+
+    public void setUltimaMedida(MedidaCorporal ultimaMedida) {
+        this.ultimaMedida = ultimaMedida;
+    }
 }

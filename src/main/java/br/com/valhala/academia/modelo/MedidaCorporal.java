@@ -1,5 +1,6 @@
 package br.com.valhala.academia.modelo;
 
+import br.com.valhala.academia.db.entities.listeners.MedidaCorporalEntityListener;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -9,6 +10,7 @@ import java.util.Date;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
+@EntityListeners(value = {MedidaCorporalEntityListener.class})
 @Table(name = "tb_medida_corporal")
 public class MedidaCorporal implements Serializable {
 
@@ -20,7 +22,7 @@ public class MedidaCorporal implements Serializable {
     private Long id;
 
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
+    @Column(name = "data_medicao", nullable = false)
     private Date dataMedicao;
 
     @Column(precision = 3, scale = 2, nullable = false, columnDefinition = "decimal(3,2) not null default 0")
@@ -32,10 +34,10 @@ public class MedidaCorporal implements Serializable {
     @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double pescoco = 0.0;
 
-    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
+    @Column(name = "torax_superior", precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double toraxSuperior = 0.0;
 
-    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
+    @Column(name = "torax_inferior", precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double toraxInferior = 0.0;
 
     @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
@@ -50,28 +52,28 @@ public class MedidaCorporal implements Serializable {
     @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double quadril = 0.0;
 
-    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
+    @Column(name = "coxa_direita", precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double coxaDireita = 0.0;
 
-    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
+    @Column(name = "coxa_esquerda", precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double coxaEsquerda = 0.0;
 
-    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
+    @Column(name = "panturrilha_direita", precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double panturrilhaDireita = 0.0;
 
-    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
+    @Column(name = "panturrilha_esquerda", precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double panturrilhaEsquerda = 0.0;
 
-    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
+    @Column(name = "braco_direito", precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double bracoDireito = 0.0;
 
-    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
+    @Column(name = "braco_esquerdo", precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double bracoEsquerdo = 0.0;
 
-    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
+    @Column(name = "antebraco_direito", precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double antebracoDireito = 0.0;
 
-    @Column(precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
+    @Column(name = "antebraco_esquerdo", precision = 5, scale = 2, nullable = false, columnDefinition = "decimal(5,2) not null default 0")
     private Double antebracoEsquerdo = 0.0;
 
     @Column(length = 255, nullable = false)

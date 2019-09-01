@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns="http://www.w3.org/1999/xhtml">
+
+<ui:composition template="/ui/layout/layout.xhtml">
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:viewParam name="idAluno" value="#{medidaCorporalController.idAluno}" required="false"/>
+            <f:viewAction action="#{medidaCorporalController.carregaDados()}"/>
+        </f:metadata>
+
+        <section class="content-header">
+            <h1>
+                Evolução <small>Aluno: #{medidaCorporalController.medidaCorporal.aluno.nome}</small>
+            </h1>
+        </section>
+
+        <section class="content container-fluid">
+
+            <div id="curve_chart" style="width: 900px; height: 500px"></div>
+
+        </section>
+
+    </ui:define>
+
+    <ui:define name="scripts">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+
+            google.charts.load('current', {'packages':['corechart']});
+
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+
+                var medidas = [];
+
+                $.get('http://localhost:8080/academia/services/aluno/2/medidas', function(data){
+                    console.log(data);
+                    medidas = data;
+                });
+
+                var data = google.visualization.arrayToDataTable([
+                    ['Year', 'Sales', 'Expenses'],
+                    ['2004',  1000,      400],
+                    ['2005',  1170,      460],
+                    ['2006',  660,       1120],
+                    ['2007',  1030,      540]
+                ]);
+
+            var options = {
+                title: 'Company Performance',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+                };
+
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+            chart.draw(data, options);
+            }
+        </script>
+    </ui:define>
+
+</ui:composition>
+
+</html>

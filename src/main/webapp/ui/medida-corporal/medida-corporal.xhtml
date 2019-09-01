@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
+
+<ui:composition template="/ui/layout/layout.xhtml">
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:viewParam name="idAluno" value="#{medidaCorporalController.idAluno}" required="false"/>
+            <f:viewParam name="idMedida" value="#{medidaCorporalController.idMedidaCorporal}" required="false"/>
+            <f:viewAction action="#{medidaCorporalController.carregaDados()}"/>
+        </f:metadata>
+
+        <section class="content-header">
+            <h1>
+                Medida Corporal <small>Cadastro - Aluno: #{medidaCorporalController.medidaCorporal.aluno.nome}</small>
+            </h1>
+            <!--
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                    <li class="active">Here</li>
+                </ol>
+                -->
+        </section>
+
+        <section class="content container-fluid">
+
+            <div class="box box-default">
+
+                <div class="box-header with-border">
+
+                    <form role="form" jsf:id="form">
+                        <f:validateBean disabled="true">
+
+                            <p:messages showDetail="false" showSummary="true" id="messages" showIcon="true"/>
+
+                            <h:inputHidden value="#{medidaCorporalController.medidaCorporal.id}"/>
+
+                            <div class="box-body">
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Altura</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="10"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.altura}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Peso (kg)</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="999"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.peso}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Pescoço</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="99"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.pescoco}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Tórax Superior</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="999"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.toraxSuperior}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Tórax Inferior</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="999"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.toraxInferior}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Busto</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="999"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.busto}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Cintura</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="10"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.cintura}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Abdômen</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="999"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.abdomen}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Quadril</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="99"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.quadril}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Coxa Direita</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="999"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.coxaDireita}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Coxa Esquerda</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="999"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.coxaEsquerda}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Panturrilha Direira</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="999"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.panturrilhaDireita}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Panturrilha Esquerda</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="10"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.panturrilhaEsquerda}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Braço Direito</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="999"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.bracoDireito}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Braço Esquerdo</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="99"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.bracoEsquerdo}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Antebraço Direito</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="999"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.antebracoDireito}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Antebraco Esquerdo</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   step="0.01" min="0"
+                                                   max="999"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.antebracoEsquerdo}"/>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <button class="btn btn-primary"
+                                                    jsf:action="#{medidaCorporalController.salva()}">
+                                                <i class="fa fa-save"/> Salvar
+                                            </button>
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <button class="btn btn-danger"
+                                                    jsf:action="/ui/alunos/alunos.xhtml?faces-redirect=true">
+                                                <i class="fa fa-step-backward"/> Retornar
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </f:validateBean>
+                    </form>
+                </div>
+            </div>
+
+        </section>
+
+    </ui:define>
+
+</ui:composition>
+
+</html>
