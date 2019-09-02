@@ -10,6 +10,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,10 +27,13 @@ public class RecursoAluno {
     @Path("/{id}/medidas")
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<MedidaDto> obtemMedidasAluno(@PathParam("id") Long idAluno) {
+    	
+    	DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    	
         final Collection<MedidaCorporal> medidas = medidaCorporalDao.obtemTodasAluno(idAluno);
         final List<MedidaDto> colecao = medidas
                 .stream()
-                .map(m -> new MedidaDto(m.getDataMedicao()
+                .map(m -> new MedidaDto(format.format(m.getDataMedicao())
                         , m.getAltura()
                         , m.getPeso()
                         , m.getPescoco()

@@ -10,6 +10,7 @@ import javax.servlet.http.Part;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("rawtypes")
 @FacesValidator("fileInputImageValidator")
 public class FileInputImageValidator implements Validator {
 

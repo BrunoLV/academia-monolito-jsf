@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 @Named
 public class GerenciadorArquivos implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+	
     public static final String CAMINHO_BASE = "/home/bruno/Files";
 
     public void gravaArquivoAPartirDePart(final Part arquivo, final String path) throws IOException {

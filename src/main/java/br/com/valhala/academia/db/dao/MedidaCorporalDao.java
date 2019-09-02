@@ -17,7 +17,7 @@ public class MedidaCorporalDao extends DaoBase<MedidaCorporal, Long> {
 
     public Optional<MedidaCorporal> recuperaUltimaMedicao(Aluno aluno) {
 
-        final String jpql = "SELECT m FROM MedidaCorporal m WHERE m.aluno.id = :id ORDER BY m.dataMedicao, m.id DESC";
+        final String jpql = "SELECT m FROM MedidaCorporal m WHERE m.aluno.id = :id ORDER BY m.dataMedicao DESC, m.id DESC";
 
         TypedQuery<MedidaCorporal> query = em.createQuery(jpql, MedidaCorporal.class);
         query.setParameter("id", aluno.getId());
@@ -28,7 +28,7 @@ public class MedidaCorporalDao extends DaoBase<MedidaCorporal, Long> {
 
     public Collection<MedidaCorporal> obtemTodasAluno(Long idAluno) {
 
-        final String jpql = "SELECT m FROM MedidaCorporal m WHERE m.aluno.id = :id ORDER BY m.dataMedicao, m.id ASC";
+        final String jpql = "SELECT m FROM MedidaCorporal m WHERE m.aluno.id = :id ORDER BY m.dataMedicao ASC, m.id ASC";
 
         TypedQuery<MedidaCorporal> query = em.createQuery(jpql, MedidaCorporal.class);
         query.setParameter("id", idAluno);

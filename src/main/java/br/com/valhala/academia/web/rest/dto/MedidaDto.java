@@ -1,11 +1,12 @@
 package br.com.valhala.academia.web.rest.dto;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class MedidaDto implements Serializable {
 
-    private Date dataMedicao;
+    private static final long serialVersionUID = 1L;
+	
+    private String dataMedicao;
     private Double altura = 0.0;
     private Double peso = 0.0;
     private Double pescoco = 0.0;
@@ -27,7 +28,7 @@ public class MedidaDto implements Serializable {
     public MedidaDto() {
     }
 
-    public MedidaDto(Date dataMedicao, Double altura, Double peso, Double pescoco, Double toraxSuperior, Double toraxInferior, Double busto, Double cintura, Double abdomen, Double quadril, Double coxaDireita, Double coxaEsquerda, Double panturrilhaDireita, Double panturrilhaEsquerda, Double bracoDireito, Double bracoEsquerdo, Double antebracoDireito, Double antebracoEsquerdo) {
+    public MedidaDto(String dataMedicao, Double altura, Double peso, Double pescoco, Double toraxSuperior, Double toraxInferior, Double busto, Double cintura, Double abdomen, Double quadril, Double coxaDireita, Double coxaEsquerda, Double panturrilhaDireita, Double panturrilhaEsquerda, Double bracoDireito, Double bracoEsquerdo, Double antebracoDireito, Double antebracoEsquerdo) {
         this.dataMedicao = dataMedicao;
         this.altura = altura;
         this.peso = peso;
@@ -48,11 +49,11 @@ public class MedidaDto implements Serializable {
         this.antebracoEsquerdo = antebracoEsquerdo;
     }
 
-    public Date getDataMedicao() {
+    public String getDataMedicao() {
         return dataMedicao;
     }
 
-    public void setDataMedicao(Date dataMedicao) {
+    public void setDataMedicao(String dataMedicao) {
         this.dataMedicao = dataMedicao;
     }
 
