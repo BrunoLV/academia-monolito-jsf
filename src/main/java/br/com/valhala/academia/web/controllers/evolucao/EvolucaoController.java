@@ -13,16 +13,16 @@ import br.com.valhala.academia.web.controllers.BaseController;
 @Named
 @ViewScoped
 public class EvolucaoController extends BaseController implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long idAluno;
-	
+
 	private Aluno aluno;
-	
+
 	@Inject
 	private ServicoAluno servicoAluno;
-	
+
 	public void carregaDados() {
 		aluno = servicoAluno.buscaPorId(idAluno);
 		executaScript("evolucao.controller.renderizaGraficoEvolucao(" + idAluno + ");");
@@ -32,12 +32,12 @@ public class EvolucaoController extends BaseController implements Serializable {
 		return aluno;
 	}
 
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
 	public Long getIdAluno() {
 		return idAluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
 	}
 
 	public void setIdAluno(Long idAluno) {

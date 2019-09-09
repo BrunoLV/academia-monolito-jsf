@@ -1,5 +1,15 @@
 package br.com.valhala.academia.servicos;
 
+import java.io.Serializable;
+import java.util.Base64;
+import java.util.Collection;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.interceptor.Interceptors;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.com.valhala.academia.clients.ClienteEmissaoRelatorio;
 import br.com.valhala.academia.clients.wrapper.Relatorio;
 import br.com.valhala.academia.clients.wrapper.RequisicaoRelatorio;
@@ -7,69 +17,61 @@ import br.com.valhala.academia.db.dao.AlunoDao;
 import br.com.valhala.academia.db.interceptores.InterceptadorTransacao;
 import br.com.valhala.academia.db.interceptores.Transacional;
 import br.com.valhala.academia.modelo.Aluno;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.interceptor.Interceptors;
-import java.io.Serializable;
-import java.util.Base64;
-import java.util.Collection;
 
 @Named
-@Interceptors({InterceptadorTransacao.class})
+@Interceptors({ InterceptadorTransacao.class })
 public class ServicoAluno implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Inject
-    private AlunoDao dao;
+	@Inject
+	private AlunoDao dao;
 
-    @Inject
-    private ClienteEmissaoRelatorio clienteEmissaoRelatorio;
+	@Inject
+	private ClienteEmissaoRelatorio clienteEmissaoRelatorio;
 
-    public Aluno buscaPorId(Long id) {
-        return dao.buscaPorIdComEnderecos(id);
-    }
+	public Aluno buscaPorId(Long id) {
+		return dao.buscaPorIdComEnderecos(id);
+	}
 
-    public Collection<Aluno> buscaTodos() {
-        return dao.buscaTodos();
-    }
+	public Collection<Aluno> buscaTodos() {
+		return dao.buscaTodos();
+	}
 
-    @Transacional
-    public void exclui(Aluno aluno) {
-        Aluno alunoBanco = dao.buscaPorId(aluno.getId());
-        if (alunoBanco == null)
-            return;
-        dao.exclui(alunoBanco);
-    }
+	public Relatorio emiteRelatorioDetalheAluno(Long id) {
+		try {
+			Aluno aluno = dao.buscaPorIdComEnderecos(id);
 
-    @Transacional
-    public void salva(Aluno aluno) {
-        if (aluno.getId() == null) {
-            dao.salva(aluno);
-        } else {
-            dao.atualiza(aluno);
-        }
-    }
+			ObjectMapper mapper = new ObjectMapper();
+			String json = mapper.writeValueAsString(aluno);
 
-    public Relatorio emiteRelatorioDetalheAluno(Long id) {
-        try {
-            Aluno aluno = dao.buscaPorIdComEnderecos(id);
+			RequisicaoRelatorio requisicao = new RequisicaoRelatorio.Builder().nomeRelatorio("detalhe-aluno")
+					.json(Base64.getEncoder().encodeToString(json.getBytes())).build();
 
-            ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(aluno);
+			Relatorio relatorio = clienteEmissaoRelatorio.emitiRelatorio(requisicao);
+			return relatorio;
 
-            RequisicaoRelatorio requisicao = new RequisicaoRelatorio.Builder().nomeRelatorio("detalhe-aluno")
-                    .json(Base64.getEncoder().encodeToString(json.getBytes())).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-            Relatorio relatorio = clienteEmissaoRelatorio.emitiRelatorio(requisicao);
-            return relatorio;
+	@Transacional
+	public void exclui(Aluno aluno) {
+		Aluno alunoBanco = dao.buscaPorId(aluno.getId());
+		if (alunoBanco == null)
+			return;
+		dao.exclui(alunoBanco);
+	}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+	@Transacional
+	public void salva(Aluno aluno) {
+		if (aluno.getId() == null) {
+			dao.salva(aluno);
+		} else {
+			dao.atualiza(aluno);
+		}
+	}
 
 }

@@ -4,6 +4,6 @@ import java.util.Set;
 
 public interface Validador {
 
-    <T> Set<String> validar(T obj);
+	<T> Set<String> validar(T obj);
 
 }

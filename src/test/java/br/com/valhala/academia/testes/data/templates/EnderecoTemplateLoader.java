@@ -130,6 +130,17 @@ public class EnderecoTemplateLoader implements TemplateLoader {
             {
                 add("complemento", "5º andar Bloco B");
             }
+        }).addTemplate("cenario_parceiro_valido", new Rule() {
+        	{
+        		add("logradouro", "Osasco");
+                add("numero", "380");
+                add("complemento", "5º andar Bloco B");
+                add("bairro", "Estrela");
+                add("cep", "68743-280");
+                add("tipoEndereco", EnumTipoEndereco.RESIDENCIAL);
+                add("tipoLogradouro", one(TipoLogradouro.class, "cenario_alameda"));
+                add("municipio", one(Municipio.class, "cenario_castanhal"));
+        	}
         });
     }
 

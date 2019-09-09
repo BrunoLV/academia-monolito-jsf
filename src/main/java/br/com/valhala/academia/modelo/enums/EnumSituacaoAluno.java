@@ -2,16 +2,16 @@ package br.com.valhala.academia.modelo.enums;
 
 public enum EnumSituacaoAluno {
 
-    ATIVO("Ativo"), INATIVO("Inativo"), INADIMPLENTE("Inadimplente");
+	ATIVO("Ativo"), INATIVO("Inativo"), INADIMPLENTE("Inadimplente");
 
-    private String descricao;
+	private String descricao;
 
-    private EnumSituacaoAluno(final String descricao) {
-        this.descricao = descricao;
-    }
+	private EnumSituacaoAluno(final String descricao) {
+		this.descricao = descricao;
+	}
 
-    public String getDescricao() {
-        return descricao;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
 }

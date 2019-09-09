@@ -4,192 +4,317 @@ import java.io.Serializable;
 
 public class MedidaDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-	
-    private String dataMedicao;
-    private Double altura = 0.0;
-    private Double peso = 0.0;
-    private Double pescoco = 0.0;
-    private Double toraxSuperior = 0.0;
-    private Double toraxInferior = 0.0;
-    private Double busto = 0.0;
-    private Double cintura = 0.0;
-    private Double abdomen = 0.0;
-    private Double quadril = 0.0;
-    private Double coxaDireita = 0.0;
-    private Double coxaEsquerda = 0.0;
-    private Double panturrilhaDireita = 0.0;
-    private Double panturrilhaEsquerda = 0.0;
-    private Double bracoDireito = 0.0;
-    private Double bracoEsquerdo = 0.0;
-    private Double antebracoDireito = 0.0;
-    private Double antebracoEsquerdo = 0.0;
+	public static final class Builder {
+		private String dataMedicao;
+		private Double altura;
+		private Double peso;
+		private Double pescoco;
+		private Double toraxSuperior;
+		private Double toraxInferior;
+		private Double busto;
+		private Double cintura;
+		private Double abdomen;
+		private Double quadril;
+		private Double coxaDireita;
+		private Double coxaEsquerda;
+		private Double panturrilhaDireita;
+		private Double panturrilhaEsquerda;
+		private Double bracoDireito;
+		private Double bracoEsquerdo;
+		private Double antebracoDireito;
+		private Double antebracoEsquerdo;
 
-    public MedidaDto() {
-    }
+		private Builder() {
+		}
 
-    public MedidaDto(String dataMedicao, Double altura, Double peso, Double pescoco, Double toraxSuperior, Double toraxInferior, Double busto, Double cintura, Double abdomen, Double quadril, Double coxaDireita, Double coxaEsquerda, Double panturrilhaDireita, Double panturrilhaEsquerda, Double bracoDireito, Double bracoEsquerdo, Double antebracoDireito, Double antebracoEsquerdo) {
-        this.dataMedicao = dataMedicao;
-        this.altura = altura;
-        this.peso = peso;
-        this.pescoco = pescoco;
-        this.toraxSuperior = toraxSuperior;
-        this.toraxInferior = toraxInferior;
-        this.busto = busto;
-        this.cintura = cintura;
-        this.abdomen = abdomen;
-        this.quadril = quadril;
-        this.coxaDireita = coxaDireita;
-        this.coxaEsquerda = coxaEsquerda;
-        this.panturrilhaDireita = panturrilhaDireita;
-        this.panturrilhaEsquerda = panturrilhaEsquerda;
-        this.bracoDireito = bracoDireito;
-        this.bracoEsquerdo = bracoEsquerdo;
-        this.antebracoDireito = antebracoDireito;
-        this.antebracoEsquerdo = antebracoEsquerdo;
-    }
+		public MedidaDto build() {
+			return new MedidaDto(this);
+		}
 
-    public String getDataMedicao() {
-        return dataMedicao;
-    }
+		public Builder comAbdomen(Double abdomen) {
+			this.abdomen = abdomen;
+			return this;
+		}
 
-    public void setDataMedicao(String dataMedicao) {
-        this.dataMedicao = dataMedicao;
-    }
+		public Builder comAltura(Double altura) {
+			this.altura = altura;
+			return this;
+		}
 
-    public Double getAltura() {
-        return altura;
-    }
+		public Builder comAntebracoDireito(Double antebracoDireito) {
+			this.antebracoDireito = antebracoDireito;
+			return this;
+		}
 
-    public void setAltura(Double altura) {
-        this.altura = altura;
-    }
+		public Builder comAntebracoEsquerdo(Double antebracoEsquerdo) {
+			this.antebracoEsquerdo = antebracoEsquerdo;
+			return this;
+		}
 
-    public Double getPeso() {
-        return peso;
-    }
+		public Builder comBracoDireito(Double bracoDireito) {
+			this.bracoDireito = bracoDireito;
+			return this;
+		}
 
-    public void setPeso(Double peso) {
-        this.peso = peso;
-    }
+		public Builder comBracoEsquerdo(Double bracoEsquerdo) {
+			this.bracoEsquerdo = bracoEsquerdo;
+			return this;
+		}
 
-    public Double getPescoco() {
-        return pescoco;
-    }
+		public Builder comBusto(Double busto) {
+			this.busto = busto;
+			return this;
+		}
 
-    public void setPescoco(Double pescoco) {
-        this.pescoco = pescoco;
-    }
+		public Builder comCintura(Double cintura) {
+			this.cintura = cintura;
+			return this;
+		}
 
-    public Double getToraxSuperior() {
-        return toraxSuperior;
-    }
+		public Builder comCoxaDireita(Double coxaDireita) {
+			this.coxaDireita = coxaDireita;
+			return this;
+		}
 
-    public void setToraxSuperior(Double toraxSuperior) {
-        this.toraxSuperior = toraxSuperior;
-    }
+		public Builder comCoxaEsquerda(Double coxaEsquerda) {
+			this.coxaEsquerda = coxaEsquerda;
+			return this;
+		}
 
-    public Double getToraxInferior() {
-        return toraxInferior;
-    }
+		public Builder comDataMedicao(String dataMedicao) {
+			this.dataMedicao = dataMedicao;
+			return this;
+		}
 
-    public void setToraxInferior(Double toraxInferior) {
-        this.toraxInferior = toraxInferior;
-    }
+		public Builder comPanturrilhaDireita(Double panturrilhaDireita) {
+			this.panturrilhaDireita = panturrilhaDireita;
+			return this;
+		}
 
-    public Double getBusto() {
-        return busto;
-    }
+		public Builder comPanturrilhaEsquerda(Double panturrilhaEsquerda) {
+			this.panturrilhaEsquerda = panturrilhaEsquerda;
+			return this;
+		}
 
-    public void setBusto(Double busto) {
-        this.busto = busto;
-    }
+		public Builder comPescoco(Double pescoco) {
+			this.pescoco = pescoco;
+			return this;
+		}
 
-    public Double getCintura() {
-        return cintura;
-    }
+		public Builder comPeso(Double peso) {
+			this.peso = peso;
+			return this;
+		}
 
-    public void setCintura(Double cintura) {
-        this.cintura = cintura;
-    }
+		public Builder comQuadril(Double quadril) {
+			this.quadril = quadril;
+			return this;
+		}
 
-    public Double getAbdomen() {
-        return abdomen;
-    }
+		public Builder comToraxInferior(Double toraxInferior) {
+			this.toraxInferior = toraxInferior;
+			return this;
+		}
 
-    public void setAbdomen(Double abdomen) {
-        this.abdomen = abdomen;
-    }
+		public Builder comToraxSuperior(Double toraxSuperior) {
+			this.toraxSuperior = toraxSuperior;
+			return this;
+		}
+	}
 
-    public Double getQuadril() {
-        return quadril;
-    }
+	private static final long serialVersionUID = 1L;
 
-    public void setQuadril(Double quadril) {
-        this.quadril = quadril;
-    }
+	public static Builder builder() {
+		return new Builder();
+	}
 
-    public Double getCoxaDireita() {
-        return coxaDireita;
-    }
+	private String dataMedicao;
+	private Double altura = 0.0;
+	private Double peso = 0.0;
+	private Double pescoco = 0.0;
+	private Double toraxSuperior = 0.0;
+	private Double toraxInferior = 0.0;
+	private Double busto = 0.0;
+	private Double cintura = 0.0;
+	private Double abdomen = 0.0;
+	private Double quadril = 0.0;
+	private Double coxaDireita = 0.0;
+	private Double coxaEsquerda = 0.0;
+	private Double panturrilhaDireita = 0.0;
+	private Double panturrilhaEsquerda = 0.0;
+	private Double bracoDireito = 0.0;
+	private Double bracoEsquerdo = 0.0;
 
-    public void setCoxaDireita(Double coxaDireita) {
-        this.coxaDireita = coxaDireita;
-    }
+	private Double antebracoDireito = 0.0;
 
-    public Double getCoxaEsquerda() {
-        return coxaEsquerda;
-    }
+	private Double antebracoEsquerdo = 0.0;
 
-    public void setCoxaEsquerda(Double coxaEsquerda) {
-        this.coxaEsquerda = coxaEsquerda;
-    }
+	public MedidaDto() {
+		super();
+	}
 
-    public Double getPanturrilhaDireita() {
-        return panturrilhaDireita;
-    }
+	private MedidaDto(Builder builder) {
+		this.dataMedicao = builder.dataMedicao;
+		this.altura = builder.altura;
+		this.peso = builder.peso;
+		this.pescoco = builder.pescoco;
+		this.toraxSuperior = builder.toraxSuperior;
+		this.toraxInferior = builder.toraxInferior;
+		this.busto = builder.busto;
+		this.cintura = builder.cintura;
+		this.abdomen = builder.abdomen;
+		this.quadril = builder.quadril;
+		this.coxaDireita = builder.coxaDireita;
+		this.coxaEsquerda = builder.coxaEsquerda;
+		this.panturrilhaDireita = builder.panturrilhaDireita;
+		this.panturrilhaEsquerda = builder.panturrilhaEsquerda;
+		this.bracoDireito = builder.bracoDireito;
+		this.bracoEsquerdo = builder.bracoEsquerdo;
+		this.antebracoDireito = builder.antebracoDireito;
+		this.antebracoEsquerdo = builder.antebracoEsquerdo;
+	}
 
-    public void setPanturrilhaDireita(Double panturrilhaDireita) {
-        this.panturrilhaDireita = panturrilhaDireita;
-    }
+	public Double getAbdomen() {
+		return abdomen;
+	}
 
-    public Double getPanturrilhaEsquerda() {
-        return panturrilhaEsquerda;
-    }
+	public Double getAltura() {
+		return altura;
+	}
 
-    public void setPanturrilhaEsquerda(Double panturrilhaEsquerda) {
-        this.panturrilhaEsquerda = panturrilhaEsquerda;
-    }
+	public Double getAntebracoDireito() {
+		return antebracoDireito;
+	}
 
-    public Double getBracoDireito() {
-        return bracoDireito;
-    }
+	public Double getAntebracoEsquerdo() {
+		return antebracoEsquerdo;
+	}
 
-    public void setBracoDireito(Double bracoDireito) {
-        this.bracoDireito = bracoDireito;
-    }
+	public Double getBracoDireito() {
+		return bracoDireito;
+	}
 
-    public Double getBracoEsquerdo() {
-        return bracoEsquerdo;
-    }
+	public Double getBracoEsquerdo() {
+		return bracoEsquerdo;
+	}
 
-    public void setBracoEsquerdo(Double bracoEsquerdo) {
-        this.bracoEsquerdo = bracoEsquerdo;
-    }
+	public Double getBusto() {
+		return busto;
+	}
 
-    public Double getAntebracoDireito() {
-        return antebracoDireito;
-    }
+	public Double getCintura() {
+		return cintura;
+	}
 
-    public void setAntebracoDireito(Double antebracoDireito) {
-        this.antebracoDireito = antebracoDireito;
-    }
+	public Double getCoxaDireita() {
+		return coxaDireita;
+	}
 
-    public Double getAntebracoEsquerdo() {
-        return antebracoEsquerdo;
-    }
+	public Double getCoxaEsquerda() {
+		return coxaEsquerda;
+	}
 
-    public void setAntebracoEsquerdo(Double antebracoEsquerdo) {
-        this.antebracoEsquerdo = antebracoEsquerdo;
-    }
+	public String getDataMedicao() {
+		return dataMedicao;
+	}
+
+	public Double getPanturrilhaDireita() {
+		return panturrilhaDireita;
+	}
+
+	public Double getPanturrilhaEsquerda() {
+		return panturrilhaEsquerda;
+	}
+
+	public Double getPescoco() {
+		return pescoco;
+	}
+
+	public Double getPeso() {
+		return peso;
+	}
+
+	public Double getQuadril() {
+		return quadril;
+	}
+
+	public Double getToraxInferior() {
+		return toraxInferior;
+	}
+
+	public Double getToraxSuperior() {
+		return toraxSuperior;
+	}
+
+	public void setAbdomen(Double abdomen) {
+		this.abdomen = abdomen;
+	}
+
+	public void setAltura(Double altura) {
+		this.altura = altura;
+	}
+
+	public void setAntebracoDireito(Double antebracoDireito) {
+		this.antebracoDireito = antebracoDireito;
+	}
+
+	public void setAntebracoEsquerdo(Double antebracoEsquerdo) {
+		this.antebracoEsquerdo = antebracoEsquerdo;
+	}
+
+	public void setBracoDireito(Double bracoDireito) {
+		this.bracoDireito = bracoDireito;
+	}
+
+	public void setBracoEsquerdo(Double bracoEsquerdo) {
+		this.bracoEsquerdo = bracoEsquerdo;
+	}
+
+	public void setBusto(Double busto) {
+		this.busto = busto;
+	}
+
+	public void setCintura(Double cintura) {
+		this.cintura = cintura;
+	}
+
+	public void setCoxaDireita(Double coxaDireita) {
+		this.coxaDireita = coxaDireita;
+	}
+
+	public void setCoxaEsquerda(Double coxaEsquerda) {
+		this.coxaEsquerda = coxaEsquerda;
+	}
+
+	public void setDataMedicao(String dataMedicao) {
+		this.dataMedicao = dataMedicao;
+	}
+
+	public void setPanturrilhaDireita(Double panturrilhaDireita) {
+		this.panturrilhaDireita = panturrilhaDireita;
+	}
+
+	public void setPanturrilhaEsquerda(Double panturrilhaEsquerda) {
+		this.panturrilhaEsquerda = panturrilhaEsquerda;
+	}
+
+	public void setPescoco(Double pescoco) {
+		this.pescoco = pescoco;
+	}
+
+	public void setPeso(Double peso) {
+		this.peso = peso;
+	}
+
+	public void setQuadril(Double quadril) {
+		this.quadril = quadril;
+	}
+
+	public void setToraxInferior(Double toraxInferior) {
+		this.toraxInferior = toraxInferior;
+	}
+
+	public void setToraxSuperior(Double toraxSuperior) {
+		this.toraxSuperior = toraxSuperior;
+	}
 }

@@ -2,17 +2,17 @@ package br.com.valhala.academia.modelo.enums;
 
 public enum EnumTipoEndereco {
 
-    RESIDENCIAL_COMERCIAL("Residencial ou Comercial"), RESIDENCIAL("Residencial"), COMERCIAL("Comercial"),
-    ENDERECO_OFICIAL("Endereço Oficial"), NAO_ESPECIFICADO("Não especificado");
+	RESIDENCIAL_COMERCIAL("Residencial ou Comercial"), RESIDENCIAL("Residencial"), COMERCIAL("Comercial"),
+	ENDERECO_OFICIAL("Endereço Oficial"), NAO_ESPECIFICADO("Não especificado");
 
-    private String descricao;
+	private String descricao;
 
-    private EnumTipoEndereco(String descricao) {
-        this.descricao = descricao;
-    }
+	private EnumTipoEndereco(String descricao) {
+		this.descricao = descricao;
+	}
 
-    public String getDescricao() {
-        return descricao;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
 }

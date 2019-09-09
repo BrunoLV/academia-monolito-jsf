@@ -15,6 +15,11 @@ public class TipoLogradouroTemplateLoader implements TemplateLoader {
                 add("abreviatura", "R");
                 add("descricao", "Rua");
             }
+        }).addTemplate("cenario_alameda", new Rule() {
+        	{
+        		add("abreviatura", "AL");
+        		add("descricao", "Alameda");
+        	}
         });
 
     }

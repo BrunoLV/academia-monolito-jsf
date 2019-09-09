@@ -4,49 +4,49 @@ import java.io.Serializable;
 
 public class RequisicaoRelatorio implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	public static class Builder {
 
-    private String nomeRelatorio;
-    private String json;
+		private String nomeRelatorio;
+		private String json;
 
-    public String getNomeRelatorio() {
-        return nomeRelatorio;
-    }
+		public RequisicaoRelatorio build() {
+			RequisicaoRelatorio requisicao = new RequisicaoRelatorio();
+			requisicao.setNomeRelatorio(this.nomeRelatorio);
+			requisicao.setJson(this.json);
+			return requisicao;
+		}
 
-    public void setNomeRelatorio(String nomeRelatorio) {
-        this.nomeRelatorio = nomeRelatorio;
-    }
+		public Builder json(final String json) {
+			this.json = json;
+			return this;
+		}
 
-    public String getJson() {
-        return json;
-    }
+		public Builder nomeRelatorio(final String nomeRelatorio) {
+			this.nomeRelatorio = nomeRelatorio;
+			return this;
+		}
 
-    public void setJson(String json) {
-        this.json = json;
-    }
+	}
 
-    public static class Builder {
+	private static final long serialVersionUID = 1L;
+	private String nomeRelatorio;
 
-        private String nomeRelatorio;
-        private String json;
+	private String json;
 
-        public Builder nomeRelatorio(final String nomeRelatorio) {
-            this.nomeRelatorio = nomeRelatorio;
-            return this;
-        }
+	public String getJson() {
+		return json;
+	}
 
-        public Builder json(final String json) {
-            this.json = json;
-            return this;
-        }
+	public String getNomeRelatorio() {
+		return nomeRelatorio;
+	}
 
-        public RequisicaoRelatorio build() {
-            RequisicaoRelatorio requisicao = new RequisicaoRelatorio();
-            requisicao.setNomeRelatorio(this.nomeRelatorio);
-            requisicao.setJson(this.json);
-            return requisicao;
-        }
+	public void setJson(String json) {
+		this.json = json;
+	}
 
-    }
+	public void setNomeRelatorio(String nomeRelatorio) {
+		this.nomeRelatorio = nomeRelatorio;
+	}
 
 }

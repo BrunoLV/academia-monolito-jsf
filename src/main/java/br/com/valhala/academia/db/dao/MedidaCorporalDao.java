@@ -1,39 +1,40 @@
 package br.com.valhala.academia.db.dao;
 
-import br.com.valhala.academia.modelo.Aluno;
-import br.com.valhala.academia.modelo.MedidaCorporal;
+import java.util.Collection;
+import java.util.Optional;
 
 import javax.inject.Named;
 import javax.persistence.TypedQuery;
-import java.util.Collection;
-import java.util.Optional;
+
+import br.com.valhala.academia.modelo.Aluno;
+import br.com.valhala.academia.modelo.MedidaCorporal;
 
 @Named
 public class MedidaCorporalDao extends DaoBase<MedidaCorporal, Long> {
 
-    public MedidaCorporalDao() {
-        this.classePersistente = MedidaCorporal.class;
-    }
+	public MedidaCorporalDao() {
+		this.classePersistente = MedidaCorporal.class;
+	}
 
-    public Optional<MedidaCorporal> recuperaUltimaMedicao(Aluno aluno) {
+	public Collection<MedidaCorporal> obtemTodasAluno(Long idAluno) {
 
-        final String jpql = "SELECT m FROM MedidaCorporal m WHERE m.aluno.id = :id ORDER BY m.dataMedicao DESC, m.id DESC";
+		final String jpql = "SELECT m FROM MedidaCorporal m WHERE m.aluno.id = :id ORDER BY m.dataMedicao ASC, m.id ASC";
 
-        TypedQuery<MedidaCorporal> query = em.createQuery(jpql, MedidaCorporal.class);
-        query.setParameter("id", aluno.getId());
+		TypedQuery<MedidaCorporal> query = em.createQuery(jpql, MedidaCorporal.class);
+		query.setParameter("id", idAluno);
 
-        return query.getResultList().stream().findFirst();
+		return query.getResultList();
 
-    }
+	}
 
-    public Collection<MedidaCorporal> obtemTodasAluno(Long idAluno) {
+	public Optional<MedidaCorporal> recuperaUltimaMedicao(Aluno aluno) {
 
-        final String jpql = "SELECT m FROM MedidaCorporal m WHERE m.aluno.id = :id ORDER BY m.dataMedicao ASC, m.id ASC";
+		final String jpql = "SELECT m FROM MedidaCorporal m WHERE m.aluno.id = :id ORDER BY m.dataMedicao DESC, m.id DESC";
 
-        TypedQuery<MedidaCorporal> query = em.createQuery(jpql, MedidaCorporal.class);
-        query.setParameter("id", idAluno);
+		TypedQuery<MedidaCorporal> query = em.createQuery(jpql, MedidaCorporal.class);
+		query.setParameter("id", aluno.getId());
 
-        return query.getResultList();
+		return query.getResultList().stream().findFirst();
 
-    }
+	}
 }

@@ -11,28 +11,28 @@ import javax.persistence.EntityTransaction;
 @Interceptor
 public class InterceptadorTransacao {
 
-    @Inject
-    private EntityManager em;
+	@Inject
+	private EntityManager em;
 
-    @AroundInvoke
-    public Object executaDentroDaTransacao(InvocationContext ctx) throws Exception {
+	@AroundInvoke
+	public Object executaDentroDaTransacao(InvocationContext ctx) throws Exception {
 
-        EntityTransaction transacao = em.getTransaction();
-        try {
-            if (!transacao.isActive()) {
-                transacao.begin();
-            }
-            Object resultado = ctx.proceed();
-            if (transacao.isActive()) {
-                transacao.commit();
-            }
-            return resultado;
-        } catch (Exception e) {
-            if (transacao.isActive()) {
-                transacao.rollback();
-            }
-            throw e;
-        }
-    }
+		EntityTransaction transacao = em.getTransaction();
+		try {
+			if (!transacao.isActive()) {
+				transacao.begin();
+			}
+			Object resultado = ctx.proceed();
+			if (transacao.isActive()) {
+				transacao.commit();
+			}
+			return resultado;
+		} catch (Exception e) {
+			if (transacao.isActive()) {
+				transacao.rollback();
+			}
+			throw e;
+		}
+	}
 
 }
