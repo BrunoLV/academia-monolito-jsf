@@ -324,7 +324,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: data_medicao
-                  type: date
+                  type: datetime
                   constraints:
                     nullable: false
               - column:
