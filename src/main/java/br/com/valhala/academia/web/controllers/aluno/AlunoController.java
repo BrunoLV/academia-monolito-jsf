@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -40,6 +41,18 @@ import br.com.valhala.academia.web.controllers.BaseController;
 public class AlunoController extends BaseController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private Long id;
+
+	private Aluno aluno;
+
+	private Endereco endereco;
+
+	private Telefone telefone;
+
+	private EnumUnidadeFederacao ufSelecionado;
+	
+	private Estado estado;
 
 	private Collection<Estado> estados;
 
@@ -79,27 +92,16 @@ public class AlunoController extends BaseController implements Serializable {
 	@ValidaAluno
 	private Validador validadorAluno;
 
-	private Long id;
-
-	private Aluno aluno;
-
-	private Endereco endereco;
-
-	private Telefone telefone;
-
-	private EnumUnidadeFederacao ufSelecionado;
-	private Estado estado;
-
 	public AlunoController() {
 		super();
 	}
 
 	public void adicionaEndereco() {
 
-		Set<String> constraints = validadorEndereco.validar(endereco);
+		Set<String> validacoes = validadorEndereco.validar(endereco);
 
-		if (CollectionUtils.isNotEmpty(constraints)) {
-			adicionaMensagensAlerta(constraints);
+		if (CollectionUtils.isNotEmpty(validacoes)) {
+			adicionaMensagensNoContexto(FacesMessage.SEVERITY_WARN, validacoes);
 			executaScript("aluno.controller.resetaMascarasDadosEndereco()");
 			return;
 		}
@@ -117,7 +119,7 @@ public class AlunoController extends BaseController implements Serializable {
 		Set<String> validacoes = validadorTelefone.validar(telefone);
 
 		if (CollectionUtils.isNotEmpty(validacoes)) {
-			adicionaMensagensAlerta(validacoes);
+			adicionaMensagensNoContexto(FacesMessage.SEVERITY_WARN, validacoes);
 			executaScript("aluno.controller.resetaMascarasDadosEndereco()");
 			return;
 		}
@@ -240,10 +242,10 @@ public class AlunoController extends BaseController implements Serializable {
 
 	public String salva() {
 
-		Set<String> mensagens = validadorAluno.validar(aluno);
+		Set<String> validacoes = validadorAluno.validar(aluno);
 
-		if (CollectionUtils.isNotEmpty(mensagens)) {
-			adicionaMensagensAlerta(mensagens);
+		if (CollectionUtils.isNotEmpty(validacoes)) {
+			adicionaMensagensNoContexto(FacesMessage.SEVERITY_WARN, validacoes);
 			return null;
 		}
 
@@ -257,9 +259,9 @@ public class AlunoController extends BaseController implements Serializable {
 		}
 
 		servicoAluno.salva(aluno);
-
-		adicionaMensagensInformativas(Arrays.asList("Aluno salvo com sucesso!"));
-
+		
+		adicionaMensagensNoContexto(FacesMessage.SEVERITY_INFO, Arrays.asList("Aluno salvo com sucesso!"));
+		
 		return "alunos?faces-redirect=true";
 	}
 

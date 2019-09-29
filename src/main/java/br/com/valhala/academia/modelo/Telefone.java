@@ -128,7 +128,9 @@ public class Telefone implements Serializable {
 	}
 
 	public String telefoneFormatado() {
-		return String.format("(%s) %s", ddd, numero);
+		final String primeiraParte = numero.length() == 8 ? numero.substring(0, 4) : numero.substring(0, 5);
+		final String segundaParte = numero.length() == 8 ? numero.substring(4) : numero.substring(5);
+		return String.format("(%s) %s-%s", ddd, primeiraParte, segundaParte);
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,15 +34,15 @@ public class ListaAlunoController extends BaseController implements Serializable
 
 	private MedidaCorporal ultimaMedida;
 
+	private Collection<Aluno> alunos;
+	
+	private StreamedContent arquivo;
+
 	@Inject
 	private ServicoAluno servico;
 
 	@Inject
 	private ServicoMedidaCorporal servicoMedidaCorporal;
-
-	private Collection<Aluno> alunos;
-
-	private StreamedContent arquivo;
 
 	public String defineEstiloSituacao(EnumSituacaoAluno situacao) {
 		String estilo = "label label-success";
@@ -69,13 +70,13 @@ public class ListaAlunoController extends BaseController implements Serializable
 	public void exclui(Aluno aluno) {
 		servico.exclui(aluno);
 		alunos.remove(aluno);
-		adicionaMensagensInformativas(Arrays.asList("Excluído com sucesso!"));
+		adicionaMensagensNoContexto(FacesMessage.SEVERITY_INFO, Arrays.asList("Excluído com sucesso!"));
 	}
 
 	public void excluiAluno() {
 		servico.exclui(alunoSelecionado);
 		alunos.remove(alunoSelecionado);
-		adicionaMensagensInformativas(Arrays.asList("Excluído com sucesso!"));
+		adicionaMensagensNoContexto(FacesMessage.SEVERITY_INFO, Arrays.asList("Excluído com sucesso!"));
 		executaScript("$('#modal-default').modal('hide')");
 	}
 
@@ -110,11 +111,9 @@ public class ListaAlunoController extends BaseController implements Serializable
 
 	public void onToggleRow(ToggleEvent event) {
 		Aluno aluno = (Aluno) event.getData();
-		if (event.getVisibility() == Visibility.VISIBLE) {
-			ultimaMedida = servicoMedidaCorporal.recuperaUltimaMedicao(aluno).orElse(new MedidaCorporal());
-		} else {
-			ultimaMedida = new MedidaCorporal();
-		}
+		ultimaMedida = event.getVisibility() == Visibility.VISIBLE
+				? servicoMedidaCorporal.recuperaUltimaMedicao(aluno).orElse(new MedidaCorporal())
+				: new MedidaCorporal();
 	}
 
 	public void preparaExclusao(Aluno aluno) {

@@ -4,38 +4,50 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns="http://www.w3.org/1999/xhtml">
 
 <ui:composition>
 
     <h:panelGroup id="dadosTelefone">
 
         <div class="row">
+        
             <div class="col-md-3">
                 <div class="form-group">
-                    <label>Tipo de Telefone </label>
+                    <label>Tipo de Telefone</label>
                     <h:selectOneMenu styleClass="form-control"
                                      value="#{alunoController.telefone.tipo}">
-                        <f:selectItem itemValue="#{null}" itemLabel=""/>
+                        <f:selectItem itemValue="#{null}" 
+                        			  itemLabel=""/>
                         <f:selectItems value="#{alunoController.tiposTelefones}"
-                                       var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.nome}"/>
+                                       var="tipo" 
+                                       itemValue="#{tipo}" 
+                                       itemLabel="#{tipo.nome}"/>
                     </h:selectOneMenu>
                 </div>
             </div>
+        
             <div class="col-md-1">
                 <div class="form-group">
-                    <label>DDD </label> <input type="text" class="form-control ddd"
-                                               jsf:value="#{alunoController.telefone.ddd}"/>
+                    <label>DDD</label> 
+                    <input type="text"
+                    	   maxlength="2" 
+                    	   class="form-control"
+                           jsf:value="#{alunoController.telefone.ddd}"/>
                 </div>
             </div>
+            
             <div class="col-md-3">
                 <div class="form-group">
-                    <label>Número</label> <input type="text"
-                                                 class="form-control telefone"
-                                                 jsf:styleClass="form-control telefone"
-                                                 jsf:value="#{alunoController.telefone.numero}"/>
+                    <label>Número</label>
+                    <input type="text"
+                    	   maxlength="9"
+                    	   class="form-control"
+                           jsf:value="#{alunoController.telefone.numero}"/>
                 </div>
             </div>
+            
         </div>
 
 
@@ -44,7 +56,9 @@
                 <button jsf:actionListener="#{alunoController.adicionaTelefone()}"
                         class="btn btn-primary">
                     <i class="fa fa-plus"/> Adicionar
-                    <f:ajax execute="dadosTelefone" render="dadosTelefone telefones messages"/>
+                    <f:ajax event="click"
+                    		execute="dadosTelefone" 
+                    		render="dadosTelefone telefones messages" />
                 </button>
             </div>
         </div>
@@ -56,42 +70,58 @@
     <h:panelGroup id="telefones">
 
         <p:dataTable styleClass="table table-bordered"
-                     value="#{alunoController.aluno.telefones}" var="telefone"
+                     value="#{alunoController.aluno.telefones}" 
+                     var="telefone"
                      rendered="#{not empty alunoController.aluno.telefones}">
-            <p:column style="text-align:center; width: 5%;">
+            
+            <p:column style="text-align:center; 
+            		  width: 10%;">
                 <h:commandLink id="btnEditar"
                                actionListener="#{alunoController.editaTelefone(telefone)}"
                                class="btn btn-primary">
-					<span> <i class="fa fa-pencil"/>
+					<span> 
+						<i class="fa fa-pencil"/>
 					</span>
-                    <f:ajax execute="@this" render="form:dadosTelefone form:telefones"/>
+                    <f:ajax execute="@this" 
+                    		render="form:dadosTelefone form:telefones"/>
                 </h:commandLink>
-                <p:tooltip id="toolTipEditar" for="btnEditar" value="Editar"
+                <p:tooltip id="toolTipEditar" 
+                		   for="btnEditar" 
+                		   value="Editar"
                            position="top"/>
             </p:column>
-            <p:column style="text-align:center; width: 5%;">
+            
+            <p:column style="text-align:center; 
+            		  width: 10%;">
                 <h:commandLink id="btnRemover"
                                actionListener="#{alunoController.removeTelefone(telefone)}"
                                class="btn btn-danger">
-					<span> <i class="fa fa-trash"/>
+					<span> 
+						<i class="fa fa-trash"/>
 					</span>
-                    <f:ajax execute="@this" render="form:telefones"/>
+                    <f:ajax execute="@this" 
+                    		render="form:telefones"/>
                 </h:commandLink>
-                <p:tooltip id="toolTipRemover" for="btnRemover" value="Remover"
+                <p:tooltip id="toolTipRemover" 
+                		   for="btnRemover" 
+                		   value="Remover"
                            position="top"/>
             </p:column>
+            
             <p:column>
                 <f:facet name="header">
                     <h:outputText value="Tipo de Telefone"/>
                 </f:facet>
                 <h:outputText value="#{telefone.tipo.nome}"/>
             </p:column>
+            
             <p:column>
                 <f:facet name="header">
                     <h:outputText value="Número"/>
                 </f:facet>
                 <h:outputText value="#{telefone.telefoneFormatado()}"/>
             </p:column>
+            
         </p:dataTable>
 
     </h:panelGroup>

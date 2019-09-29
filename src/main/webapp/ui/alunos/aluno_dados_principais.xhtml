@@ -10,36 +10,46 @@
 
     <h:panelGroup rendered="#{alunoController.aluno.id ne null}">
         <div class="row">
+            
             <div class="col-md-2">
                 <div class="form-group">
                     <label>Id</label>
-                    <h:inputText disabled="true" styleClass="form-control"
+                    <h:inputText disabled="true" 
+                    			 styleClass="form-control"
                                  value="#{alunoController.aluno.id}"/>
                 </div>
             </div>
+            
             <div class="col-md-2">
-                <h2>
-                    <h:outputText
-                            styleClass="#{listaAlunoController.defineEstiloSituacao(alunoController.aluno.situacao)}"
-                            value="#{alunoController.aluno.situacao.descricao}"/>
-                </h2>
+                <h3>
+                    <h:outputText styleClass="#{listaAlunoController.defineEstiloSituacao(alunoController.aluno.situacao)}"
+                            	  value="#{alunoController.aluno.situacao.descricao}"/>
+                </h3>
             </div>
+            
         </div>
     </h:panelGroup>
 
     <div class="row">
+        
         <div class="col-md-4">
             <div class="form-group">
-                <label>Nome</label> <input type="text" class="form-control"
-                                           jsf:value="#{alunoController.aluno.nome}"/>
+                <label>Nome</label> 
+                <input type="text" 
+                	   class="form-control"
+                       jsf:value="#{alunoController.aluno.nome}"/>
             </div>
         </div>
+        
         <div class="col-md-3">
             <div class="form-group">
-                <label>CPF</label> <input type="text" class="form-control documento"
-                                          jsf:value="#{alunoController.aluno.cpf}"/>
+                <label>CPF</label> 
+                <input type="text" 
+                	   class="form-control documento"
+                       jsf:value="#{alunoController.aluno.cpf}"/>
             </div>
         </div>
+        
         <div class="col-md-3">
             <div class="form-group">
                 <label>Data de Nascimento</label>
@@ -47,31 +57,36 @@
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text"
+                    <input type="text" 
                            jsf:value="#{alunoController.aluno.dataNascimento}"
                            class="form-control pull-right calendario">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
                     </input>
                 </div>
             </div>
         </div>
+        
         <div class="col-md-2">
             <div class="form-group">
                 <label>Sexo</label>
                 <h:selectOneMenu class="form-control"
                                  value="#{alunoController.aluno.sexo}">
                     <f:selectItems value="#{alunoController.listaSexo()}" var="sexo"
-                                   itemValue="#{sexo}" itemLabel="#{sexo.descricao}"/>
+                                   itemValue="#{sexo}" 
+                                   itemLabel="#{sexo.descricao}" />
                 </h:selectOneMenu>
             </div>
         </div>
+        
     </div>
 
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <label>E-Mail</label> <input type="email" class="form-control"
-                                             jsf:value="#{alunoController.aluno.email}"/>
+                <label>E-Mail</label> 
+                <input type="email" 
+                	   class="form-control"
+                       jsf:value="#{alunoController.aluno.email}"/>
             </div>
         </div>
     </div>
@@ -80,7 +95,8 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label>Foto</label>
-                <h:inputFile value="#{alunoController.foto}" styleClass="form-control">
+                <h:inputFile value="#{alunoController.foto}" 
+                			 styleClass="form-control">
                     <f:validator validatorId="fileInputImageValidator"/>
                 </h:inputFile>
             </div>

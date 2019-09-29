@@ -62,7 +62,7 @@ public class ServicoAluno implements Serializable {
 		Aluno alunoBanco = dao.buscaPorId(aluno.getId());
 		if (alunoBanco == null)
 			return;
-		dao.exclui(alunoBanco);
+		dao.deleta(alunoBanco);
 	}
 
 	@Transacional

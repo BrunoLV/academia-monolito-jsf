@@ -11,15 +11,11 @@ public class ValidadorMunicipioNaoPertencentEstado
 
 	@Override
 	public boolean isValid(Municipio municipio, ConstraintValidatorContext context) {
-
 		if (municipio == null || municipio.getEstado() == null) {
 			return true;
 		}
-
 		boolean valido = municipio.getUf() == municipio.getEstado().getUf();
-
 		return valido;
-
 	}
 
 }

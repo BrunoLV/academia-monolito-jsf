@@ -1,5 +1,7 @@
 package br.com.valhala.academia.db.dao;
 
+import java.util.List;
+
 import javax.inject.Named;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -7,7 +9,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import br.com.valhala.academia.modelo.Aluno;
+import br.com.valhala.academia.modelo.MedidaCorporal;
 
 @Named
 public class AlunoDao extends DaoBase<Aluno, Long> {
@@ -31,6 +36,20 @@ public class AlunoDao extends DaoBase<Aluno, Long> {
 
 		return aluno;
 
+	}
+	
+	public void deleta(Aluno aluno) {
+		
+		String sqlMedidas = "SELECT mc FROM MedidaCorporal mc WHERE mc.aluno = :aluno";
+		
+		List<MedidaCorporal> medidas = em.createQuery(sqlMedidas, MedidaCorporal.class).setParameter("aluno", aluno).getResultList();
+		
+		if (CollectionUtils.isNotEmpty(medidas)) {
+			medidas.stream().forEach(mc -> em.remove(mc));
+		}
+		
+		em.remove(aluno);
+		
 	}
 
 }

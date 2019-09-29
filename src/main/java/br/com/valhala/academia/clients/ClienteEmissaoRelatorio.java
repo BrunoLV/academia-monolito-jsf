@@ -29,9 +29,8 @@ public class ClienteEmissaoRelatorio implements Serializable {
 	private String urlEmissaoRelatorio;
 
 	public ClienteEmissaoRelatorio() {
-		InputStream stream = getClass().getClassLoader().getResourceAsStream("client.properties");
 		Properties props = new Properties();
-		try {
+		try (InputStream stream = getClass().getClassLoader().getResourceAsStream("client.properties")) {
 			props.load(stream);
 			urlEmissaoRelatorio = props.getProperty("emissor.relatorio.url");
 		} catch (IOException e) {
@@ -40,13 +39,15 @@ public class ClienteEmissaoRelatorio implements Serializable {
 	}
 
 	public Relatorio emitiRelatorio(RequisicaoRelatorio requisicao) {
+
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target(urlEmissaoRelatorio).path("/");
+		Entity<RequisicaoRelatorio> entity = Entity.entity(requisicao, MediaType.APPLICATION_JSON);
 
-		Response response = target.request(MediaType.APPLICATION_JSON)
-				.post(Entity.entity(requisicao, MediaType.APPLICATION_JSON));
+		try (Response response = target.request(MediaType.APPLICATION_JSON).post(entity)) {
+			return response.readEntity(Relatorio.class);
+		}
 
-		return response.readEntity(Relatorio.class);
 	}
 
 }

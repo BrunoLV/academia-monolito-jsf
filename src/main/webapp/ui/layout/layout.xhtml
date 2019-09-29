@@ -53,7 +53,7 @@
 
     <h:body class="hold-transition skin-black-light sidebar-mini">
 
-        <h:outputScript name="jsf.js" library="javax.faces" target="body"/>
+        <h:outputScript name="jsf.js" library="javax.faces" target="head"/>
 
         <div class="wrapper">
 
@@ -140,7 +140,9 @@
         <!-- REQUIRED JS SCRIPTS -->
 
         <!-- jQuery 3 -->
-        <h:outputScript library="webjars" name="jquery/3.3.1/jquery.min.js"/>
+        <h:outputScript library="webjars" 
+        				name="jquery/3.3.1/jquery.min.js"/>
+        
         <h:outputScript library="webjars"
                         name="jquery-ui/1.12.1/jquery-ui.min.js"/>
 
@@ -154,17 +156,26 @@
         <h:outputScript library="webjars"
                         name="bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.pt-BR.min.js"/>
 
-        <h:outputScript library="inputmask" name="jquery.inputmask.js"/>
-
-        <h:outputScript library="inputmask"
-                        name="jquery.inputmask.date.extensions.js"/>
+        <h:outputScript library="inputmask" 
+        				name="jquery.inputmask.js"/>
 
         <h:outputScript library="inputmask"
                         name="jquery.inputmask.extensions.js"/>
 
+        <h:outputScript library="inputmask"
+                        name="jquery.inputmask.regex.extensions.js"/>
+
+        <h:outputScript library="inputmask"
+                        name="jquery.inputmask.date.extensions.js"/>
+                        
+        <h:outputScript library="inputmask"
+                        name="jquery.inputmask.numeric.extensions.js"/>
+
         <!-- AdminLTE App -->
-        <h:outputScript library="adminLte" name="js/adminlte.min.js"/>
-        <h:outputScript library="academia" name="js/mascaras.js"/>
+        <h:outputScript library="adminLte" 
+        				name="js/adminlte.min.js"/>
+        <h:outputScript library="academia" 
+        				name="js/mascaras.js"/>
 
         <ui:insert name="scripts"></ui:insert>
 

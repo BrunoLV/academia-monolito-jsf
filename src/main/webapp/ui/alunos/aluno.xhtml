@@ -4,14 +4,17 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns="http://www.w3.org/1999/xhtml">
 
 <ui:composition template="/ui/layout/layout.xhtml">
 
     <ui:define name="content">
 
         <f:metadata>
-            <f:viewParam name="id" value="#{alunoController.id}" required="false"/>
+            <f:viewParam name="id" 
+            			 value="#{alunoController.id}" 
+            			 required="false"/>
             <f:viewAction action="#{alunoController.carregaAluno()}"/>
         </f:metadata>
 
@@ -27,10 +30,15 @@
 
                 <div class="box-header with-border">
 
-                    <form role="form" jsf:id="form" jsf:enctype="multipart/form-data">
+                    <form role="form" 
+                    	  jsf:id="form" 
+                    	  jsf:enctype="multipart/form-data">
                         <f:validateBean disabled="true">
 
-                            <p:messages showDetail="false" showSummary="true" id="messages" showIcon="true"/>
+                            <p:messages showDetail="false" 
+                            			showSummary="true" 
+                            			id="messages" 
+                            			showIcon="true"/>
 
                             <h:inputHidden value="#{alunoController.aluno.id}"/>
 
@@ -38,26 +46,35 @@
 
                                 <div class="nav-tabs-custom">
                                     <ul class="nav nav-tabs">
-                                        <li class="active"><a href="#tab_dados_principais"
-                                                              data-toggle="tab"> Dados Principais </a></li>
+                                        <li class="active">
+                                        	<a href="#tab_dados_principais"
+                                               data-toggle="tab">Dados Principais</a>
+                                        </li>
 
-                                        <li><a href="#tab_dados_endereco" data-toggle="tab">
-                                            Endereços </a></li>
+                                        <li>
+                                        	<a href="#tab_dados_endereco" 
+                                        	   data-toggle="tab">Endereços</a>
+                                      	</li>
 
-                                        <li><a href="#tab_dados_telefone" data-toggle="tab">
-                                            Telefones </a></li>
+                                        <li>
+                                        	<a href="#tab_dados_telefone" 
+                                        	   data-toggle="tab">Telefones</a>
+                                       	</li>
                                     </ul>
 
                                     <div class="tab-content">
-                                        <div class="tab-pane active" id="tab_dados_principais">
+                                        <div class="tab-pane active" 
+                                        	 id="tab_dados_principais">
                                             <ui:include src="/ui/alunos/aluno_dados_principais.xhtml"/>
                                         </div>
 
-                                        <div class="tab-pane" id="tab_dados_endereco">
+                                        <div class="tab-pane" 
+                                        	 id="tab_dados_endereco">
                                             <ui:include src="/ui/alunos/aluno_dados_endereco.xhtml"/>
                                         </div>
 
-                                        <div class="tab-pane" id="tab_dados_telefone">
+                                        <div class="tab-pane" 
+                                        	 id="tab_dados_telefone">
                                             <ui:include src="/ui/alunos/aluno_dados_telefone.xhtml"/>
                                         </div>
                                     </div>
@@ -69,14 +86,14 @@
                                         <div class="col-md-1">
                                             <button class="btn btn-primary"
                                                     jsf:action="#{alunoController.salva()}">
-                                                <i class="fa fa-save"/> Salvar
+                                                <i class="fa fa-save"/>Salvar
                                             </button>
                                         </div>
 
                                         <div class="col-md-1">
                                             <button class="btn btn-danger"
                                                     jsf:action="alunos?faces-redirect=true">
-                                                <i class="fa fa-step-backward"/> Retornar
+                                                <i class="fa fa-step-backward"/>Retornar
                                             </button>
                                         </div>
                                     </div>
@@ -95,7 +112,8 @@
     </ui:define>
 
     <ui:define name="scripts">
-        <h:outputScript library="academia" name="js/aluno.js"/>
+        <h:outputScript library="academia" 
+        				name="js/aluno.js"/>
     </ui:define>
 
 </ui:composition>
