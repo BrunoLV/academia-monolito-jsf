@@ -4,8 +4,8 @@ import java.util.Collection;
 
 import javax.faces.application.FacesMessage;
 
-import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Messages;
+import org.primefaces.PrimeFaces;
 
 public abstract class BaseController {
 
@@ -14,7 +14,7 @@ public abstract class BaseController {
 	}
 
 	public void executaScript(String funcao) {
-		Ajax.oncomplete(funcao);
+		PrimeFaces.current().executeScript(funcao);
 	}
 
 }
