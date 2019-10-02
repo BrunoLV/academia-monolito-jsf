@@ -51,12 +51,13 @@
                                         <div class="form-group">
                                             <label>Altura (m)</label>
                                             <input type="text"
-                                                   class="form-control decimal_1_2"
-                                                   jsf:styleClass="form-control decimal_1_2"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
                                                    jsf:value="#{medidaCorporalController.medidaCorporal.altura}">
                                             	<f:convertNumber minFractionDigits="2" 
                                             					 maxFractionDigits="2" 
-                                            					 minIntegerDigits="1" />
+                                            					 minIntegerDigits="1"
+                                            					 maxIntegerDigits="1" />
                                             </input>
                                         </div>
                                     </div>
@@ -65,126 +66,74 @@
                                         <div class="form-group">
                                             <label>Peso (kg)</label>
                                             <input type="text"
-                                                   class="form-control decimal_3_2"
-                                                   jsf:styleClass="form-control decimal_3_2"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
                                                    jsf:value="#{medidaCorporalController.medidaCorporal.peso}">
                                                <f:convertNumber minFractionDigits="2"
                                                					maxFractionDigits="2"
-                                               					maxIntegerDigits="5" />
+                                               					maxIntegerDigits="3"
+                                               					minIntegerDigits="1" />
+                                           </input>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Pescoço (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.pescoco}">
+                                             	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="2"
+                                               					 minIntegerDigits="1" />
                                             </input>
                                         </div>
                                     </div>
 
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>Pescoço</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" 
-                                                   min="0"
-                                                   max="99"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.pescoco}"/>
+                                            <label>Tórax Sup. (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.toraxSuperior}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />                                                   
+                                            </input>
                                         </div>
                                     </div>
 
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>Tórax Superior</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.toraxSuperior}"/>
+                                            <label>Tórax Inf. (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.toraxInferior}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
                                         </div>
                                     </div>
 
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>Tórax Inferior</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.toraxInferior}"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Busto</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.busto}"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Cintura</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.cintura}"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Abdômen</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.abdomen}"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Quadril</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.quadril}"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Coxa Direita</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.coxaDireita}"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Coxa Esquerda</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.coxaEsquerda}"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Panturrilha Direira</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.panturrilhaDireita}"/>
+                                            <label>Busto (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.busto}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
                                         </div>
                                     </div>
                                 </div>
@@ -192,57 +141,168 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>Panturrilha Esquerda</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.panturrilhaEsquerda}"/>
+                                            <label>Cintura (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.cintura}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
                                         </div>
                                     </div>
 
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>Braço Direito</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.bracoDireito}"/>
+                                            <label>Abdômen (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.abdomen}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
                                         </div>
                                     </div>
 
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>Braço Esquerdo</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.bracoEsquerdo}"/>
+                                            <label>Quadril (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.quadril}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
                                         </div>
                                     </div>
 
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>Antebraço Direito</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.antebracoDireito}"/>
+                                            <label>Coxa Dir. (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.coxaDireita}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
                                         </div>
                                     </div>
 
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>Antebraco Esquerdo</label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   step="0.01" min="0"
-                                                   maxlength="6"
-                                                   max="999"
-                                                   jsf:value="#{medidaCorporalController.medidaCorporal.antebracoEsquerdo}"/>
+                                            <label>Coxa Esq. (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.coxaEsquerda}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               				 	 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Panturrilha Dir. (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.panturrilhaDireita}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               				 	 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Panturrilha Esq. (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.panturrilhaEsquerda}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Braço Dir. (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.bracoDireito}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Braço Esq. (cm)</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.bracoEsquerdo}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Antebraço Dir.</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.antebracoDireito}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Antebraco Esq.</label>
+                                            <input type="text"
+                                                   class="form-control decimal"
+                                                   jsf:styleClass="form-control decimal"
+                                                   jsf:value="#{medidaCorporalController.medidaCorporal.antebracoEsquerdo}">
+                                            	<f:convertNumber minFractionDigits="2"
+                                               					 maxFractionDigits="2"
+                                               					 maxIntegerDigits="3"
+                                               					 minIntegerDigits="1" />
+                                            </input>
                                         </div>
                                     </div>
 

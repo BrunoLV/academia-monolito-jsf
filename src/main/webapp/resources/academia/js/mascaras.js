@@ -18,13 +18,7 @@ $(document).ready(function() {
 		format: 'dd/mm/yyyy'
 	});
 	
-	$('.decimal_1_2').inputmask({
-		mask: '9,99',
-		placeholder: '0',
-		numericInput: true
-	});
-	
-	$('.decimal_3_2').inputmask({
+	$('.decimal').inputmask({
 		alias: 'decimal',
 		enforceDigitsOnBlur: true,
 		positionCaretOnClick: 'none',

@@ -31,8 +31,8 @@ public class ListaAlunoController extends BaseController implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	private Aluno alunoSelecionado;
-
-	private MedidaCorporal ultimaMedida;
+	
+	private MedidaCorporal medidaSelecionada;
 
 	private Collection<Aluno> alunos;
 	
@@ -79,6 +79,19 @@ public class ListaAlunoController extends BaseController implements Serializable
 		adicionaMensagensNoContexto(FacesMessage.SEVERITY_INFO, Arrays.asList("Excluído com sucesso!"));
 		executaScript("$('#modal-default').modal('hide')");
 	}
+	
+	public void excluiMedida(Aluno aluno) {
+		alunoSelecionado = aluno;
+		medidaSelecionada = aluno.getUltimaMedicao();
+		executaScript("$('#modal-medicao').modal('show')");
+	}
+	
+	public void excluiMedida() {
+		servicoMedidaCorporal.exclui(medidaSelecionada);
+		alunoSelecionado.setUltimaMedicao(servicoMedidaCorporal.recuperaUltimaMedicao(alunoSelecionado).orElse(new MedidaCorporal()));
+		adicionaMensagensNoContexto(FacesMessage.SEVERITY_INFO, Arrays.asList("Excluído com sucesso!"));
+		executaScript("$('#modal-medicao').modal('hide')");
+	}
 
 	public Collection<Aluno> getAlunos() {
 		return alunos;
@@ -90,10 +103,6 @@ public class ListaAlunoController extends BaseController implements Serializable
 
 	public StreamedContent getArquivo() {
 		return arquivo;
-	}
-
-	public MedidaCorporal getUltimaMedida() {
-		return ultimaMedida;
 	}
 
 	public void imprimeDetalhesAlunos(Long id) {
@@ -111,9 +120,9 @@ public class ListaAlunoController extends BaseController implements Serializable
 
 	public void onToggleRow(ToggleEvent event) {
 		Aluno aluno = (Aluno) event.getData();
-		ultimaMedida = event.getVisibility() == Visibility.VISIBLE
+		aluno.setUltimaMedicao(event.getVisibility() == Visibility.VISIBLE
 				? servicoMedidaCorporal.recuperaUltimaMedicao(aluno).orElse(new MedidaCorporal())
-				: new MedidaCorporal();
+				: new MedidaCorporal());
 	}
 
 	public void preparaExclusao(Aluno aluno) {
@@ -129,7 +138,4 @@ public class ListaAlunoController extends BaseController implements Serializable
 		this.alunoSelecionado = alunoSelecionado;
 	}
 
-	public void setUltimaMedida(MedidaCorporal ultimaMedida) {
-		this.ultimaMedida = ultimaMedida;
-	}
 }

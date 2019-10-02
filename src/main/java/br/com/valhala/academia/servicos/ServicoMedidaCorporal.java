@@ -36,4 +36,13 @@ public class ServicoMedidaCorporal implements Serializable {
 			dao.atualiza(medidaCorporal);
 		}
 	}
+
+	@Transacional
+	public void exclui(MedidaCorporal medida) {
+		MedidaCorporal medidaCorporal = dao.buscaPorId(medida.getId());
+		if (medidaCorporal == null) {
+			return;
+		}
+		dao.exclui(medidaCorporal);
+	}
 }

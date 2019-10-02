@@ -4,7 +4,8 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns="http://www.w3.org/1999/xhtml">
 
 <h:body>
 
@@ -41,7 +42,12 @@
                             <p:remoteCommand name="excluiAluno"
                                              actionListener="#{listaAlunoController.excluiAluno()}"
                                              process="@this" 
-                                             update="dtAlunos messages"/>
+                                             update="dtAlunos messages" />
+                                             
+                            <p:remoteCommand name="excluiUltimaMedicao"
+                            				 actionListener="#{listaAlunoController.excluiMedida()}"
+                            				 process="@this"
+                            				 update="dtAlunos messages" />
 
                             <div class="box-body">
 
@@ -146,7 +152,7 @@
 
                                         <p:outputPanel styleClass="medidas">
 
-                                            <p:outputPanel rendered="#{listaAlunoController.ultimaMedida eq null or listaAlunoController.ultimaMedida.id eq null}">
+                                            <p:outputPanel rendered="#{aluno.ultimaMedicao eq null or aluno.ultimaMedicao.id eq null}">
                                                 <div class="box">
                                                     <div class="box-header">
                                                         <h3 class="box-title">Ultima medição corporal</h3>
@@ -161,11 +167,14 @@
                                                 </div>
                                             </p:outputPanel>
 
-                                            <p:outputPanel rendered="#{listaAlunoController.ultimaMedida ne null and listaAlunoController.ultimaMedida.id ne null}">
+                                            <p:outputPanel rendered="#{aluno.ultimaMedicao ne null and aluno.ultimaMedicao.id ne null}">
 
                                                 <div class="box">
                                                     <div class="box-header">
-                                                        <h3 class="box-title">Ultima medição corporal</h3>
+                                                        <h3 class="box-title">Ultima medição corporal - Data: 
+                                                        	<h:outputText value="#{aluno.ultimaMedicao.dataMedicao}">
+                                                        		<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                                                        	</h:outputText></h3>
                                                     </div>
 
                                                     <div class="box-body" style="font-size: 12px;!important">
@@ -179,7 +188,7 @@
                                                                     <f:param name="idAluno" 
                                                                     		 value="#{aluno.id}"/>
                                                                     <f:param name="idMedida"
-                                                                             value="#{listaAlunoController.ultimaMedida.id}"/>
+                                                                             value="#{aluno.ultimaMedicao.id}"/>
                                                                 </a>
                                                             </div>
 
@@ -193,9 +202,11 @@
                                                             </div>
 
                                                             <div class="col-md-2">
-                                                                <a jsf:outcome="/ui/medida-corporal/medida-corporal"
+                                                                <a jsf:actionListener="#{listaAlunoController.excluiMedida(aluno)}"
                                                                    class="text-danger">
                                                                     <i class="fa fa-trash"></i> Excluir essa medida
+                                                                    <f:ajax execute="@this" 
+                                            								render="frmDlgExclusaoMedida"/>
                                                                 </a>
                                                             </div>
 
@@ -211,80 +222,121 @@
                                                         <br/>
 
                                                         <div class="row">
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-3">
                                                                 <b>Altura: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.altura}"/>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.altura}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> m
                                                             </div>
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-3">
                                                                 <b>Peso: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.peso}"/>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.peso}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> kg
                                                             </div>
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-3">
                                                                 <b>Pescoço: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.pescoco}"/>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.pescoco}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
                                                             </div>
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-3">
                                                                 <b>Tórax Superior: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.toraxSuperior}"/>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.toraxSuperior}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
                                                             </div>
-                                                            <div class="col-md-2">
+                                                        </div>
+
+                                                        <div class="row">
+                                                        	<div class="col-md-3">
                                                                 <b>Tórax Inferior: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.toraxInferior}"/>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.toraxInferior}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
                                                             </div>
-                                                            <div class="col-md-2">
+                                                        	<div class="col-md-3">
                                                                 <b>Busto: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.busto}"/>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.busto}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
                                                             </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-3">
                                                                 <b>Cintura: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.cintura} cm"/>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.cintura}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
                                                             </div>
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-3">
                                                                 <b>Abdômen: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.abdomen}"/>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <b>Quadril: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.quadril}"/>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <b>Coxa Direita: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.coxaDireita}"/>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <b>Coxa Esquerda: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.coxaEsquerda}"/>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <b>Panturrilha Direita: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.panturrilhaDireita}"/>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.abdomen}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
                                                             </div>
                                                         </div>
 
                                                         <div class="row">
-                                                            <div class="col-md-2">
+                                                        	<div class="col-md-3">
+                                                                <b>Quadril: </b>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.quadril}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
+                                                            </div>
+                                                        	<div class="col-md-3">
+                                                                <b>Coxa Direita: </b>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.coxaDireita}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
+                                                            </div>
+                                                        	<div class="col-md-3">
+                                                                <b>Coxa Esquerda: </b>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.coxaEsquerda}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <b>Panturrilha Direita: </b>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.panturrilhaDireita}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        
+                                                        <div class="row">
+                                                            <div class="col-md-3">
                                                                 <b>Panturrilha Esquerda: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.panturrilhaEsquerda}"/>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.panturrilhaEsquerda}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
                                                             </div>
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-3">
                                                                 <b>Braço Direito: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.bracoDireito}"/>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.bracoDireito}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
                                                             </div>
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-3">
                                                                 <b>Braço Esquerdo: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.bracoEsquerdo}"/>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.bracoEsquerdo}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
                                                             </div>
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-3">
                                                                 <b>Antebraço Direito: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.antebracoDireito}"/>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.antebracoDireito}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
                                                             </div>
+                                                        </div>
+                                                        
+                                                        <div class="row">
                                                             <div class="col-md-2">
                                                                 <b>Antebraço Esquerdo: </b>
-                                                                <h:outputText value="#{listaAlunoController.ultimaMedida.antebracoEsquerdo}"/>
-                                                            </div>
+                                                                <h:outputText value="#{aluno.ultimaMedicao.antebracoEsquerdo}">
+                                                                	<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                                                                </h:outputText> cm
+                                                            </div>                                                        	
                                                         </div>
                                                     </div>
                                                 </div>
@@ -329,6 +381,39 @@
                                 <button type="button" 
                                 		class="btn btn-primary"
                                         onclick="excluiAluno();">Sim
+                                </button>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="modal-medicao">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <h:form id="frmDlgExclusaoMedida">
+                            <div class="modal-header">
+                                <button type="button" 
+                                		class="close" 
+                                		data-dismiss="modal"
+                                        aria-label="Close">
+                                    <span aria-hidden="true">&#160;</span>
+                                </button>
+                                <h4 class="modal-title">Exclusão de Medida Corporal</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Tem certeza que deseja excluir a medição?
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" 
+                                		class="btn btn-default pull-left"
+                                        data-dismiss="modal">Não
+                                </button>
+                                <button type="button" 
+                                		class="btn btn-primary"
+                                        onclick="excluiUltimaMedicao();">Sim
                                 </button>
                             </div>
                         </h:form>

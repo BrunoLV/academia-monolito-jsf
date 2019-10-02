@@ -22,6 +22,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -100,6 +101,9 @@ public class Aluno implements Serializable {
 	@Valid
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno", orphanRemoval = true)
 	private Set<Telefone> telefones;
+	
+	@Transient
+	private MedidaCorporal ultimaMedicao = new MedidaCorporal();
 
 	public void adicionaEndereco(final Endereco endereco) {
 		if (enderecos == null) {
@@ -214,6 +218,14 @@ public class Aluno implements Serializable {
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+	
+	public MedidaCorporal getUltimaMedicao() {
+		return ultimaMedicao;
+	}
+
+	public void setUltimaMedicao(MedidaCorporal ultimaMedicao) {
+		this.ultimaMedicao = ultimaMedicao;
 	}
 
 	@Override
