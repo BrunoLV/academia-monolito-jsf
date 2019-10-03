@@ -116,6 +116,7 @@ public class Aluno implements Serializable {
 		if (telefones == null) {
 			telefones = new HashSet<>();
 		}
+		telefone.setAluno(this);
 		telefones.add(telefone);
 	}
 
