@@ -1,6 +1,7 @@
 package br.com.valhala.academia.servicos;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -44,5 +45,10 @@ public class ServicoMedidaCorporal implements Serializable {
 			return;
 		}
 		dao.exclui(medidaCorporal);
+	}
+
+	public Collection<MedidaCorporal> obtemTodasMedidas(Aluno aluno) {
+		Collection<MedidaCorporal> medidas = dao.obtemTodasAluno(aluno.getId());
+		return medidas;
 	}
 }
