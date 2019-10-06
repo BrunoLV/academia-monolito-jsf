@@ -10,8 +10,8 @@ import javax.inject.Named;
 
 import br.com.valhala.academia.modelo.Aluno;
 import br.com.valhala.academia.modelo.MedidaCorporal;
-import br.com.valhala.academia.servicos.ServicoAluno;
-import br.com.valhala.academia.servicos.ServicoMedidaCorporal;
+import br.com.valhala.academia.servicos.AlunoService;
+import br.com.valhala.academia.servicos.MedidaCorporalService;
 import br.com.valhala.academia.web.controllers.BaseController;
 
 @Named
@@ -35,14 +35,14 @@ public class EvolucaoController extends BaseController implements Serializable {
 	}
 
 	@Inject
-	private ServicoAluno servicoAluno;
+	private AlunoService alunoService;
 	
 	@Inject
-	private ServicoMedidaCorporal servicoMedidaCorporal;
+	private MedidaCorporalService medidaCorporalService;
 
 	public void carregaDados() {
-		aluno = servicoAluno.buscaPorId(idAluno);
-		medidas = servicoMedidaCorporal.obtemTodasMedidas(aluno);
+		aluno = alunoService.buscaPorId(idAluno);
+		medidas = medidaCorporalService.obtemTodasMedidas(aluno);
 		executaScript("evolucao.controller.renderizaGraficoEvolucao(" + idAluno + ");");
 	}
 

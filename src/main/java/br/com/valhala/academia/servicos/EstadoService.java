@@ -10,7 +10,7 @@ import br.com.valhala.academia.modelo.Estado;
 import br.com.valhala.academia.modelo.enums.EnumUnidadeFederacao;
 
 @Named
-public class ServicoEstado implements Serializable {
+public class EstadoService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

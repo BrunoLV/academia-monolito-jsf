@@ -10,7 +10,7 @@ import br.com.valhala.academia.db.dao.TipoLogradouroDao;
 import br.com.valhala.academia.modelo.TipoLogradouro;
 
 @Named
-public class ServicoTipoLogradouro implements Serializable {
+public class TipoLogradouroService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

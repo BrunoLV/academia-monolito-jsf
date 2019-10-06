@@ -13,7 +13,7 @@ import br.com.valhala.academia.modelo.Aluno;
 import br.com.valhala.academia.modelo.MedidaCorporal;
 
 @Named
-public class ServicoMedidaCorporal implements Serializable {
+public class MedidaCorporalService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -20,7 +20,7 @@ import br.com.valhala.academia.modelo.Aluno;
 
 @Named
 @Interceptors({ InterceptadorTransacao.class })
-public class ServicoAluno implements Serializable {
+public class AlunoService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

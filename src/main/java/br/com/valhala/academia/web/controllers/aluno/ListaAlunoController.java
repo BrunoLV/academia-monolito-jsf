@@ -20,8 +20,8 @@ import br.com.valhala.academia.clients.wrapper.Relatorio;
 import br.com.valhala.academia.modelo.Aluno;
 import br.com.valhala.academia.modelo.MedidaCorporal;
 import br.com.valhala.academia.modelo.enums.EnumSituacaoAluno;
-import br.com.valhala.academia.servicos.ServicoAluno;
-import br.com.valhala.academia.servicos.ServicoMedidaCorporal;
+import br.com.valhala.academia.servicos.AlunoService;
+import br.com.valhala.academia.servicos.MedidaCorporalService;
 import br.com.valhala.academia.web.controllers.BaseController;
 
 @Named
@@ -39,10 +39,10 @@ public class ListaAlunoController extends BaseController implements Serializable
 	private StreamedContent arquivo;
 
 	@Inject
-	private ServicoAluno servico;
+	private AlunoService alunoService;
 
 	@Inject
-	private ServicoMedidaCorporal servicoMedidaCorporal;
+	private MedidaCorporalService servicoMedidaCorporal;
 
 	public String defineEstiloSituacao(EnumSituacaoAluno situacao) {
 		String estilo = "label label-success";
@@ -68,13 +68,13 @@ public class ListaAlunoController extends BaseController implements Serializable
 	}
 
 	public void exclui(Aluno aluno) {
-		servico.exclui(aluno);
+		alunoService.exclui(aluno);
 		alunos.remove(aluno);
 		adicionaMensagensNoContexto(FacesMessage.SEVERITY_INFO, Arrays.asList("Excluído com sucesso!"));
 	}
 
 	public void excluiAluno() {
-		servico.exclui(alunoSelecionado);
+		alunoService.exclui(alunoSelecionado);
 		alunos.remove(alunoSelecionado);
 		adicionaMensagensNoContexto(FacesMessage.SEVERITY_INFO, Arrays.asList("Excluído com sucesso!"));
 		executaScript("$('#modal-default').modal('hide')");
@@ -106,7 +106,7 @@ public class ListaAlunoController extends BaseController implements Serializable
 	}
 
 	public void imprimeDetalhesAlunos(Long id) {
-		Relatorio relatorio = this.servico.emiteRelatorioDetalheAluno(id);
+		Relatorio relatorio = this.alunoService.emiteRelatorioDetalheAluno(id);
 		if (relatorio != null) {
 			arquivo = new DefaultStreamedContent(new ByteArrayInputStream(relatorio.getArquivo()),
 					relatorio.getFormato(), relatorio.getNomeArquivo());
@@ -115,7 +115,7 @@ public class ListaAlunoController extends BaseController implements Serializable
 
 	@PostConstruct
 	public void inicializa() {
-		alunos = servico.buscaTodos();
+		alunos = alunoService.buscaTodos();
 	}
 
 	public void onToggleRow(ToggleEvent event) {

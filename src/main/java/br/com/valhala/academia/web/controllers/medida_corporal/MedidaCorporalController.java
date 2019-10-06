@@ -9,8 +9,8 @@ import javax.inject.Named;
 
 import br.com.valhala.academia.modelo.Aluno;
 import br.com.valhala.academia.modelo.MedidaCorporal;
-import br.com.valhala.academia.servicos.ServicoAluno;
-import br.com.valhala.academia.servicos.ServicoMedidaCorporal;
+import br.com.valhala.academia.servicos.AlunoService;
+import br.com.valhala.academia.servicos.MedidaCorporalService;
 import br.com.valhala.academia.web.controllers.BaseController;
 
 @Named
@@ -26,19 +26,19 @@ public class MedidaCorporalController extends BaseController implements Serializ
 	private Long idMedidaCorporal;
 
 	@Inject
-	private ServicoAluno servicoAluno;
+	private AlunoService alunoService;
 
 	@Inject
-	private ServicoMedidaCorporal servicoMedidaCorporal;
+	private MedidaCorporalService medidaCorporalService;
 
 	public void carregaDados() {
 
 		if (idAluno != null) {
-			aluno = servicoAluno.buscaPorId(idAluno);
+			aluno = alunoService.buscaPorId(idAluno);
 		}
 
 		if (idMedidaCorporal != null) {
-			medidaCorporal = servicoMedidaCorporal.buscaPorId(idMedidaCorporal);
+			medidaCorporal = medidaCorporalService.buscaPorId(idMedidaCorporal);
 		}
 
 	}
@@ -61,7 +61,7 @@ public class MedidaCorporalController extends BaseController implements Serializ
 	}
 
 	public String salva() {
-		servicoMedidaCorporal.salva(medidaCorporal, aluno);
+		medidaCorporalService.salva(medidaCorporal, aluno);
 		return "/ui/alunos/alunos.xhtml?faces-redirect=true";
 	}
 

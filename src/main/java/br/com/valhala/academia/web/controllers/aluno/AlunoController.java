@@ -27,9 +27,9 @@ import br.com.valhala.academia.modelo.enums.EnumSexoAluno;
 import br.com.valhala.academia.modelo.enums.EnumTipoEndereco;
 import br.com.valhala.academia.modelo.enums.EnumTipoTelefone;
 import br.com.valhala.academia.modelo.enums.EnumUnidadeFederacao;
-import br.com.valhala.academia.servicos.ServicoAluno;
-import br.com.valhala.academia.servicos.ServicoEstado;
-import br.com.valhala.academia.servicos.ServicoTipoLogradouro;
+import br.com.valhala.academia.servicos.AlunoService;
+import br.com.valhala.academia.servicos.EstadoService;
+import br.com.valhala.academia.servicos.TipoLogradouroService;
 import br.com.valhala.academia.validacao.Validador;
 import br.com.valhala.academia.validacao.marcadores.ValidaAluno;
 import br.com.valhala.academia.validacao.marcadores.ValidaEndereco;
@@ -69,13 +69,13 @@ public class AlunoController extends BaseController implements Serializable {
 	private Part foto;
 
 	@Inject
-	private ServicoAluno servicoAluno;
+	private AlunoService alunoService;
 
 	@Inject
-	private ServicoTipoLogradouro servicoTipoLogradouro;
+	private TipoLogradouroService tipoLogradouroService;
 
 	@Inject
-	private ServicoEstado servicoEstado;
+	private EstadoService estadoService;
 
 	@Inject
 	private GerenciadorArquivos gerenciadorArquivos;
@@ -132,7 +132,7 @@ public class AlunoController extends BaseController implements Serializable {
 
 	public void carregaAluno() {
 		if (id != null) {
-			aluno = servicoAluno.buscaPorId(id);
+			aluno = alunoService.buscaPorId(id);
 		}
 	}
 
@@ -140,7 +140,7 @@ public class AlunoController extends BaseController implements Serializable {
 		this.endereco = endereco;
 		aluno.removeEndereco(endereco);
 		ufSelecionado = endereco.getMunicipio().getUf();
-		estado = servicoEstado.buscaEstadoPorUFComMunicipios(ufSelecionado);
+		estado = estadoService.buscaEstadoPorUFComMunicipios(ufSelecionado);
 	}
 
 	public void editaTelefone(Telefone telefone) {
@@ -207,7 +207,7 @@ public class AlunoController extends BaseController implements Serializable {
 		tiposEnderecos = Arrays.asList(EnumTipoEndereco.values());
 		tiposTelefones = Arrays.asList(EnumTipoTelefone.values());
 
-		tiposLogradouros = servicoTipoLogradouro.listaTiposLogradouros();
+		tiposLogradouros = tipoLogradouroService.listaTiposLogradouros();
 
 		aluno = new Aluno();
 		endereco = new Endereco();
@@ -227,7 +227,7 @@ public class AlunoController extends BaseController implements Serializable {
 			estado = null;
 			endereco.setMunicipio(new Municipio());
 		} else {
-			estado = servicoEstado.buscaEstadoPorUFComMunicipios(ufSelecionado);
+			estado = estadoService.buscaEstadoPorUFComMunicipios(ufSelecionado);
 			endereco.setMunicipio(null);
 		}
 	}
@@ -258,7 +258,7 @@ public class AlunoController extends BaseController implements Serializable {
 			e.printStackTrace();
 		}
 
-		servicoAluno.salva(aluno);
+		alunoService.salva(aluno);
 		
 		adicionaMensagensNoContexto(FacesMessage.SEVERITY_INFO, Arrays.asList("Aluno salvo com sucesso!"));
 		
