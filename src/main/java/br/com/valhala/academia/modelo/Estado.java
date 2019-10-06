@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -27,8 +26,7 @@ public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "seq_id_estado", sequenceName = "seq_id_estado", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_estado")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "codigo", nullable = false, unique = true)
