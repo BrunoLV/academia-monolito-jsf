@@ -32,6 +32,9 @@ databaseChangeLog:
                   constraints:
                      nullable: false
                      unique: true
+      -  loadData:
+            file: liquibase/v1/estados.csv
+            tableName: tb_estado
 -  changeSet:
       id: v1-2
       author: Bruno Luiz Viana
@@ -69,19 +72,6 @@ databaseChangeLog:
                   constraints:
                      foreignKeyName: fk_municipio_id_estado
                      references: tb_estado(id)
--  changeSet:
-      id: carga tb_estado
-      author: Bruno Luiz Viana
-      comment: Carga de estados e municipios
-      changes:
-      -  loadData:
-            file: liquibase/v1/estados.csv
-            tableName: tb_estado
--  changeSet:
-      id: carga tb_municipio
-      author: Bruno Luiz Viana
-      comment: Carga de estados e municipios
-      changes:
       -  loadData:
             file: liquibase/v1/municipios.csv
             tableName: tb_municipio
