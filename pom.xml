@@ -11,7 +11,7 @@
 
 	<properties>
 
-		<database.url>jdbc:hsqldb:mem:academia_db</database.url>
+		<database.url>jdbc:hsqldb:mem:academia_db;DB_CLOSE_DELAY=-1</database.url>
 		<database.driver>org.hsqldb.jdbc.JDBCDriver</database.driver>
 		<database.usuario>SA</database.usuario>
 		<database.senha></database.senha>
