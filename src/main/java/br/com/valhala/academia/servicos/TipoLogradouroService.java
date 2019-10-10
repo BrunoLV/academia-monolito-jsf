@@ -12,13 +12,13 @@ import br.com.valhala.academia.modelo.TipoLogradouro;
 @Named
 public class TipoLogradouroService implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Inject
-	private TipoLogradouroDao dao;
+    @Inject
+    private TipoLogradouroDao dao;
 
-	public Collection<TipoLogradouro> listaTiposLogradouros() {
-		return dao.buscaTodos();
-	}
+    public Collection<TipoLogradouro> listaTiposLogradouros() {
+        return dao.buscaTodos();
+    }
 
 }

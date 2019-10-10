@@ -12,19 +12,19 @@ import br.com.valhala.academia.modelo.MedidaCorporal;
 
 public class MedidaCorporalEntityListener {
 
-	@PrePersist
-	@PreUpdate
-	public void completaDadosAutomaticos(MedidaCorporal medidaCorporal) {
+    @PrePersist
+    @PreUpdate
+    public void completaDadosAutomaticos(MedidaCorporal medidaCorporal) {
 
-		if (StringUtils.isBlank(medidaCorporal.getUuid())) {
-			UUID uuid = UUID.randomUUID();
-			medidaCorporal.setUuid(uuid.toString());
-		}
+        if (StringUtils.isBlank(medidaCorporal.getUuid())) {
+            UUID uuid = UUID.randomUUID();
+            medidaCorporal.setUuid(uuid.toString());
+        }
 
-		if (medidaCorporal.getDataMedicao() == null) {
-			medidaCorporal.setDataMedicao(Calendar.getInstance().getTime());
-		}
+        if (medidaCorporal.getDataMedicao() == null) {
+            medidaCorporal.setDataMedicao(Calendar.getInstance().getTime());
+        }
 
-	}
+    }
 
 }

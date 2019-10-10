@@ -42,194 +42,194 @@ import br.com.valhala.academia.modelo.enums.EnumSituacaoAluno;
 @XmlRootElement
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
-@EntityListeners(value = { AlunoEntityListener.class })
+@EntityListeners(value = {AlunoEntityListener.class})
 @Table(name = "tb_aluno")
 public class Aluno implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotBlank(message = "{aluno.nome.notnull}")
-	@Size(min = 3, max = 100, message = "{aluno.nome.size}")
-	@Column(name = "nome", unique = true, nullable = false, length = 100)
-	private String nome;
+    @NotBlank(message = "{aluno.nome.notnull}")
+    @Size(min = 3, max = 100, message = "{aluno.nome.size}")
+    @Column(name = "nome", unique = true, nullable = false, length = 100)
+    private String nome;
 
-	@CPF(message = "{aluno.cpf.invalido}")
-	@NotBlank(message = "{aluno.cpf.notnull}")
-	@Column(name = "cpf", unique = true, nullable = false, length = 20)
-	private String cpf;
+    @CPF(message = "{aluno.cpf.invalido}")
+    @NotBlank(message = "{aluno.cpf.notnull}")
+    @Column(name = "cpf", unique = true, nullable = false, length = 20)
+    private String cpf;
 
-	@Email(message = "{aluno.email.invalido}")
-	@NotBlank(message = "{aluno.email.notnull}")
-	@Column(name = "email", nullable = false, length = 320)
-	private String email;
+    @Email(message = "{aluno.email.invalido}")
+    @NotBlank(message = "{aluno.email.notnull}")
+    @Column(name = "email", nullable = false, length = 320)
+    private String email;
 
-	@NotNull(message = "{aluno.data_nascimento.notnull}")
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
-	@Column(name = "data_nascimento", nullable = false)
-	private Date dataNascimento;
+    @NotNull(message = "{aluno.data_nascimento.notnull}")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_nascimento", nullable = false)
+    private Date dataNascimento;
 
-	@NotNull(message = "{aluno.situacao.notnull}")
-	@Enumerated(EnumType.STRING)
-	@Column(name = "situacao", nullable = false, length = 30)
-	private EnumSituacaoAluno situacao = EnumSituacaoAluno.ATIVO;
+    @NotNull(message = "{aluno.situacao.notnull}")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "situacao", nullable = false, length = 30)
+    private EnumSituacaoAluno situacao = EnumSituacaoAluno.ATIVO;
 
-	@NotNull(message = "{aluno.sexo.notnull}")
-	@Enumerated(EnumType.STRING)
-	@Column(name = "sexo", nullable = false, length = 30)
-	private EnumSexoAluno sexo = EnumSexoAluno.NAO_INFORMADO;
+    @NotNull(message = "{aluno.sexo.notnull}")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sexo", nullable = false, length = 30)
+    private EnumSexoAluno sexo = EnumSexoAluno.NAO_INFORMADO;
 
-	@Column(name = "uuid", nullable = false, length = 255)
-	private String uuid;
+    @Column(name = "uuid", nullable = false, length = 255)
+    private String uuid;
 
-	@Column(name = "path_foto", nullable = true, length = 255)
-	private String pathFoto;
+    @Column(name = "path_foto", nullable = true, length = 255)
+    private String pathFoto;
 
-	@Valid
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "tb_aluno_endereco", joinColumns = {
-			@JoinColumn(name = "id_aluno", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "id_endereco", referencedColumnName = "id") })
-	private Set<Endereco> enderecos;
+    @Valid
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "tb_aluno_endereco", joinColumns = {
+        @JoinColumn(name = "id_aluno", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_endereco", referencedColumnName = "id")})
+    private Set<Endereco> enderecos;
 
-	@Valid
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno", orphanRemoval = true)
-	private Set<Telefone> telefones;
-	
-	@Transient
-	private MedidaCorporal ultimaMedicao = new MedidaCorporal();
+    @Valid
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno", orphanRemoval = true)
+    private Set<Telefone> telefones;
 
-	public void adicionaEndereco(final Endereco endereco) {
-		if (enderecos == null) {
-			enderecos = new HashSet<>();
-		}
-		enderecos.add(endereco);
-	}
+    @Transient
+    private MedidaCorporal ultimaMedicao = new MedidaCorporal();
 
-	public void adicionaTelefone(final Telefone telefone) {
-		if (telefones == null) {
-			telefones = new HashSet<>();
-		}
-		telefone.setAluno(this);
-		telefones.add(telefone);
-	}
+    public void adicionaEndereco(final Endereco endereco) {
+        if (enderecos == null) {
+            enderecos = new HashSet<>();
+        }
+        enderecos.add(endereco);
+    }
 
-	public String getCpf() {
-		return cpf;
-	}
+    public void adicionaTelefone(final Telefone telefone) {
+        if (telefones == null) {
+            telefones = new HashSet<>();
+        }
+        telefone.setAluno(this);
+        telefones.add(telefone);
+    }
 
-	public Date getDataNascimento() {
-		return dataNascimento;
-	}
+    public String getCpf() {
+        return cpf;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
 
-	public Set<Endereco> getEnderecos() {
-		return enderecos;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Set<Endereco> getEnderecos() {
+        return enderecos;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getPathFoto() {
-		return pathFoto;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public EnumSexoAluno getSexo() {
-		return sexo;
-	}
+    public String getPathFoto() {
+        return pathFoto;
+    }
 
-	public EnumSituacaoAluno getSituacao() {
-		return situacao;
-	}
+    public EnumSexoAluno getSexo() {
+        return sexo;
+    }
 
-	public Set<Telefone> getTelefones() {
-		return telefones;
-	}
+    public EnumSituacaoAluno getSituacao() {
+        return situacao;
+    }
 
-	public String getUuid() {
-		return uuid;
-	}
+    public Set<Telefone> getTelefones() {
+        return telefones;
+    }
 
-	public void removeEndereco(final Endereco endereco) {
-		if (enderecos != null) {
-			enderecos.remove(endereco);
-		}
-	}
+    public String getUuid() {
+        return uuid;
+    }
 
-	public void removeTelefone(Telefone telefone) {
-		if (telefones != null) {
-			System.out.println("Esta na lista: " + telefones.contains(telefone));
-			telefones.remove(telefone);
-		}
-	}
+    public void removeEndereco(final Endereco endereco) {
+        if (enderecos != null) {
+            enderecos.remove(endereco);
+        }
+    }
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
+    public void removeTelefone(Telefone telefone) {
+        if (telefones != null) {
+            System.out.println("Esta na lista: " + telefones.contains(telefone));
+            telefones.remove(telefone);
+        }
+    }
 
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
 
-	public void setEnderecos(Set<Endereco> enderecos) {
-		this.enderecos = enderecos;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setEnderecos(Set<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setPathFoto(String pathFoto) {
-		this.pathFoto = pathFoto;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setSexo(EnumSexoAluno sexo) {
-		this.sexo = sexo;
-	}
+    public void setPathFoto(String pathFoto) {
+        this.pathFoto = pathFoto;
+    }
 
-	public void setSituacao(EnumSituacaoAluno situacao) {
-		this.situacao = situacao;
-	}
+    public void setSexo(EnumSexoAluno sexo) {
+        this.sexo = sexo;
+    }
 
-	public void setTelefones(Set<Telefone> telefones) {
-		this.telefones = telefones;
-	}
+    public void setSituacao(EnumSituacaoAluno situacao) {
+        this.situacao = situacao;
+    }
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-	
-	public MedidaCorporal getUltimaMedicao() {
-		return ultimaMedicao;
-	}
+    public void setTelefones(Set<Telefone> telefones) {
+        this.telefones = telefones;
+    }
 
-	public void setUltimaMedicao(MedidaCorporal ultimaMedicao) {
-		this.ultimaMedicao = ultimaMedicao;
-	}
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
-	@Override
-	public String toString() {
-		return "Aluno [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", email=" + email + ", dataNascimento="
-				+ dataNascimento + ", situacao=" + situacao + ", sexo=" + sexo + "]";
-	}
+    public MedidaCorporal getUltimaMedicao() {
+        return ultimaMedicao;
+    }
+
+    public void setUltimaMedicao(MedidaCorporal ultimaMedicao) {
+        this.ultimaMedicao = ultimaMedicao;
+    }
+
+    @Override
+    public String toString() {
+        return "Aluno [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", email=" + email + ", dataNascimento="
+                + dataNascimento + ", situacao=" + situacao + ", sexo=" + sexo + "]";
+    }
 }

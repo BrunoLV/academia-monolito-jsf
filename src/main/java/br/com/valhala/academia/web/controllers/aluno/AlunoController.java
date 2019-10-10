@@ -40,253 +40,253 @@ import br.com.valhala.academia.web.controllers.BaseController;
 @ViewScoped
 public class AlunoController extends BaseController implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	private Long id;
+    private static final long serialVersionUID = 1L;
 
-	private Aluno aluno;
+    private Long id;
 
-	private Endereco endereco;
+    private Aluno aluno;
 
-	private Telefone telefone;
+    private Endereco endereco;
 
-	private EnumUnidadeFederacao ufSelecionado;
-	
-	private Estado estado;
+    private Telefone telefone;
 
-	private Collection<Estado> estados;
+    private EnumUnidadeFederacao ufSelecionado;
 
-	private Collection<Municipio> municipios;
+    private Estado estado;
 
-	private Collection<TipoLogradouro> tiposLogradouros;
+    private Collection<Estado> estados;
 
-	private Collection<EnumUnidadeFederacao> ufs;
+    private Collection<Municipio> municipios;
 
-	private Collection<EnumTipoEndereco> tiposEnderecos;
+    private Collection<TipoLogradouro> tiposLogradouros;
 
-	private Collection<EnumTipoTelefone> tiposTelefones;
+    private Collection<EnumUnidadeFederacao> ufs;
 
-	private Part foto;
+    private Collection<EnumTipoEndereco> tiposEnderecos;
 
-	@Inject
-	private AlunoService alunoService;
+    private Collection<EnumTipoTelefone> tiposTelefones;
 
-	@Inject
-	private TipoLogradouroService tipoLogradouroService;
+    private Part foto;
 
-	@Inject
-	private EstadoService estadoService;
+    @Inject
+    private AlunoService alunoService;
 
-	@Inject
-	private GerenciadorArquivos gerenciadorArquivos;
+    @Inject
+    private TipoLogradouroService tipoLogradouroService;
 
-	@Inject
-	@ValidaEndereco
-	private Validador validadorEndereco;
+    @Inject
+    private EstadoService estadoService;
 
-	@Inject
-	@ValidaTelefone
-	private Validador validadorTelefone;
+    @Inject
+    private GerenciadorArquivos gerenciadorArquivos;
 
-	@Inject
-	@ValidaAluno
-	private Validador validadorAluno;
+    @Inject
+    @ValidaEndereco
+    private Validador validadorEndereco;
 
-	public AlunoController() {
-		super();
-	}
+    @Inject
+    @ValidaTelefone
+    private Validador validadorTelefone;
 
-	public void adicionaEndereco() {
+    @Inject
+    @ValidaAluno
+    private Validador validadorAluno;
 
-		Set<String> validacoes = validadorEndereco.validar(endereco);
+    public AlunoController() {
+        super();
+    }
 
-		if (CollectionUtils.isNotEmpty(validacoes)) {
-			adicionaMensagensNoContexto(FacesMessage.SEVERITY_WARN, validacoes);
-			executaScript("aluno.controller.resetaMascarasDadosEndereco()");
-			return;
-		}
+    public void adicionaEndereco() {
 
-		aluno.adicionaEndereco(endereco);
-		endereco = new Endereco();
-		ufSelecionado = null;
-		estado = null;
+        Set<String> validacoes = validadorEndereco.validar(endereco);
 
-		executaScript("aluno.controller.resetaMascarasDadosEndereco()");
-	}
+        if (CollectionUtils.isNotEmpty(validacoes)) {
+            adicionaMensagensNoContexto(FacesMessage.SEVERITY_WARN, validacoes);
+            executaScript("aluno.controller.resetaMascarasDadosEndereco()");
+            return;
+        }
 
-	public void adicionaTelefone() {
+        aluno.adicionaEndereco(endereco);
+        endereco = new Endereco();
+        ufSelecionado = null;
+        estado = null;
 
-		Set<String> validacoes = validadorTelefone.validar(telefone);
+        executaScript("aluno.controller.resetaMascarasDadosEndereco()");
+    }
 
-		if (CollectionUtils.isNotEmpty(validacoes)) {
-			adicionaMensagensNoContexto(FacesMessage.SEVERITY_WARN, validacoes);
-			executaScript("aluno.controller.resetaMascarasDadosEndereco()");
-			return;
-		}
+    public void adicionaTelefone() {
 
-		aluno.adicionaTelefone(telefone);
-		telefone = new Telefone();
+        Set<String> validacoes = validadorTelefone.validar(telefone);
 
-		executaScript("aluno.controller.resetaMascarasDadosTelefone()");
-	}
+        if (CollectionUtils.isNotEmpty(validacoes)) {
+            adicionaMensagensNoContexto(FacesMessage.SEVERITY_WARN, validacoes);
+            executaScript("aluno.controller.resetaMascarasDadosEndereco()");
+            return;
+        }
 
-	public void carregaAluno() {
-		if (id != null) {
-			aluno = alunoService.buscaPorId(id);
-		}
-	}
+        aluno.adicionaTelefone(telefone);
+        telefone = new Telefone();
 
-	public void editaEndereco(Endereco endereco) {
-		this.endereco = endereco;
-		aluno.removeEndereco(endereco);
-		ufSelecionado = endereco.getMunicipio().getUf();
-		estado = estadoService.buscaEstadoPorUFComMunicipios(ufSelecionado);
-	}
+        executaScript("aluno.controller.resetaMascarasDadosTelefone()");
+    }
 
-	public void editaTelefone(Telefone telefone) {
-		this.telefone = telefone;
-		aluno.removeTelefone(telefone);
-	}
+    public void carregaAluno() {
+        if (id != null) {
+            aluno = alunoService.buscaPorId(id);
+        }
+    }
 
-	public Aluno getAluno() {
-		return aluno;
-	}
+    public void editaEndereco(Endereco endereco) {
+        this.endereco = endereco;
+        aluno.removeEndereco(endereco);
+        ufSelecionado = endereco.getMunicipio().getUf();
+        estado = estadoService.buscaEstadoPorUFComMunicipios(ufSelecionado);
+    }
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-	public Estado getEstado() {
-		return estado;
-	}
-
-	public Collection<Estado> getEstados() {
-		return estados;
-	}
-
-	public Part getFoto() {
-		return foto;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public Collection<Municipio> getMunicipios() {
-		return municipios;
-	}
-
-	public Telefone getTelefone() {
-		return telefone;
-	}
-
-	public Collection<EnumTipoEndereco> getTiposEnderecos() {
-		return tiposEnderecos;
-	}
-
-	public Collection<TipoLogradouro> getTiposLogradouros() {
-		return tiposLogradouros;
-	}
-
-	public Collection<EnumTipoTelefone> getTiposTelefones() {
-		return tiposTelefones;
-	}
-
-	public Collection<EnumUnidadeFederacao> getUfs() {
-		return ufs;
-	}
-
-	public EnumUnidadeFederacao getUfSelecionado() {
-		return ufSelecionado;
-	}
-
-	@PostConstruct
-	public void inicializa() {
-
-		ufs = Arrays.asList(EnumUnidadeFederacao.values());
-		tiposEnderecos = Arrays.asList(EnumTipoEndereco.values());
-		tiposTelefones = Arrays.asList(EnumTipoTelefone.values());
-
-		tiposLogradouros = tipoLogradouroService.listaTiposLogradouros();
-
-		aluno = new Aluno();
-		endereco = new Endereco();
-		endereco.setTipoLogradouro(new TipoLogradouro());
-		endereco.setMunicipio(new Municipio());
-
-		telefone = new Telefone();
-
-	}
-
-	public EnumSexoAluno[] listaSexo() {
-		return EnumSexoAluno.values();
-	}
-
-	public void onChangeUf(AjaxBehaviorEvent event) {
-		if (ufSelecionado == null) {
-			estado = null;
-			endereco.setMunicipio(new Municipio());
-		} else {
-			estado = estadoService.buscaEstadoPorUFComMunicipios(ufSelecionado);
-			endereco.setMunicipio(null);
-		}
-	}
-
-	public void removeEndereco(Endereco endereco) {
-		aluno.removeEndereco(endereco);
-	}
-
-	public void removeTelefone(Telefone telefone) {
-		aluno.removeTelefone(telefone);
-	}
-
-	public String salva() {
-
-		Set<String> validacoes = validadorAluno.validar(aluno);
-
-		if (CollectionUtils.isNotEmpty(validacoes)) {
-			adicionaMensagensNoContexto(FacesMessage.SEVERITY_WARN, validacoes);
-			return null;
-		}
-
-		try {
-			if (foto != null) {
-				gerenciadorArquivos.gravaArquivoAPartirDePart(foto, "Fotos");
-				aluno.setPathFoto("/Fotos/" + foto.getSubmittedFileName());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		alunoService.salva(aluno);
-		
-		adicionaMensagensNoContexto(FacesMessage.SEVERITY_INFO, Arrays.asList("Aluno salvo com sucesso!"));
-		
-		return "alunos?faces-redirect=true";
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-
-	public void setFoto(Part foto) {
-		this.foto = foto;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setTelefone(Telefone telefone) {
-		this.telefone = telefone;
-	}
-
-	public void setUfSelecionado(EnumUnidadeFederacao ufSelecionado) {
-		this.ufSelecionado = ufSelecionado;
-	}
+    public void editaTelefone(Telefone telefone) {
+        this.telefone = telefone;
+        aluno.removeTelefone(telefone);
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public Collection<Estado> getEstados() {
+        return estados;
+    }
+
+    public Part getFoto() {
+        return foto;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Collection<Municipio> getMunicipios() {
+        return municipios;
+    }
+
+    public Telefone getTelefone() {
+        return telefone;
+    }
+
+    public Collection<EnumTipoEndereco> getTiposEnderecos() {
+        return tiposEnderecos;
+    }
+
+    public Collection<TipoLogradouro> getTiposLogradouros() {
+        return tiposLogradouros;
+    }
+
+    public Collection<EnumTipoTelefone> getTiposTelefones() {
+        return tiposTelefones;
+    }
+
+    public Collection<EnumUnidadeFederacao> getUfs() {
+        return ufs;
+    }
+
+    public EnumUnidadeFederacao getUfSelecionado() {
+        return ufSelecionado;
+    }
+
+    @PostConstruct
+    public void inicializa() {
+
+        ufs = Arrays.asList(EnumUnidadeFederacao.values());
+        tiposEnderecos = Arrays.asList(EnumTipoEndereco.values());
+        tiposTelefones = Arrays.asList(EnumTipoTelefone.values());
+
+        tiposLogradouros = tipoLogradouroService.listaTiposLogradouros();
+
+        aluno = new Aluno();
+        endereco = new Endereco();
+        endereco.setTipoLogradouro(new TipoLogradouro());
+        endereco.setMunicipio(new Municipio());
+
+        telefone = new Telefone();
+
+    }
+
+    public EnumSexoAluno[] listaSexo() {
+        return EnumSexoAluno.values();
+    }
+
+    public void onChangeUf(AjaxBehaviorEvent event) {
+        if (ufSelecionado == null) {
+            estado = null;
+            endereco.setMunicipio(new Municipio());
+        } else {
+            estado = estadoService.buscaEstadoPorUFComMunicipios(ufSelecionado);
+            endereco.setMunicipio(null);
+        }
+    }
+
+    public void removeEndereco(Endereco endereco) {
+        aluno.removeEndereco(endereco);
+    }
+
+    public void removeTelefone(Telefone telefone) {
+        aluno.removeTelefone(telefone);
+    }
+
+    public String salva() {
+
+        Set<String> validacoes = validadorAluno.validar(aluno);
+
+        if (CollectionUtils.isNotEmpty(validacoes)) {
+            adicionaMensagensNoContexto(FacesMessage.SEVERITY_WARN, validacoes);
+            return null;
+        }
+
+        try {
+            if (foto != null) {
+                gerenciadorArquivos.gravaArquivoAPartirDePart(foto, "Fotos");
+                aluno.setPathFoto("/Fotos/" + foto.getSubmittedFileName());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        alunoService.salva(aluno);
+
+        adicionaMensagensNoContexto(FacesMessage.SEVERITY_INFO, Arrays.asList("Aluno salvo com sucesso!"));
+
+        return "alunos?faces-redirect=true";
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public void setFoto(Part foto) {
+        this.foto = foto;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTelefone(Telefone telefone) {
+        this.telefone = telefone;
+    }
+
+    public void setUfSelecionado(EnumUnidadeFederacao ufSelecionado) {
+        this.ufSelecionado = ufSelecionado;
+    }
 
 }

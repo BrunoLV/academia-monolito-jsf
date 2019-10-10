@@ -28,207 +28,227 @@ import br.com.valhala.academia.modelo.enums.EnumTipoEndereco;
 @Table(name = "tb_endereco")
 public class Endereco implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotBlank(message = "{endereco.logradouro.notnull}")
-	@Column(name = "logradouro", length = 255, nullable = false)
-	private String logradouro;
+    @NotBlank(message = "{endereco.logradouro.notnull}")
+    @Column(name = "logradouro", length = 255, nullable = false)
+    private String logradouro;
 
-	@NotBlank(message = "{endereco.numero.notnull}")
-	@Column(name = "numero", length = 5, nullable = false)
-	private String numero;
+    @NotBlank(message = "{endereco.numero.notnull}")
+    @Column(name = "numero", length = 5, nullable = false)
+    private String numero;
 
-	@Size(min = 2, message = "{endereco.complemento.tamanho.invalido.min}")
-	@Size(max = 20, message = "{endereco.complemento.tamanho.invalido.max}")
-	@Column(name = "complemento", length = 20)
-	private String complemento;
+    @Size(min = 2, message = "{endereco.complemento.tamanho.invalido.min}")
+    @Size(max = 20, message = "{endereco.complemento.tamanho.invalido.max}")
+    @Column(name = "complemento", length = 20)
+    private String complemento;
 
-	@NotBlank(message = "{endereco.bairro.notnull}")
-	@Column(name = "bairro", length = 100, nullable = false)
-	private String bairro;
+    @NotBlank(message = "{endereco.bairro.notnull}")
+    @Column(name = "bairro", length = 100, nullable = false)
+    private String bairro;
 
-	@NotBlank(message = "{endereco.cep.notnull}")
-	@Column(name = "cep", length = 10, nullable = false)
-	private String cep;
+    @NotBlank(message = "{endereco.cep.notnull}")
+    @Column(name = "cep", length = 10, nullable = false)
+    private String cep;
 
-	@NotNull(message = "{endereco.tipo.notnul}")
-	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo_endereco", nullable = false, length = 60)
-	private EnumTipoEndereco tipoEndereco;
+    @NotNull(message = "{endereco.tipo.notnul}")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_endereco", nullable = false, length = 60)
+    private EnumTipoEndereco tipoEndereco;
 
-	@NotNull(message = "{endereco.tipo_logradouro.notnull}")
-	@ManyToOne
-	@JoinColumn(name = "id_tipo_logradouro", nullable = false, foreignKey = @ForeignKey(name = "fk_endereco_id_tipo_logradouro"))
-	private TipoLogradouro tipoLogradouro;
+    @NotNull(message = "{endereco.tipo_logradouro.notnull}")
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_logradouro", nullable = false, foreignKey = @ForeignKey(name = "fk_endereco_id_tipo_logradouro"))
+    private TipoLogradouro tipoLogradouro;
 
-	@Valid
-	@NotNull(message = "{endereco.municipio.notnull}")
-	@ManyToOne
-	@JoinColumn(name = "id_municipio", nullable = false, foreignKey = @ForeignKey(name = "fk_endereco_id_municipio"))
-	private Municipio municipio;
+    @Valid
+    @NotNull(message = "{endereco.municipio.notnull}")
+    @ManyToOne
+    @JoinColumn(name = "id_municipio", nullable = false, foreignKey = @ForeignKey(name = "fk_endereco_id_municipio"))
+    private Municipio municipio;
 
-	public Endereco() {
-		super();
-	}
+    public Endereco() {
+        super();
+    }
 
-	public String enderecoFormatado() {
-		return String.format("%s %s, nº %s - %s - Bairro: %s, Cep: %s - %s / %s",
-				tipoEndereco != null ? tipoLogradouro.getDescricao() : null, logradouro, numero, complemento, bairro,
-				cep, municipio != null ? municipio.getNome() : null,
-				municipio != null && municipio.getUf() != null ? municipio.getUf().name() : null);
-	}
+    public String enderecoFormatado() {
+        return String.format("%s %s, nº %s - %s - Bairro: %s, Cep: %s - %s / %s",
+                tipoEndereco != null ? tipoLogradouro.getDescricao() : null, logradouro, numero, complemento, bairro,
+                cep, municipio != null ? municipio.getNome() : null,
+                municipio != null && municipio.getUf() != null ? municipio.getUf().name() : null);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Endereco other = (Endereco) obj;
-		if (bairro == null) {
-			if (other.bairro != null)
-				return false;
-		} else if (!bairro.equals(other.bairro))
-			return false;
-		if (cep == null) {
-			if (other.cep != null)
-				return false;
-		} else if (!cep.equals(other.cep))
-			return false;
-		if (complemento == null) {
-			if (other.complemento != null)
-				return false;
-		} else if (!complemento.equals(other.complemento))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (logradouro == null) {
-			if (other.logradouro != null)
-				return false;
-		} else if (!logradouro.equals(other.logradouro))
-			return false;
-		if (municipio == null) {
-			if (other.municipio != null)
-				return false;
-		} else if (!municipio.equals(other.municipio))
-			return false;
-		if (numero == null) {
-			if (other.numero != null)
-				return false;
-		} else if (!numero.equals(other.numero))
-			return false;
-		if (tipoEndereco != other.tipoEndereco)
-			return false;
-		if (tipoLogradouro == null) {
-			if (other.tipoLogradouro != null)
-				return false;
-		} else if (!tipoLogradouro.equals(other.tipoLogradouro))
-			return false;
-		return true;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Endereco other = (Endereco) obj;
+        if (bairro == null) {
+            if (other.bairro != null) {
+                return false;
+            }
+        } else if (!bairro.equals(other.bairro)) {
+            return false;
+        }
+        if (cep == null) {
+            if (other.cep != null) {
+                return false;
+            }
+        } else if (!cep.equals(other.cep)) {
+            return false;
+        }
+        if (complemento == null) {
+            if (other.complemento != null) {
+                return false;
+            }
+        } else if (!complemento.equals(other.complemento)) {
+            return false;
+        }
+        if (id == null) {
+            if (other.id != null) {
+                return false;
+            }
+        } else if (!id.equals(other.id)) {
+            return false;
+        }
+        if (logradouro == null) {
+            if (other.logradouro != null) {
+                return false;
+            }
+        } else if (!logradouro.equals(other.logradouro)) {
+            return false;
+        }
+        if (municipio == null) {
+            if (other.municipio != null) {
+                return false;
+            }
+        } else if (!municipio.equals(other.municipio)) {
+            return false;
+        }
+        if (numero == null) {
+            if (other.numero != null) {
+                return false;
+            }
+        } else if (!numero.equals(other.numero)) {
+            return false;
+        }
+        if (tipoEndereco != other.tipoEndereco) {
+            return false;
+        }
+        if (tipoLogradouro == null) {
+            if (other.tipoLogradouro != null) {
+                return false;
+            }
+        } else if (!tipoLogradouro.equals(other.tipoLogradouro)) {
+            return false;
+        }
+        return true;
+    }
 
-	public String getBairro() {
-		return bairro;
-	}
+    public String getBairro() {
+        return bairro;
+    }
 
-	public String getCep() {
-		return cep;
-	}
+    public String getCep() {
+        return cep;
+    }
 
-	public String getComplemento() {
-		return complemento;
-	}
+    public String getComplemento() {
+        return complemento;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getLogradouro() {
-		return logradouro;
-	}
+    public String getLogradouro() {
+        return logradouro;
+    }
 
-	public Municipio getMunicipio() {
-		return municipio;
-	}
+    public Municipio getMunicipio() {
+        return municipio;
+    }
 
-	public String getNumero() {
-		return numero;
-	}
+    public String getNumero() {
+        return numero;
+    }
 
-	public EnumTipoEndereco getTipoEndereco() {
-		return tipoEndereco;
-	}
+    public EnumTipoEndereco getTipoEndereco() {
+        return tipoEndereco;
+    }
 
-	public TipoLogradouro getTipoLogradouro() {
-		return tipoLogradouro;
-	}
+    public TipoLogradouro getTipoLogradouro() {
+        return tipoLogradouro;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((bairro == null) ? 0 : bairro.hashCode());
-		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
-		result = prime * result + ((complemento == null) ? 0 : complemento.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((logradouro == null) ? 0 : logradouro.hashCode());
-		result = prime * result + ((municipio == null) ? 0 : municipio.hashCode());
-		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
-		result = prime * result + ((tipoEndereco == null) ? 0 : tipoEndereco.hashCode());
-		result = prime * result + ((tipoLogradouro == null) ? 0 : tipoLogradouro.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((bairro == null) ? 0 : bairro.hashCode());
+        result = prime * result + ((cep == null) ? 0 : cep.hashCode());
+        result = prime * result + ((complemento == null) ? 0 : complemento.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((logradouro == null) ? 0 : logradouro.hashCode());
+        result = prime * result + ((municipio == null) ? 0 : municipio.hashCode());
+        result = prime * result + ((numero == null) ? 0 : numero.hashCode());
+        result = prime * result + ((tipoEndereco == null) ? 0 : tipoEndereco.hashCode());
+        result = prime * result + ((tipoLogradouro == null) ? 0 : tipoLogradouro.hashCode());
+        return result;
+    }
 
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
 
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
 
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
 
-	public void setMunicipio(Municipio municipio) {
-		this.municipio = municipio;
-	}
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
+    }
 
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
 
-	public void setTipoEndereco(EnumTipoEndereco tipoEndereco) {
-		this.tipoEndereco = tipoEndereco;
-	}
+    public void setTipoEndereco(EnumTipoEndereco tipoEndereco) {
+        this.tipoEndereco = tipoEndereco;
+    }
 
-	public void setTipoLogradouro(TipoLogradouro tipoLogradouro) {
-		this.tipoLogradouro = tipoLogradouro;
-	}
+    public void setTipoLogradouro(TipoLogradouro tipoLogradouro) {
+        this.tipoLogradouro = tipoLogradouro;
+    }
 
-	@Override
-	public String toString() {
-		return "Endereco [id=" + id + ", logradouro=" + logradouro + ", numero=" + numero + ", complemento="
-				+ complemento + ", bairro=" + bairro + ", cep=" + cep + ", tipoEndereco=" + tipoEndereco
-				+ ", tipoLogradouro=" + tipoLogradouro + ", municipio=" + municipio + "]";
-	}
+    @Override
+    public String toString() {
+        return "Endereco [id=" + id + ", logradouro=" + logradouro + ", numero=" + numero + ", complemento="
+                + complemento + ", bairro=" + bairro + ", cep=" + cep + ", tipoEndereco=" + tipoEndereco
+                + ", tipoLogradouro=" + tipoLogradouro + ", municipio=" + municipio + "]";
+    }
 
 }

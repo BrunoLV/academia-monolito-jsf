@@ -18,48 +18,48 @@ import br.com.valhala.academia.web.controllers.BaseController;
 @ViewScoped
 public class EvolucaoController extends BaseController implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long idAluno;
+    private Long idAluno;
 
-	private Aluno aluno;
-	
-	private Collection<MedidaCorporal> medidas = Collections.emptyList();
+    private Aluno aluno;
 
-	public Collection<MedidaCorporal> getMedidas() {
-		return medidas;
-	}
+    private Collection<MedidaCorporal> medidas = Collections.emptyList();
 
-	public void setMedidas(Collection<MedidaCorporal> medidas) {
-		this.medidas = medidas;
-	}
+    public Collection<MedidaCorporal> getMedidas() {
+        return medidas;
+    }
 
-	@Inject
-	private AlunoService alunoService;
-	
-	@Inject
-	private MedidaCorporalService medidaCorporalService;
+    public void setMedidas(Collection<MedidaCorporal> medidas) {
+        this.medidas = medidas;
+    }
 
-	public void carregaDados() {
-		aluno = alunoService.buscaPorId(idAluno);
-		medidas = medidaCorporalService.obtemTodasMedidas(aluno);
-		executaScript("evolucao.controller.renderizaGraficoEvolucao(" + idAluno + ");");
-	}
+    @Inject
+    private AlunoService alunoService;
 
-	public Aluno getAluno() {
-		return aluno;
-	}
+    @Inject
+    private MedidaCorporalService medidaCorporalService;
 
-	public Long getIdAluno() {
-		return idAluno;
-	}
+    public void carregaDados() {
+        aluno = alunoService.buscaPorId(idAluno);
+        medidas = medidaCorporalService.obtemTodasMedidas(aluno);
+        executaScript("evolucao.controller.renderizaGraficoEvolucao(" + idAluno + ");");
+    }
 
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
+    public Aluno getAluno() {
+        return aluno;
+    }
 
-	public void setIdAluno(Long idAluno) {
-		this.idAluno = idAluno;
-	}
+    public Long getIdAluno() {
+        return idAluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
+
+    public void setIdAluno(Long idAluno) {
+        this.idAluno = idAluno;
+    }
 
 }

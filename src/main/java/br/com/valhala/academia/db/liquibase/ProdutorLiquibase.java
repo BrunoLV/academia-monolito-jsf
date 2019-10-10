@@ -16,41 +16,41 @@ import liquibase.resource.ResourceAccessor;
 
 public class ProdutorLiquibase {
 
-	private Properties propriedadesBancoDados;
+    private Properties propriedadesBancoDados;
 
-	@Produces
-	@LiquibaseType
-	public CDILiquibaseConfig criaConfiguracao() {
-		CDILiquibaseConfig configuracao = new CDILiquibaseConfig();
-		configuracao.setChangeLog("liquibase/db.changelog-mestre.yaml");
-		return configuracao;
-	}
+    @Produces
+    @LiquibaseType
+    public CDILiquibaseConfig criaConfiguracao() {
+        CDILiquibaseConfig configuracao = new CDILiquibaseConfig();
+        configuracao.setChangeLog("liquibase/db.changelog-mestre.yaml");
+        return configuracao;
+    }
 
-	@Produces
-	@LiquibaseType
-	public DataSource criaDataSource() {
-		BasicDataSource ds = new BasicDataSource();
-		ds.setDriverClassName(propriedadesBancoDados.getProperty("database.driver"));
-		ds.setUrl(propriedadesBancoDados.getProperty("database.url"));
-		ds.setUsername(propriedadesBancoDados.getProperty("database.usuario"));
-		ds.setPassword(propriedadesBancoDados.getProperty("database.senha"));
-		return ds;
-	}
+    @Produces
+    @LiquibaseType
+    public DataSource criaDataSource() {
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName(propriedadesBancoDados.getProperty("database.driver"));
+        ds.setUrl(propriedadesBancoDados.getProperty("database.url"));
+        ds.setUsername(propriedadesBancoDados.getProperty("database.usuario"));
+        ds.setPassword(propriedadesBancoDados.getProperty("database.senha"));
+        return ds;
+    }
 
-	@Produces
-	@LiquibaseType
-	public ResourceAccessor criaResourceAccessor() {
-		return new ClassLoaderResourceAccessor(getClass().getClassLoader());
-	}
+    @Produces
+    @LiquibaseType
+    public ResourceAccessor criaResourceAccessor() {
+        return new ClassLoaderResourceAccessor(getClass().getClassLoader());
+    }
 
-	@PostConstruct
-	public void inicia() {
-		try (InputStream stream = getClass().getClassLoader().getResourceAsStream("db.properties")) {
-			propriedadesBancoDados = new Properties();
-			propriedadesBancoDados.load(stream);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
+    @PostConstruct
+    public void inicia() {
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("db.properties")) {
+            propriedadesBancoDados = new Properties();
+            propriedadesBancoDados.load(stream);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
 
 }

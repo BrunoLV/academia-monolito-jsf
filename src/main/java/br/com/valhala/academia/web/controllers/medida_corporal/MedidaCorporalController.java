@@ -17,63 +17,63 @@ import br.com.valhala.academia.web.controllers.BaseController;
 @ViewScoped
 public class MedidaCorporalController extends BaseController implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private MedidaCorporal medidaCorporal;
-	private Aluno aluno;
+    private MedidaCorporal medidaCorporal;
+    private Aluno aluno;
 
-	private Long idAluno;
-	private Long idMedidaCorporal;
+    private Long idAluno;
+    private Long idMedidaCorporal;
 
-	@Inject
-	private AlunoService alunoService;
+    @Inject
+    private AlunoService alunoService;
 
-	@Inject
-	private MedidaCorporalService medidaCorporalService;
+    @Inject
+    private MedidaCorporalService medidaCorporalService;
 
-	public void carregaDados() {
+    public void carregaDados() {
 
-		if (idAluno != null) {
-			aluno = alunoService.buscaPorId(idAluno);
-		}
+        if (idAluno != null) {
+            aluno = alunoService.buscaPorId(idAluno);
+        }
 
-		if (idMedidaCorporal != null) {
-			medidaCorporal = medidaCorporalService.buscaPorId(idMedidaCorporal);
-		}
+        if (idMedidaCorporal != null) {
+            medidaCorporal = medidaCorporalService.buscaPorId(idMedidaCorporal);
+        }
 
-	}
+    }
 
-	public Long getIdAluno() {
-		return idAluno;
-	}
+    public Long getIdAluno() {
+        return idAluno;
+    }
 
-	public Long getIdMedidaCorporal() {
-		return idMedidaCorporal;
-	}
+    public Long getIdMedidaCorporal() {
+        return idMedidaCorporal;
+    }
 
-	public MedidaCorporal getMedidaCorporal() {
-		return medidaCorporal;
-	}
+    public MedidaCorporal getMedidaCorporal() {
+        return medidaCorporal;
+    }
 
-	@PostConstruct
-	public void inicializa() {
-		medidaCorporal = new MedidaCorporal();
-	}
+    @PostConstruct
+    public void inicializa() {
+        medidaCorporal = new MedidaCorporal();
+    }
 
-	public String salva() {
-		medidaCorporalService.salva(medidaCorporal, aluno);
-		return "/ui/alunos/alunos.xhtml?faces-redirect=true";
-	}
+    public String salva() {
+        medidaCorporalService.salva(medidaCorporal, aluno);
+        return "/ui/alunos/alunos.xhtml?faces-redirect=true";
+    }
 
-	public void setIdAluno(Long idAluno) {
-		this.idAluno = idAluno;
-	}
+    public void setIdAluno(Long idAluno) {
+        this.idAluno = idAluno;
+    }
 
-	public void setIdMedidaCorporal(Long idMedidaCorporal) {
-		this.idMedidaCorporal = idMedidaCorporal;
-	}
+    public void setIdMedidaCorporal(Long idMedidaCorporal) {
+        this.idMedidaCorporal = idMedidaCorporal;
+    }
 
-	public void setMedidaCorporal(MedidaCorporal medidaCorporal) {
-		this.medidaCorporal = medidaCorporal;
-	}
+    public void setMedidaCorporal(MedidaCorporal medidaCorporal) {
+        this.medidaCorporal = medidaCorporal;
+    }
 }

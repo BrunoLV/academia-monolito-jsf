@@ -63,5 +63,12 @@ public class ValidadorAlunoTest {
         Set<String> validacoes = validador.validar(aluno);
         assertThat(validacoes, is(empty()));
     }
+    
+    @Test
+    @DisplayName("Deve validar quando parceiro possuir endereços inválidos")
+    public void deveValidarParceiroComEnderecoInvalido() {
+        Aluno aluno = Fixture.from(Aluno.class).gimme("");
+        
+    }
 
 }

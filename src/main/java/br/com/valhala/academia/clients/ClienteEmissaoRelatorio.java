@@ -22,32 +22,32 @@ import br.com.valhala.academia.clients.wrapper.RequisicaoRelatorio;
 @Named
 public class ClienteEmissaoRelatorio implements Serializable {
 
-	private static final Logger log = LogManager.getLogger(ClienteEmissaoRelatorio.class);
+    private static final Logger LOG = LogManager.getLogger(ClienteEmissaoRelatorio.class);
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String urlEmissaoRelatorio;
+    private String urlEmissaoRelatorio;
 
-	public ClienteEmissaoRelatorio() {
-		Properties props = new Properties();
-		try (InputStream stream = getClass().getClassLoader().getResourceAsStream("client.properties")) {
-			props.load(stream);
-			urlEmissaoRelatorio = props.getProperty("emissor.relatorio.url");
-		} catch (IOException e) {
-			log.warn("[construtor] Ocorreu erro para inicializar a classe. Erro: " + e.getMessage(), e);
-		}
-	}
+    public ClienteEmissaoRelatorio() {
+        Properties props = new Properties();
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("client.properties")) {
+            props.load(stream);
+            urlEmissaoRelatorio = props.getProperty("emissor.relatorio.url");
+        } catch (IOException e) {
+            LOG.warn("[construtor] Ocorreu erro para inicializar a classe. Erro: " + e.getMessage(), e);
+        }
+    }
 
-	public Relatorio emitiRelatorio(RequisicaoRelatorio requisicao) {
+    public Relatorio emitiRelatorio(RequisicaoRelatorio requisicao) {
 
-		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(urlEmissaoRelatorio).path("/");
-		Entity<RequisicaoRelatorio> entity = Entity.entity(requisicao, MediaType.APPLICATION_JSON);
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(urlEmissaoRelatorio).path("/");
+        Entity<RequisicaoRelatorio> entity = Entity.entity(requisicao, MediaType.APPLICATION_JSON);
 
-		try (Response response = target.request(MediaType.APPLICATION_JSON).post(entity)) {
-			return response.readEntity(Relatorio.class);
-		}
+        try (Response response = target.request(MediaType.APPLICATION_JSON).post(entity)) {
+            return response.readEntity(Relatorio.class);
+        }
 
-	}
+    }
 
 }
