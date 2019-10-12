@@ -13,14 +13,14 @@ import br.com.valhala.academia.validacao.ValidadorMunicipioNaoPertencentEstado;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.TYPE })
 @Constraint(validatedBy = ValidadorMunicipioNaoPertencentEstado.class)
 public @interface ValidaMunicipioNaoPertencenteEstado {
 
-    Class<?>[] groups() default {};
+	Class<?>[] groups() default {};
 
-    String message() default "{endereco.municipio.nao.pertence.estado}";
+	String message() default "{endereco.municipio.nao.pertence.estado}";
 
-    Class<? extends Payload>[] payload() default {};
+	Class<? extends Payload>[] payload() default {};
 
 }

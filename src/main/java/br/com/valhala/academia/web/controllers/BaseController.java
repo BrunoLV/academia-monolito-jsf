@@ -9,12 +9,12 @@ import org.primefaces.PrimeFaces;
 
 public abstract class BaseController {
 
-    public void adicionaMensagensNoContexto(FacesMessage.Severity severity, Collection<String> mensagens) {
-        mensagens.forEach(m -> Messages.addFlash(severity, null, m));
-    }
+	public void adicionaMensagensNoContexto(FacesMessage.Severity severity, Collection<String> mensagens) {
+		mensagens.forEach(m -> Messages.addFlash(severity, null, m));
+	}
 
-    public void executaScript(String funcao) {
-        PrimeFaces.current().executeScript(funcao);
-    }
+	public void executaScript(String funcao) {
+		PrimeFaces.current().executeScript(funcao);
+	}
 
 }

@@ -7,8 +7,8 @@ import br.com.valhala.academia.modelo.TipoLogradouro;
 @Named
 public class TipoLogradouroDao extends DaoBase<TipoLogradouro, Long> {
 
-    public TipoLogradouroDao() {
-        this.classePersistente = TipoLogradouro.class;
-    }
+	public TipoLogradouroDao() {
+		this.classePersistente = TipoLogradouro.class;
+	}
 
 }

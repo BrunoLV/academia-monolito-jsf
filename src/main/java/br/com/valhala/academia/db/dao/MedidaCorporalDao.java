@@ -12,29 +12,29 @@ import br.com.valhala.academia.modelo.MedidaCorporal;
 @Named
 public class MedidaCorporalDao extends DaoBase<MedidaCorporal, Long> {
 
-    public MedidaCorporalDao() {
-        this.classePersistente = MedidaCorporal.class;
-    }
+	public MedidaCorporalDao() {
+		this.classePersistente = MedidaCorporal.class;
+	}
 
-    public Collection<MedidaCorporal> obtemTodasAluno(Long idAluno) {
+	public Collection<MedidaCorporal> obtemTodasAluno(Long idAluno) {
 
-        final String jpql = "SELECT m FROM MedidaCorporal m WHERE m.aluno.id = :id ORDER BY m.dataMedicao ASC, m.id ASC";
+		final String jpql = "SELECT m FROM MedidaCorporal m WHERE m.aluno.id = :id ORDER BY m.dataMedicao ASC, m.id ASC";
 
-        TypedQuery<MedidaCorporal> query = em.createQuery(jpql, MedidaCorporal.class);
-        query.setParameter("id", idAluno);
+		TypedQuery<MedidaCorporal> query = em.createQuery(jpql, MedidaCorporal.class);
+		query.setParameter("id", idAluno);
 
-        return query.getResultList();
+		return query.getResultList();
 
-    }
+	}
 
-    public Optional<MedidaCorporal> recuperaUltimaMedicao(Aluno aluno) {
+	public Optional<MedidaCorporal> recuperaUltimaMedicao(Aluno aluno) {
 
-        final String jpql = "SELECT m FROM MedidaCorporal m WHERE m.aluno.id = :id ORDER BY m.dataMedicao DESC, m.id DESC";
+		final String jpql = "SELECT m FROM MedidaCorporal m WHERE m.aluno.id = :id ORDER BY m.dataMedicao DESC, m.id DESC";
 
-        TypedQuery<MedidaCorporal> query = em.createQuery(jpql, MedidaCorporal.class);
-        query.setParameter("id", aluno.getId());
+		TypedQuery<MedidaCorporal> query = em.createQuery(jpql, MedidaCorporal.class);
+		query.setParameter("id", aluno.getId());
 
-        return query.getResultList().stream().findFirst();
+		return query.getResultList().stream().findFirst();
 
-    }
+	}
 }

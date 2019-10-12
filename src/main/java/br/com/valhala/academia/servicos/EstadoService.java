@@ -12,14 +12,14 @@ import br.com.valhala.academia.modelo.enums.EnumUnidadeFederacao;
 @Named
 public class EstadoService implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Inject
-    private EstadoDao dao;
+	@Inject
+	private EstadoDao dao;
 
-    public Estado buscaEstadoPorUFComMunicipios(final EnumUnidadeFederacao uf) {
-        Estado estado = dao.buscaEstadoPorUFComMunicipios(uf);
-        return estado;
-    }
+	public Estado buscaEstadoPorUFComMunicipios(final EnumUnidadeFederacao uf) {
+		Estado estado = dao.buscaEstadoPorUFComMunicipios(uf);
+		return estado;
+	}
 
 }

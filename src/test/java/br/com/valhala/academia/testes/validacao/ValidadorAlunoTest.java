@@ -28,47 +28,47 @@ import br.com.valhala.academia.validacao.marcadores.ValidaAluno;
 @EnableWeld
 @DisplayName("Teste do validador de Aluno")
 public class ValidadorAlunoTest {
-	
-    @WeldSetup
-    public WeldInitiator weld = WeldInitiator.from(ValidadorAluno.class).activate(RequestScoped.class).build();
-    
-    @Inject
-    @ValidaAluno
-    private Validador validador;
 
-    @BeforeAll
-    public static void setup() {
-        FixtureFactoryLoader.loadTemplates("br.com.valhala.academia.testes.data.templates");
-    }
-    
-    @Test
-    @DisplayName("Deve injetar validador de aluno correto")
-    public void deveInjetarValidadorEnderecoCorreto() {
-        assertThat(validador, is(notNullValue()));
-        assertThat(validador, instanceOf(ValidadorAluno.class));
-    }
-    
-    @Test
-    @DisplayName("Deve passar sem erro quando aluno validos, porém sem relacionamentos")
-    public void devePassarSemErroAlunoValidoSemRelacionamentos() {
-    	Aluno aluno = Fixture.from(Aluno.class).gimme("cenario_valido_sem_relacionamentos");
-        Set<String> validacoes = validador.validar(aluno);
-        assertThat(validacoes, is(empty()));
-    }
-    
-    @Test
-    @DisplayName("Deve passar sem erro quando aluno valido, com endereços válidos")
-    public void devePassarSemErroAlunoValidoComEnderecosValidos() {
-    	Aluno aluno = Fixture.from(Aluno.class).gimme("cenario_valido_com_enderecos_validos");
-        Set<String> validacoes = validador.validar(aluno);
-        assertThat(validacoes, is(empty()));
-    }
-    
-    @Test
-    @DisplayName("Deve validar quando parceiro possuir endereços inválidos")
-    public void deveValidarParceiroComEnderecoInvalido() {
-        Aluno aluno = Fixture.from(Aluno.class).gimme("");
-        
-    }
+	@BeforeAll
+	public static void setup() {
+		FixtureFactoryLoader.loadTemplates("br.com.valhala.academia.testes.data.templates");
+	}
+
+	@WeldSetup
+	public WeldInitiator weld = WeldInitiator.from(ValidadorAluno.class).activate(RequestScoped.class).build();
+
+	@Inject
+	@ValidaAluno
+	private Validador validador;
+
+	@Test
+	@DisplayName("Deve injetar validador de aluno correto")
+	public void deveInjetarValidadorEnderecoCorreto() {
+		assertThat(validador, is(notNullValue()));
+		assertThat(validador, instanceOf(ValidadorAluno.class));
+	}
+
+	@Test
+	@DisplayName("Deve passar sem erro quando aluno valido, com endereços válidos")
+	public void devePassarSemErroAlunoValidoComEnderecosValidos() {
+		Aluno aluno = Fixture.from(Aluno.class).gimme("cenario_valido_com_enderecos_validos");
+		Set<String> validacoes = validador.validar(aluno);
+		assertThat(validacoes, is(empty()));
+	}
+
+	@Test
+	@DisplayName("Deve passar sem erro quando aluno validos, porém sem relacionamentos")
+	public void devePassarSemErroAlunoValidoSemRelacionamentos() {
+		Aluno aluno = Fixture.from(Aluno.class).gimme("cenario_valido_sem_relacionamentos");
+		Set<String> validacoes = validador.validar(aluno);
+		assertThat(validacoes, is(empty()));
+	}
+
+	@Test
+	@DisplayName("Deve validar quando parceiro possuir endereços inválidos")
+	public void deveValidarParceiroComEnderecoInvalido() {
+		Aluno aluno = Fixture.from(Aluno.class).gimme("");
+
+	}
 
 }

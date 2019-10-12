@@ -12,16 +12,16 @@ import br.com.valhala.academia.modelo.Aluno;
 
 public class AlunoEntityListener {
 
-    @PrePersist
-    @PreUpdate
-    public void completaDadosAutomaticos(Aluno aluno) {
-        if (StringUtils.isBlank(aluno.getUuid())) {
-            UUID uuid = UUID.randomUUID();
-            aluno.setUuid(uuid.toString());
-        }
-        if (CollectionUtils.isNotEmpty(aluno.getTelefones())) {
-            aluno.getTelefones().forEach(t -> t.setAluno(aluno));
-        }
-    }
+	@PrePersist
+	@PreUpdate
+	public void completaDadosAutomaticos(Aluno aluno) {
+		if (StringUtils.isBlank(aluno.getUuid())) {
+			UUID uuid = UUID.randomUUID();
+			aluno.setUuid(uuid.toString());
+		}
+		if (CollectionUtils.isNotEmpty(aluno.getTelefones())) {
+			aluno.getTelefones().forEach(t -> t.setAluno(aluno));
+		}
+	}
 
 }

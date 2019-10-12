@@ -15,40 +15,40 @@ import br.com.valhala.academia.modelo.MedidaCorporal;
 @Named
 public class MedidaCorporalService implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Inject
-    private MedidaCorporalDao dao;
+	@Inject
+	private MedidaCorporalDao dao;
 
-    public MedidaCorporal buscaPorId(Long id) {
-        return dao.buscaPorId(id);
-    }
+	public MedidaCorporal buscaPorId(Long id) {
+		return dao.buscaPorId(id);
+	}
 
-    public Optional<MedidaCorporal> recuperaUltimaMedicao(Aluno aluno) {
-        return dao.recuperaUltimaMedicao(aluno);
-    }
+	@Transacional
+	public void exclui(MedidaCorporal medida) {
+		MedidaCorporal medidaCorporal = dao.buscaPorId(medida.getId());
+		if (medidaCorporal == null) {
+			return;
+		}
+		dao.exclui(medidaCorporal);
+	}
 
-    @Transacional
-    public void salva(MedidaCorporal medidaCorporal, Aluno aluno) {
-        medidaCorporal.setAluno(aluno);
-        if (medidaCorporal.getId() == null) {
-            dao.salva(medidaCorporal);
-        } else {
-            dao.atualiza(medidaCorporal);
-        }
-    }
+	public Collection<MedidaCorporal> obtemTodasMedidas(Aluno aluno) {
+		Collection<MedidaCorporal> medidas = dao.obtemTodasAluno(aluno.getId());
+		return medidas;
+	}
 
-    @Transacional
-    public void exclui(MedidaCorporal medida) {
-        MedidaCorporal medidaCorporal = dao.buscaPorId(medida.getId());
-        if (medidaCorporal == null) {
-            return;
-        }
-        dao.exclui(medidaCorporal);
-    }
+	public Optional<MedidaCorporal> recuperaUltimaMedicao(Aluno aluno) {
+		return dao.recuperaUltimaMedicao(aluno);
+	}
 
-    public Collection<MedidaCorporal> obtemTodasMedidas(Aluno aluno) {
-        Collection<MedidaCorporal> medidas = dao.obtemTodasAluno(aluno.getId());
-        return medidas;
-    }
+	@Transacional
+	public void salva(MedidaCorporal medidaCorporal, Aluno aluno) {
+		medidaCorporal.setAluno(aluno);
+		if (medidaCorporal.getId() == null) {
+			dao.salva(medidaCorporal);
+		} else {
+			dao.atualiza(medidaCorporal);
+		}
+	}
 }

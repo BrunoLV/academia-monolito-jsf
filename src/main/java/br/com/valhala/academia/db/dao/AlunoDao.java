@@ -17,39 +17,40 @@ import br.com.valhala.academia.modelo.MedidaCorporal;
 @Named
 public class AlunoDao extends DaoBase<Aluno, Long> {
 
-    public AlunoDao() {
-        this.classePersistente = Aluno.class;
-    }
+	public AlunoDao() {
+		this.classePersistente = Aluno.class;
+	}
 
-    public Aluno buscaPorIdComEnderecos(final Long id) {
+	public Aluno buscaPorIdComEnderecos(final Long id) {
 
-        CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
 
-        CriteriaQuery<Aluno> criteriaQuery = cb.createQuery(classePersistente);
-        Root<Aluno> from = criteriaQuery.from(classePersistente);
-        from.fetch("telefones", JoinType.LEFT);
-        from.fetch("enderecos", JoinType.LEFT);
-        criteriaQuery.where(cb.equal(from.get("id"), id));
+		CriteriaQuery<Aluno> criteriaQuery = cb.createQuery(classePersistente);
+		Root<Aluno> from = criteriaQuery.from(classePersistente);
+		from.fetch("telefones", JoinType.LEFT);
+		from.fetch("enderecos", JoinType.LEFT);
+		criteriaQuery.where(cb.equal(from.get("id"), id));
 
-        TypedQuery<Aluno> query = em.createQuery(criteriaQuery);
-        Aluno aluno = query.getSingleResult();
+		TypedQuery<Aluno> query = em.createQuery(criteriaQuery);
+		Aluno aluno = query.getSingleResult();
 
-        return aluno;
+		return aluno;
 
-    }
+	}
 
-    public void deleta(Aluno aluno) {
+	public void deleta(Aluno aluno) {
 
-        String sqlMedidas = "SELECT mc FROM MedidaCorporal mc WHERE mc.aluno = :aluno";
+		String sqlMedidas = "SELECT mc FROM MedidaCorporal mc WHERE mc.aluno = :aluno";
 
-        List<MedidaCorporal> medidas = em.createQuery(sqlMedidas, MedidaCorporal.class).setParameter("aluno", aluno).getResultList();
+		List<MedidaCorporal> medidas = em.createQuery(sqlMedidas, MedidaCorporal.class).setParameter("aluno", aluno)
+				.getResultList();
 
-        if (CollectionUtils.isNotEmpty(medidas)) {
-            medidas.stream().forEach(mc -> em.remove(mc));
-        }
+		if (CollectionUtils.isNotEmpty(medidas)) {
+			medidas.stream().forEach(mc -> em.remove(mc));
+		}
 
-        em.remove(aluno);
+		em.remove(aluno);
 
-    }
+	}
 
 }

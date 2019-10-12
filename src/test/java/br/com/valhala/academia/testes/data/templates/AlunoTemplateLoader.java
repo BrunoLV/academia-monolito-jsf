@@ -16,7 +16,7 @@ public class AlunoTemplateLoader implements TemplateLoader {
 
 	@Override
 	public void load() {
-		
+
 		Fixture.of(Aluno.class).addTemplate("cenario_valido_sem_relacionamentos", new Rule() {
 			{
 				add("nome", "Elaine Rosângela Hadassa Aragão");
@@ -26,12 +26,13 @@ public class AlunoTemplateLoader implements TemplateLoader {
 				add("situacao", EnumSituacaoAluno.ATIVO);
 				add("sexo", EnumSexoAluno.FEMININO);
 			}
-		}).addTemplate("cenario_valido_com_enderecos_validos").inherits("cenario_valido_sem_relacionamentos", new Rule() {
-			{
-				add("enderecos", has(1).of(Endereco.class, "cenario_parceiro_valido"));
-			}
-		});
-		
+		}).addTemplate("cenario_valido_com_enderecos_validos").inherits("cenario_valido_sem_relacionamentos",
+				new Rule() {
+					{
+						add("enderecos", has(1).of(Endereco.class, "cenario_parceiro_valido"));
+					}
+				});
+
 	}
 
 }
