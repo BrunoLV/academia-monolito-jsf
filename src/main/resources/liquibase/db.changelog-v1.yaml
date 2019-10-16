@@ -33,7 +33,8 @@ databaseChangeLog:
                      nullable: false
                      unique: true
       -  loadData:
-            file: liquibase/v1/estados.csv
+            file: v1/estados.csv
+            relativeToChangelogFile: true
             tableName: tb_estado
 -  changeSet:
       id: v1-2
@@ -73,7 +74,8 @@ databaseChangeLog:
                      foreignKeyName: fk_municipio_id_estado
                      references: tb_estado(id)
       -  loadData:
-            file: liquibase/v1/municipios.csv
+            file: v1/municipios.csv
+            relativeToChangelogFile: true
             tableName: tb_municipio
       -  sql: update tb_municipio m set m.id_estado = (select e.id from tb_estado e where e.uf = m.uf)
 -  changeSet:
@@ -161,7 +163,8 @@ databaseChangeLog:
                      unique: true
                      nullable: false
       -  loadData:
-            file: liquibase/v1/tipos_logradouros.csv
+            file: v1/tipos_logradouros.csv
+            relativeToChangelogFile: true
             tableName: tb_tipo_logradouro
 -  changeSet:
       id: v1-5

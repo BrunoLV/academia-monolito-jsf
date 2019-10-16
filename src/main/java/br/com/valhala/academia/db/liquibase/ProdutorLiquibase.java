@@ -45,7 +45,7 @@ public class ProdutorLiquibase {
 
 	@PostConstruct
 	public void inicia() {
-		try (InputStream stream = getClass().getClassLoader().getResourceAsStream("db.properties")) {
+		try (InputStream stream = getClass().getClassLoader().getResourceAsStream("liquibase.properties")) {
 			propriedadesBancoDados = new Properties();
 			propriedadesBancoDados.load(stream);
 		} catch (Exception e) {

@@ -21,7 +21,7 @@ public class AlunoDao extends DaoBase<Aluno, Long> {
 		this.classePersistente = Aluno.class;
 	}
 
-	public Aluno buscaPorIdComEnderecos(final Long id) {
+	public Aluno buscaPorIdComTodosOsDados(final Long id) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
@@ -40,10 +40,9 @@ public class AlunoDao extends DaoBase<Aluno, Long> {
 
 	public void deleta(Aluno aluno) {
 
-		String sqlMedidas = "SELECT mc FROM MedidaCorporal mc WHERE mc.aluno = :aluno";
-
-		List<MedidaCorporal> medidas = em.createQuery(sqlMedidas, MedidaCorporal.class).setParameter("aluno", aluno)
-				.getResultList();
+		List<MedidaCorporal> medidas = em.createQuery("SELECT mc FROM MedidaCorporal mc WHERE mc.aluno = :aluno", MedidaCorporal.class)
+										 .setParameter("aluno", aluno)
+										 .getResultList();
 
 		if (CollectionUtils.isNotEmpty(medidas)) {
 			medidas.stream().forEach(mc -> em.remove(mc));

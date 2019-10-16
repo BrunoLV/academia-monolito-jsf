@@ -8,12 +8,10 @@ import static org.hamcrest.Matchers.notNullValue;
 
 import java.util.Set;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
-import org.jboss.weld.junit5.EnableWeld;
-import org.jboss.weld.junit5.WeldInitiator;
-import org.jboss.weld.junit5.WeldSetup;
+import org.jboss.weld.junit5.auto.AddPackages;
+import org.jboss.weld.junit5.auto.EnableAutoWeld;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +23,8 @@ import br.com.valhala.academia.validacao.Validador;
 import br.com.valhala.academia.validacao.ValidadorAluno;
 import br.com.valhala.academia.validacao.marcadores.ValidaAluno;
 
-@EnableWeld
+@EnableAutoWeld
+@AddPackages(value = {Validador.class})
 @DisplayName("Teste do validador de Aluno")
 public class ValidadorAlunoTest {
 
@@ -34,11 +33,7 @@ public class ValidadorAlunoTest {
 		FixtureFactoryLoader.loadTemplates("br.com.valhala.academia.testes.data.templates");
 	}
 
-	@WeldSetup
-	public WeldInitiator weld = WeldInitiator.from(ValidadorAluno.class).activate(RequestScoped.class).build();
-
-	@Inject
-	@ValidaAluno
+	@Inject @ValidaAluno
 	private Validador validador;
 
 	@Test
@@ -62,13 +57,6 @@ public class ValidadorAlunoTest {
 		Aluno aluno = Fixture.from(Aluno.class).gimme("cenario_valido_sem_relacionamentos");
 		Set<String> validacoes = validador.validar(aluno);
 		assertThat(validacoes, is(empty()));
-	}
-
-	@Test
-	@DisplayName("Deve validar quando parceiro possuir endereços inválidos")
-	public void deveValidarParceiroComEnderecoInvalido() {
-		Aluno aluno = Fixture.from(Aluno.class).gimme("");
-
 	}
 
 }

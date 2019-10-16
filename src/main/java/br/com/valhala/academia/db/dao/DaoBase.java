@@ -38,5 +38,9 @@ public abstract class DaoBase<E, I> {
 	public void salva(E entidade) {
 		em.persist(entidade);
 	}
+	
+	public EntityManager getEm() {
+		return em;
+	}
 
 }

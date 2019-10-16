@@ -31,7 +31,7 @@ public class AlunoService implements Serializable {
 	private ClienteEmissaoRelatorio clienteEmissaoRelatorio;
 
 	public Aluno buscaPorId(Long id) {
-		return dao.buscaPorIdComEnderecos(id);
+		return dao.buscaPorIdComTodosOsDados(id);
 	}
 
 	public Collection<Aluno> buscaTodos() {
@@ -40,7 +40,7 @@ public class AlunoService implements Serializable {
 
 	public Relatorio emiteRelatorioDetalheAluno(Long id) {
 		try {
-			Aluno aluno = dao.buscaPorIdComEnderecos(id);
+			Aluno aluno = dao.buscaPorIdComTodosOsDados(id);
 
 			ObjectMapper mapper = new ObjectMapper();
 			String json = mapper.writeValueAsString(aluno);

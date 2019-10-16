@@ -12,12 +12,10 @@ import static org.hamcrest.Matchers.notNullValue;
 
 import java.util.Set;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
-import org.jboss.weld.junit5.EnableWeld;
-import org.jboss.weld.junit5.WeldInitiator;
-import org.jboss.weld.junit5.WeldSetup;
+import org.jboss.weld.junit5.auto.AddPackages;
+import org.jboss.weld.junit5.auto.EnableAutoWeld;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +27,8 @@ import br.com.valhala.academia.validacao.Validador;
 import br.com.valhala.academia.validacao.ValidadorEndereco;
 import br.com.valhala.academia.validacao.marcadores.ValidaEndereco;
 
-@EnableWeld
+@EnableAutoWeld
+@AddPackages(value = {Validador.class})
 @DisplayName("Teste do validador de Endereço")
 public class ValidadorEnderecoTest {
 
@@ -37,9 +36,6 @@ public class ValidadorEnderecoTest {
 	public static void setup() {
 		FixtureFactoryLoader.loadTemplates("br.com.valhala.academia.testes.data.templates");
 	}
-
-	@WeldSetup
-	public WeldInitiator weld = WeldInitiator.from(ValidadorEndereco.class).activate(RequestScoped.class).build();
 
 	@Inject
 	@ValidaEndereco
