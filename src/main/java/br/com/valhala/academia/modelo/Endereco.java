@@ -42,7 +42,6 @@ public class Endereco implements Serializable {
 	@Column(name = "numero", length = 5, nullable = false)
 	private String numero;
 
-	@Size(min = 2, message = "{endereco.complemento.tamanho.invalido.min}")
 	@Size(max = 20, message = "{endereco.complemento.tamanho.invalido.max}")
 	@Column(name = "complemento", length = 20)
 	private String complemento;

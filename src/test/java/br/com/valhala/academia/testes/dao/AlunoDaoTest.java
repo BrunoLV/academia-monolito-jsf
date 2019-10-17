@@ -82,13 +82,13 @@ public class AlunoDaoTest {
 	@Test
 	@DisplayName("Deve pesquisar aluno por id e trazer todos os dados carregados")
 	void deveCarregarAlunoCompletoPorId() {
-		
+
 		Aluno aluno = dao.buscaPorIdComTodosOsDados(0L);
-		
+
 		assertAll(() -> assertThat(aluno, is(notNullValue())),
 				() -> assertThat(aluno.getEnderecos(), is(not(emptyCollectionOf(Endereco.class)))),
 				() -> assertThat(aluno.getTelefones(), is(not(emptyCollectionOf(Telefone.class)))));
-		
+
 	}
 
 	@BeforeEach

@@ -78,17 +78,6 @@ public class ValidadorEnderecoTest {
 	}
 
 	@Test
-	@DisplayName("Deve validar quando o endereço tiver complemento informado com tamanho menor que o permitido")
-	public void deveValidarEnderecoComTamanhoComplementoMenorPermitido() {
-		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_complemento_invalido_tamanho_abaixo_permitido");
-		Set<String> validacoes = validador.validar(endereco);
-		assertThat(validacoes, is(not(empty())));
-		assertThat(validacoes.size(), equalTo(1));
-		assertThat(validacoes,
-				hasItem("Complemento informado com tamanho abaixo do mínimo permitido de 2 caracteres."));
-	}
-
-	@Test
 	@DisplayName("Deve validar quando o endereço não possuir bairro informado")
 	public void deveValidarEnderecoSemBairro() {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_sem_bairro");
