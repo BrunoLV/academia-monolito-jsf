@@ -17,6 +17,8 @@ import javax.servlet.http.Part;
 import org.apache.commons.collections4.CollectionUtils;
 
 import br.com.valhala.academia.arquivos.GerenciadorArquivos;
+import br.com.valhala.academia.clients.ClienteApiCep;
+import br.com.valhala.academia.clients.wrapper.EnderecoApiCep;
 import br.com.valhala.academia.modelo.Aluno;
 import br.com.valhala.academia.modelo.Endereco;
 import br.com.valhala.academia.modelo.Estado;
@@ -91,6 +93,9 @@ public class AlunoController extends BaseController implements Serializable {
 	@Inject
 	@ValidaAluno
 	private Validador validadorAluno;
+	
+	@Inject
+	private ClienteApiCep apiCep;
 
 	public AlunoController() {
 		super();
@@ -287,6 +292,44 @@ public class AlunoController extends BaseController implements Serializable {
 
 	public void setUfSelecionado(EnumUnidadeFederacao ufSelecionado) {
 		this.ufSelecionado = ufSelecionado;
+	}
+	
+	public void onChangeCep() {
+		if (this.endereco.getCep() != null) {
+			EnderecoApiCep resultado = apiCep.obtemEndereco(this.endereco.getCep());
+			if (resultado != null) {
+				preencheEnderecoAPartirPesquisaCep(resultado);
+			}
+		}
+	}
+
+	private void preencheEnderecoAPartirPesquisaCep(EnderecoApiCep resultado) {
+		Object[] logradouroSeparado = separaLogradouroDoTipo(resultado.getLogradouro());
+		endereco.setTipoLogradouro((TipoLogradouro) logradouroSeparado[0]);
+		endereco.setLogradouro((String) logradouroSeparado[1]);
+		endereco.setBairro(resultado.getBairro());
+		endereco.setComplemento(resultado.getComplemento());
+		ufSelecionado = EnumUnidadeFederacao.valueOf(resultado.getUf());
+		if (ufSelecionado == null) {
+			estado = null;
+			endereco.setMunicipio(new Municipio());
+		} else {
+			estado = estadoService.buscaEstadoPorUFComMunicipios(ufSelecionado);
+			for (Municipio municipio : estado.getMunicipios()) {
+				if (municipio.getCodigoIbge().equals(Integer.valueOf(resultado.getIbge()))) {
+					endereco.setMunicipio(municipio);
+				}
+			}
+		}
+	}
+	
+	private Object[] separaLogradouroDoTipo(String logradouro) {
+		for (TipoLogradouro tipoLogradouro : tiposLogradouros) {
+			if (logradouro.toLowerCase().contains(tipoLogradouro.getDescricao().toLowerCase())) {
+				return new Object[] {tipoLogradouro, logradouro.replace(tipoLogradouro.getDescricao(), "").trim()};
+			}
+		}
+		return null;
 	}
 
 }

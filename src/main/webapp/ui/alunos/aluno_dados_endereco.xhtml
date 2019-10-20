@@ -26,6 +26,20 @@
                     </h:selectOneMenu>
                 </div>
             </div>
+            
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>CEP</label> 
+                    <input type="text" 
+                    	   class="form-control cep"
+                           jsf:value="#{alunoController.endereco.cep}">
+                    	<f:ajax event="change"
+                    			execute="@this"
+                    			render="dadosEndereco"
+                    			listener="#{alunoController.onChangeCep}" />
+                    </input>
+                </div>
+            </div>
         
         </div>
 
@@ -50,6 +64,7 @@
                 <div class="form-group">
                     <label>Logradouro</label> 
                     <input type="text" 
+                    	   id="logradouro"
                     	   class="form-control"
                            jsf:value="#{alunoController.endereco.logradouro}"/>
                 </div>
@@ -58,7 +73,7 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label>Número</label> 
-                    <input type="text" 
+                    <input type="text"
                     	   class="form-control"
                            jsf:value="#{alunoController.endereco.numero}"/>
                 </div>
@@ -74,15 +89,6 @@
                     <input type="text" 
                     	   class="form-control"
                            jsf:value="#{alunoController.endereco.complemento}"/>
-                </div>
-            </div>
-
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label>CEP</label> 
-                    <input type="text" 
-                    	   class="form-control cep"
-                           jsf:value="#{alunoController.endereco.cep}" />
                 </div>
             </div>
 
