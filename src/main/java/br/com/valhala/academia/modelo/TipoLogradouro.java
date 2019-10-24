@@ -29,6 +29,16 @@ public class TipoLogradouro implements Serializable {
 	@Column(name = "descricao", unique = true, length = 40)
 	private String descricao;
 
+	public TipoLogradouro() {
+		super();
+	}
+	
+	private TipoLogradouro(Builder builder) {
+		this.id = builder.id;
+		this.abreviatura = builder.abreviatura;
+		this.descricao = builder.descricao;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -94,6 +104,38 @@ public class TipoLogradouro implements Serializable {
 	@Override
 	public String toString() {
 		return "TipoLogradouro [id=" + id + ", abreviatura=" + abreviatura + ", descricao=" + descricao + "]";
+	}
+
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public static final class Builder {
+		private Long id;
+		private String abreviatura;
+		private String descricao;
+
+		private Builder() {
+		}
+
+		public Builder withId(Long id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder withAbreviatura(String abreviatura) {
+			this.abreviatura = abreviatura;
+			return this;
+		}
+
+		public Builder withDescricao(String descricao) {
+			this.descricao = descricao;
+			return this;
+		}
+
+		public TipoLogradouro build() {
+			return new TipoLogradouro(this);
+		}
 	}
 
 }

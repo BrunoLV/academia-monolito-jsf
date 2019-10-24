@@ -16,6 +16,16 @@ public class EnderecoApiCep implements Serializable {
 	private String cidade;
 	private String uf;
 	private String ibge;
+
+	private EnderecoApiCep(Builder builder) {
+		this.cep = builder.cep;
+		this.logradouro = builder.logradouro;
+		this.complemento = builder.complemento;
+		this.bairro = builder.bairro;
+		this.cidade = builder.cidade;
+		this.uf = builder.uf;
+		this.ibge = builder.ibge;
+	}
 	
 	public EnderecoApiCep() {
 		super();
@@ -75,6 +85,62 @@ public class EnderecoApiCep implements Serializable {
 
 	public void setIbge(String ibge) {
 		this.ibge = ibge;
+	}
+
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public static final class Builder {
+		private String cep;
+		private String logradouro;
+		private String complemento;
+		private String bairro;
+		private String cidade;
+		private String uf;
+		private String ibge;
+
+		private Builder() {
+		}
+
+		public Builder withCep(String cep) {
+			this.cep = cep;
+			return this;
+		}
+
+		public Builder withLogradouro(String logradouro) {
+			this.logradouro = logradouro;
+			return this;
+		}
+
+		public Builder withComplemento(String complemento) {
+			this.complemento = complemento;
+			return this;
+		}
+
+		public Builder withBairro(String bairro) {
+			this.bairro = bairro;
+			return this;
+		}
+
+		public Builder withCidade(String cidade) {
+			this.cidade = cidade;
+			return this;
+		}
+
+		public Builder withUf(String uf) {
+			this.uf = uf;
+			return this;
+		}
+
+		public Builder withIbge(String ibge) {
+			this.ibge = ibge;
+			return this;
+		}
+
+		public EnderecoApiCep build() {
+			return new EnderecoApiCep(this);
+		}
 	}
 
 }

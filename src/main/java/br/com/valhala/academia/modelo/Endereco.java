@@ -249,5 +249,12 @@ public class Endereco implements Serializable {
 				+ complemento + ", bairro=" + bairro + ", cep=" + cep + ", tipoEndereco=" + tipoEndereco
 				+ ", tipoLogradouro=" + tipoLogradouro + ", municipio=" + municipio + "]";
 	}
+	
+	public String getEnderecoCompleto() {
+		if (tipoLogradouro != null && logradouro != null) {
+			return tipoLogradouro.getDescricao() + " " + logradouro;
+		}
+		return null;
+	}
 
 }

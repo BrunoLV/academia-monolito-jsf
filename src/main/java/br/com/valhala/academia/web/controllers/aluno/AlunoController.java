@@ -15,6 +15,7 @@ import javax.inject.Named;
 import javax.servlet.http.Part;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import br.com.valhala.academia.arquivos.GerenciadorArquivos;
 import br.com.valhala.academia.clients.ClienteApiCep;
@@ -294,42 +295,38 @@ public class AlunoController extends BaseController implements Serializable {
 		this.ufSelecionado = ufSelecionado;
 	}
 	
-	public void onChangeCep() {
-		if (this.endereco.getCep() != null) {
-			EnderecoApiCep resultado = apiCep.obtemEndereco(this.endereco.getCep());
-			if (resultado != null) {
-				preencheEnderecoAPartirPesquisaCep(resultado);
+	public void trataMudancaCep() {
+		if (StringUtils.isNotBlank(endereco.getCep())) {
+			EnderecoApiCep enderecoApi = apiCep.obtemEndereco(this.endereco.getCep());
+			if (enderecoApi != null) {
+				preencheEnderecoAPartirPesquisaCep(enderecoApi);
 			}
 		}
 	}
 
-	private void preencheEnderecoAPartirPesquisaCep(EnderecoApiCep resultado) {
-		Object[] logradouroSeparado = separaLogradouroDoTipo(resultado.getLogradouro());
-		endereco.setTipoLogradouro((TipoLogradouro) logradouroSeparado[0]);
-		endereco.setLogradouro((String) logradouroSeparado[1]);
-		endereco.setBairro(resultado.getBairro());
-		endereco.setComplemento(resultado.getComplemento());
-		ufSelecionado = EnumUnidadeFederacao.valueOf(resultado.getUf());
+	private void preencheEnderecoAPartirPesquisaCep(EnderecoApiCep enderecoApi) {
+		for (TipoLogradouro tipoLogradouro : tiposLogradouros) {
+			if (enderecoApi.getLogradouro().toLowerCase().contains(tipoLogradouro.getDescricao().toLowerCase())) {
+				endereco.setTipoLogradouro(tipoLogradouro);
+				endereco.setLogradouro(enderecoApi.getLogradouro().replace(tipoLogradouro.getDescricao(), "").trim());
+				break;
+			}
+		}
+		endereco.setBairro(enderecoApi.getBairro());
+		endereco.setComplemento(enderecoApi.getComplemento());
+		ufSelecionado = EnumUnidadeFederacao.valueOf(enderecoApi.getUf());
 		if (ufSelecionado == null) {
 			estado = null;
 			endereco.setMunicipio(new Municipio());
 		} else {
 			estado = estadoService.buscaEstadoPorUFComMunicipios(ufSelecionado);
 			for (Municipio municipio : estado.getMunicipios()) {
-				if (municipio.getCodigoIbge().equals(Integer.valueOf(resultado.getIbge()))) {
+				if (municipio.getCodigoIbge().equals(Integer.valueOf(enderecoApi.getIbge()))) {
 					endereco.setMunicipio(municipio);
+					break;
 				}
 			}
 		}
-	}
-	
-	private Object[] separaLogradouroDoTipo(String logradouro) {
-		for (TipoLogradouro tipoLogradouro : tiposLogradouros) {
-			if (logradouro.toLowerCase().contains(tipoLogradouro.getDescricao().toLowerCase())) {
-				return new Object[] {tipoLogradouro, logradouro.replace(tipoLogradouro.getDescricao(), "").trim()};
-			}
-		}
-		return null;
 	}
 
 }

@@ -46,6 +46,14 @@ public class Municipio implements Serializable {
 	@JoinColumn(name = "id_estado", nullable = false, foreignKey = @ForeignKey(name = "fk_municipio_id_estado"))
 	private Estado estado;
 
+	private Municipio(Builder builder) {
+		this.id = builder.id;
+		this.nome = builder.nome;
+		this.codigoIbge = builder.codigoIbge;
+		this.uf = builder.uf;
+		this.estado = builder.estado;
+	}
+
 	public Municipio() {
 		super();
 	}
@@ -136,6 +144,50 @@ public class Municipio implements Serializable {
 	public String toString() {
 		return "Municipio [id=" + id + ", nome=" + nome + ", codigoIbge=" + codigoIbge + ", uf=" + uf + ", estado="
 				+ estado + "]";
+	}
+
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public static final class Builder {
+		private Long id;
+		private String nome;
+		private Integer codigoIbge;
+		private EnumUnidadeFederacao uf;
+		private Estado estado;
+
+		private Builder() {
+		}
+
+		public Builder withId(Long id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder withNome(String nome) {
+			this.nome = nome;
+			return this;
+		}
+
+		public Builder withCodigoIbge(Integer codigoIbge) {
+			this.codigoIbge = codigoIbge;
+			return this;
+		}
+
+		public Builder withUf(EnumUnidadeFederacao uf) {
+			this.uf = uf;
+			return this;
+		}
+
+		public Builder withEstado(Estado estado) {
+			this.estado = estado;
+			return this;
+		}
+
+		public Municipio build() {
+			return new Municipio(this);
+		}
 	}
 
 }
