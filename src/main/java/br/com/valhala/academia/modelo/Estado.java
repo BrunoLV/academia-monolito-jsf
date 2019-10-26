@@ -24,7 +24,51 @@ import br.com.valhala.academia.modelo.enums.EnumUnidadeFederacao;
 @Table(name = "tb_estado")
 public class Estado implements Serializable {
 
+	public static final class Builder {
+		private Long id;
+		private Short codigo;
+		private String nome;
+		private EnumUnidadeFederacao uf;
+		private Collection<Municipio> municipios = Collections.emptyList();
+
+		private Builder() {
+		}
+
+		public Estado build() {
+			return new Estado(this);
+		}
+
+		public Builder withCodigo(Short codigo) {
+			this.codigo = codigo;
+			return this;
+		}
+
+		public Builder withId(Long id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder withMunicipios(Collection<Municipio> municipios) {
+			this.municipios = municipios;
+			return this;
+		}
+
+		public Builder withNome(String nome) {
+			this.nome = nome;
+			return this;
+		}
+
+		public Builder withUf(EnumUnidadeFederacao uf) {
+			this.uf = uf;
+			return this;
+		}
+	}
+
 	private static final long serialVersionUID = 1L;
+
+	public static Builder builder() {
+		return new Builder();
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,16 +87,16 @@ public class Estado implements Serializable {
 	@OneToMany(mappedBy = "estado")
 	private Collection<Municipio> municipios;
 
+	public Estado() {
+		super();
+	}
+
 	private Estado(Builder builder) {
 		this.id = builder.id;
 		this.codigo = builder.codigo;
 		this.nome = builder.nome;
 		this.uf = builder.uf;
 		this.municipios = builder.municipios;
-	}
-
-	public Estado() {
-		super();
 	}
 
 	@Override
@@ -140,50 +184,6 @@ public class Estado implements Serializable {
 	@Override
 	public String toString() {
 		return "Estado [id=" + id + ", codigo=" + codigo + ", nome=" + nome + ", uf=" + uf + "]";
-	}
-
-	public static Builder builder() {
-		return new Builder();
-	}
-
-	public static final class Builder {
-		private Long id;
-		private Short codigo;
-		private String nome;
-		private EnumUnidadeFederacao uf;
-		private Collection<Municipio> municipios = Collections.emptyList();
-
-		private Builder() {
-		}
-
-		public Builder withId(Long id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder withCodigo(Short codigo) {
-			this.codigo = codigo;
-			return this;
-		}
-
-		public Builder withNome(String nome) {
-			this.nome = nome;
-			return this;
-		}
-
-		public Builder withUf(EnumUnidadeFederacao uf) {
-			this.uf = uf;
-			return this;
-		}
-
-		public Builder withMunicipios(Collection<Municipio> municipios) {
-			this.municipios = municipios;
-			return this;
-		}
-
-		public Estado build() {
-			return new Estado(this);
-		}
 	}
 
 }

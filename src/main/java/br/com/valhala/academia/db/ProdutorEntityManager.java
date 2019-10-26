@@ -22,13 +22,6 @@ public class ProdutorEntityManager implements Serializable {
 		}
 	}
 
-	@Produces
-	@RequestScoped
-	@Default
-	public EntityManager produzEntityManager() {
-		return Persistence.createEntityManagerFactory("academia-unit", obtemPropriedades()).createEntityManager();
-	}
-	
 	private Properties obtemPropriedades() {
 		Properties props = new Properties();
 		try (InputStream stream = getClass().getClassLoader().getResourceAsStream("db.properties")) {
@@ -36,6 +29,13 @@ public class ProdutorEntityManager implements Serializable {
 		} catch (IOException e) {
 		}
 		return props;
+	}
+
+	@Produces
+	@RequestScoped
+	@Default
+	public EntityManager produzEntityManager() {
+		return Persistence.createEntityManagerFactory("academia-unit", obtemPropriedades()).createEntityManager();
 	}
 
 }

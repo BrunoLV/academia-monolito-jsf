@@ -32,7 +32,7 @@ public class ClienteEmissaoRelatorio implements Serializable {
 		Properties props = new Properties();
 		try (InputStream stream = getClass().getClassLoader().getResourceAsStream("client.properties")) {
 			props.load(stream);
-			urlEmissaoRelatorio = props.getProperty("emissor.relatorio.url");
+			urlEmissaoRelatorio = props.getProperty("api.relatorio.url");
 		} catch (IOException e) {
 			LOG.warn("[construtor] Ocorreu erro para inicializar a classe. Erro: " + e.getMessage(), e);
 		}

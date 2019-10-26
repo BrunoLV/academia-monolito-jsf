@@ -24,28 +24,29 @@ import br.com.valhala.academia.validacao.ValidadorAluno;
 import br.com.valhala.academia.validacao.marcadores.ValidaAluno;
 
 @EnableAutoWeld
-@AddPackages(value = {Validador.class})
+@AddPackages(value = { Validador.class })
 @DisplayName("Teste do validador de Aluno")
-public class ValidadorAlunoTest {
+class ValidadorAlunoTest {
 
 	@BeforeAll
-	public static void setup() {
+	static void setup() {
 		FixtureFactoryLoader.loadTemplates("br.com.valhala.academia.testes.data.templates");
 	}
 
-	@Inject @ValidaAluno
-	private Validador validador;
+	@Inject
+	@ValidaAluno
+	Validador validador;
 
 	@Test
 	@DisplayName("Deve injetar validador de aluno correto")
-	public void deveInjetarValidadorEnderecoCorreto() {
+	void deveInjetarValidadorEnderecoCorreto() {
 		assertThat(validador, is(notNullValue()));
 		assertThat(validador, instanceOf(ValidadorAluno.class));
 	}
 
 	@Test
 	@DisplayName("Deve passar sem erro quando aluno valido, com endereços válidos")
-	public void devePassarSemErroAlunoValidoComEnderecosValidos() {
+	void devePassarSemErroAlunoValidoComEnderecosValidos() {
 		Aluno aluno = Fixture.from(Aluno.class).gimme("cenario_valido_com_enderecos_validos");
 		Set<String> validacoes = validador.validar(aluno);
 		assertThat(validacoes, is(empty()));
@@ -53,7 +54,7 @@ public class ValidadorAlunoTest {
 
 	@Test
 	@DisplayName("Deve passar sem erro quando aluno validos, porém sem relacionamentos")
-	public void devePassarSemErroAlunoValidoSemRelacionamentos() {
+	void devePassarSemErroAlunoValidoSemRelacionamentos() {
 		Aluno aluno = Fixture.from(Aluno.class).gimme("cenario_valido_sem_relacionamentos");
 		Set<String> validacoes = validador.validar(aluno);
 		assertThat(validacoes, is(empty()));

@@ -24,26 +24,26 @@ public class ProdutorEntityManager implements Serializable {
 		}
 	}
 
+	private Properties obtemPropriedades() {
+		Properties props = new Properties();
+
+		ResourceBundle rb = ResourceBundle.getBundle("db-testes");
+		Enumeration<String> keys = rb.getKeys();
+
+		for (Iterator<String> iterator = keys.asIterator(); iterator.hasNext();) {
+			String chave = iterator.next();
+			props.put(chave, rb.getObject(chave));
+		}
+
+		return props;
+	}
+
 	@Produces
 	@RequestScoped
 	@Default
 	public EntityManager produzEntityManager() {
 		System.out.println("Produzindo entity manager");
 		return Persistence.createEntityManagerFactory("academia-unit", obtemPropriedades()).createEntityManager();
-	}
-	
-	private Properties obtemPropriedades() {
-		Properties props = new Properties();
-
-		ResourceBundle rb = ResourceBundle.getBundle("db-testes");
-		Enumeration<String> keys = rb.getKeys();
-		
-		for (Iterator<String> iterator = keys.asIterator(); iterator.hasNext();) {
-			String chave = iterator.next();
-			props.put(chave, rb.getObject(chave));
-		}
-		
-		return props;
 	}
 
 }

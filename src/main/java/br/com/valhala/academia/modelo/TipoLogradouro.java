@@ -17,7 +17,39 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Table(name = "tb_tipo_logradouro")
 public class TipoLogradouro implements Serializable {
 
+	public static final class Builder {
+		private Long id;
+		private String abreviatura;
+		private String descricao;
+
+		private Builder() {
+		}
+
+		public TipoLogradouro build() {
+			return new TipoLogradouro(this);
+		}
+
+		public Builder withAbreviatura(String abreviatura) {
+			this.abreviatura = abreviatura;
+			return this;
+		}
+
+		public Builder withDescricao(String descricao) {
+			this.descricao = descricao;
+			return this;
+		}
+
+		public Builder withId(Long id) {
+			this.id = id;
+			return this;
+		}
+	}
+
 	private static final long serialVersionUID = 1L;
+
+	public static Builder builder() {
+		return new Builder();
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +64,7 @@ public class TipoLogradouro implements Serializable {
 	public TipoLogradouro() {
 		super();
 	}
-	
+
 	private TipoLogradouro(Builder builder) {
 		this.id = builder.id;
 		this.abreviatura = builder.abreviatura;
@@ -104,38 +136,6 @@ public class TipoLogradouro implements Serializable {
 	@Override
 	public String toString() {
 		return "TipoLogradouro [id=" + id + ", abreviatura=" + abreviatura + ", descricao=" + descricao + "]";
-	}
-
-	public static Builder builder() {
-		return new Builder();
-	}
-
-	public static final class Builder {
-		private Long id;
-		private String abreviatura;
-		private String descricao;
-
-		private Builder() {
-		}
-
-		public Builder withId(Long id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder withAbreviatura(String abreviatura) {
-			this.abreviatura = abreviatura;
-			return this;
-		}
-
-		public Builder withDescricao(String descricao) {
-			this.descricao = descricao;
-			return this;
-		}
-
-		public TipoLogradouro build() {
-			return new TipoLogradouro(this);
-		}
 	}
 
 }

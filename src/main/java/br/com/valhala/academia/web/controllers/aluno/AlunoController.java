@@ -94,7 +94,7 @@ public class AlunoController extends BaseController implements Serializable {
 	@Inject
 	@ValidaAluno
 	private Validador validadorAluno;
-	
+
 	@Inject
 	private ClienteApiCep apiCep;
 
@@ -238,12 +238,47 @@ public class AlunoController extends BaseController implements Serializable {
 		}
 	}
 
+	private void preencheEnderecoAPartirPesquisaCep(EnderecoApiCep enderecoApi) {
+		for (TipoLogradouro tipoLogradouro : tiposLogradouros) {
+			if (enderecoApi.getLogradouro().toLowerCase().contains(tipoLogradouro.getDescricao().toLowerCase())) {
+				endereco.setTipoLogradouro(tipoLogradouro);
+				endereco.setLogradouro(enderecoApi.getLogradouro().replace(tipoLogradouro.getDescricao(), "").trim());
+				break;
+			}
+		}
+		endereco.setBairro(enderecoApi.getBairro());
+		endereco.setComplemento(enderecoApi.getComplemento());
+		ufSelecionado = EnumUnidadeFederacao.valueOf(enderecoApi.getUf());
+		if (ufSelecionado == null) {
+			estado = null;
+			endereco.setMunicipio(new Municipio());
+		} else {
+			estado = estadoService.buscaEstadoPorUFComMunicipios(ufSelecionado);
+			for (Municipio municipio : estado.getMunicipios()) {
+				if (municipio.getCodigoIbge().equals(Integer.valueOf(enderecoApi.getIbge()))) {
+					endereco.setMunicipio(municipio);
+					break;
+				}
+			}
+		}
+	}
+
 	public void removeEndereco(Endereco endereco) {
 		aluno.removeEndereco(endereco);
 	}
 
 	public void removeTelefone(Telefone telefone) {
 		aluno.removeTelefone(telefone);
+	}
+
+	private void resetaEndereco() {
+		endereco.setBairro(null);
+		endereco.setCep(null);
+		endereco.setComplemento(null);
+		endereco.setLogradouro(null);
+		endereco.setMunicipio(new Municipio());
+		endereco.setNumero(null);
+		endereco.setTipoLogradouro(new TipoLogradouro());
 	}
 
 	public String salva() {
@@ -294,37 +329,18 @@ public class AlunoController extends BaseController implements Serializable {
 	public void setUfSelecionado(EnumUnidadeFederacao ufSelecionado) {
 		this.ufSelecionado = ufSelecionado;
 	}
-	
+
 	public void trataMudancaCep() {
 		if (StringUtils.isNotBlank(endereco.getCep())) {
-			EnderecoApiCep enderecoApi = apiCep.obtemEndereco(this.endereco.getCep());
-			if (enderecoApi != null) {
-				preencheEnderecoAPartirPesquisaCep(enderecoApi);
-			}
-		}
-	}
-
-	private void preencheEnderecoAPartirPesquisaCep(EnderecoApiCep enderecoApi) {
-		for (TipoLogradouro tipoLogradouro : tiposLogradouros) {
-			if (enderecoApi.getLogradouro().toLowerCase().contains(tipoLogradouro.getDescricao().toLowerCase())) {
-				endereco.setTipoLogradouro(tipoLogradouro);
-				endereco.setLogradouro(enderecoApi.getLogradouro().replace(tipoLogradouro.getDescricao(), "").trim());
-				break;
-			}
-		}
-		endereco.setBairro(enderecoApi.getBairro());
-		endereco.setComplemento(enderecoApi.getComplemento());
-		ufSelecionado = EnumUnidadeFederacao.valueOf(enderecoApi.getUf());
-		if (ufSelecionado == null) {
-			estado = null;
-			endereco.setMunicipio(new Municipio());
-		} else {
-			estado = estadoService.buscaEstadoPorUFComMunicipios(ufSelecionado);
-			for (Municipio municipio : estado.getMunicipios()) {
-				if (municipio.getCodigoIbge().equals(Integer.valueOf(enderecoApi.getIbge()))) {
-					endereco.setMunicipio(municipio);
-					break;
+			try {
+				EnderecoApiCep enderecoApi = apiCep.buscaCep(this.endereco.getCep());
+				if (enderecoApi != null) {
+					preencheEnderecoAPartirPesquisaCep(enderecoApi);
+				} else {
+					resetaEndereco();
 				}
+			} catch (Exception e) {
+				resetaEndereco();
 			}
 		}
 	}

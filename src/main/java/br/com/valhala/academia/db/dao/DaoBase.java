@@ -35,12 +35,12 @@ public abstract class DaoBase<E, I> {
 		em.remove(entidade);
 	}
 
-	public void salva(E entidade) {
-		em.persist(entidade);
-	}
-	
 	public EntityManager getEm() {
 		return em;
+	}
+
+	public void salva(E entidade) {
+		em.persist(entidade);
 	}
 
 }

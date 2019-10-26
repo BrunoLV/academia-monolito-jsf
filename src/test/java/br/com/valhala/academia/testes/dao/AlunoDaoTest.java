@@ -47,7 +47,7 @@ import liquibase.resource.FileSystemResourceAccessor;
 @ExtendWith(WeldJunit5AutoExtension.class)
 @AddPackages(value = { ProdutorEntityManager.class, AlunoDao.class })
 @ActivateScopes(value = { RequestScoped.class })
-public class AlunoDaoTest {
+class AlunoDaoTest {
 
 	private static void executaLiquibase(Connection connection) throws DatabaseException, LiquibaseException {
 		Database database = DatabaseFactory.getInstance()
@@ -74,12 +74,6 @@ public class AlunoDaoTest {
 	AlunoDao dao;
 
 	@Test
-	@DisplayName("Deve injetar o DAO corretamente.")
-	void deveInjetarDao() {
-		assertThat(dao, is(notNullValue()));
-	}
-
-	@Test
 	@DisplayName("Deve pesquisar aluno por id e trazer todos os dados carregados")
 	void deveCarregarAlunoCompletoPorId() {
 
@@ -89,6 +83,12 @@ public class AlunoDaoTest {
 				() -> assertThat(aluno.getEnderecos(), is(not(emptyCollectionOf(Endereco.class)))),
 				() -> assertThat(aluno.getTelefones(), is(not(emptyCollectionOf(Telefone.class)))));
 
+	}
+
+	@Test
+	@DisplayName("Deve injetar o DAO corretamente.")
+	void deveInjetarDao() {
+		assertThat(dao, is(notNullValue()));
 	}
 
 	@BeforeEach

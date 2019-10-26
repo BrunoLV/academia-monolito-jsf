@@ -28,29 +28,29 @@ import br.com.valhala.academia.validacao.ValidadorTelefone;
 import br.com.valhala.academia.validacao.marcadores.ValidaTelefone;
 
 @EnableAutoWeld
-@AddPackages(value = {Validador.class})
+@AddPackages(value = { Validador.class })
 @DisplayName("Teste do validador de Telefone")
-public class ValidadorTelefoneTest {
+class ValidadorTelefoneTest {
 
 	@BeforeAll
-	public static void setup() {
+	static void setup() {
 		FixtureFactoryLoader.loadTemplates("br.com.valhala.academia.testes.data.templates");
 	}
 
 	@Inject
 	@ValidaTelefone
-	private Validador validador;
+	Validador validador;
 
 	@Test
 	@DisplayName("Deve injetar validador de telefone correto")
-	public void deveInjetarValidadorEnderecoCorreto() {
+	void deveInjetarValidadorEnderecoCorreto() {
 		assertThat(validador, is(notNullValue()));
 		assertThat(validador, instanceOf(ValidadorTelefone.class));
 	}
 
 	@Test
 	@DisplayName("Deve passar sem erro quando telefone estiver completo e com informações válidas")
-	public void devePassarSemErroDeValidacaoComTelefoneCompleto() {
+	void devePassarSemErroDeValidacaoComTelefoneCompleto() {
 		Telefone telefone = Fixture.from(Telefone.class).gimme("cenario_telefone_valido");
 		Set<String> validacoes = validador.validar(telefone);
 		assertThat(validacoes, is(empty()));
@@ -58,7 +58,7 @@ public class ValidadorTelefoneTest {
 
 	@Test
 	@DisplayName("Deve validar telefone com DDD informado com tamanho diferente de 2 caracteres")
-	public void deveValidarTelefoneComDddComTamanhoDiferenteDoisCaracteres() {
+	void deveValidarTelefoneComDddComTamanhoDiferenteDoisCaracteres() {
 		Telefone telefone = Fixture.from(Telefone.class)
 				.gimme("cenario_telefone_ddd_tamanho_diferente_dois_caracteres");
 		Set<String> validacoes = validador.validar(telefone);
@@ -69,7 +69,7 @@ public class ValidadorTelefoneTest {
 
 	@Test
 	@DisplayName("Deve validar telefone sem DDD informado")
-	public void deveValidarTelefoneSemDdd() {
+	void deveValidarTelefoneSemDdd() {
 		Telefone telefone = Fixture.from(Telefone.class).gimme("cenario_telefone_sem_ddd");
 		Set<String> validacoes = validador.validar(telefone);
 		assertThat(validacoes, is(not(empty())));
@@ -79,7 +79,7 @@ public class ValidadorTelefoneTest {
 
 	@Test
 	@DisplayName("Deve validar quando o telefone não tiver nenhuma informação obrigatória preenchida")
-	public void deveValidarTelefoneSemInformacoesObrigatoriasPreenchidas() {
+	void deveValidarTelefoneSemInformacoesObrigatoriasPreenchidas() {
 		Telefone telefone = Fixture.from(Telefone.class).gimme("cenario_telefone_com_nada_preenchido");
 		Set<String> validacoes = validador.validar(telefone);
 		assertThat(validacoes, is(not(empty())));
@@ -90,7 +90,7 @@ public class ValidadorTelefoneTest {
 
 	@Test
 	@DisplayName("Deve validar telefone sem Número informado")
-	public void deveValidarTelefoneSemNumero() {
+	void deveValidarTelefoneSemNumero() {
 		Telefone telefone = Fixture.from(Telefone.class).gimme("cenario_telefone_sem_numero");
 		Set<String> validacoes = validador.validar(telefone);
 		assertThat(validacoes, is(not(empty())));
@@ -100,7 +100,7 @@ public class ValidadorTelefoneTest {
 
 	@Test
 	@DisplayName("Deve validar telefone sem Tipo informado")
-	public void deveValidarTelefoneSemTipo() {
+	void deveValidarTelefoneSemTipo() {
 		Telefone telefone = Fixture.from(Telefone.class).gimme("cenario_telefone_sem_tipo");
 		Set<String> validacoes = validador.validar(telefone);
 		assertThat(validacoes, is(not(empty())));

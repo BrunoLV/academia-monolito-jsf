@@ -16,7 +16,8 @@
 		<database.usuario>SA</database.usuario>
 		<database.senha></database.senha>
 
-		<emissor.relatorio.url>http://localhost:8080/relatorio</emissor.relatorio.url>
+		<api.relatorio.url>http://localhost:8080/relatorio</api.relatorio.url>
+		<api.cep.url>http://localhost:8081/api-cep</api.cep.url>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 

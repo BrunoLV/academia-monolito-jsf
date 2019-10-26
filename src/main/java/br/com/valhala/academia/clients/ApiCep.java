@@ -9,7 +9,7 @@ import br.com.valhala.academia.clients.wrapper.EnderecoApiCep;
 
 @Path("/buscaCep")
 public interface ApiCep {
-	
+
 	@GET
 	@Path("/{cep}")
 	@Produces("application/json")

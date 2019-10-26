@@ -40,9 +40,9 @@ public class AlunoDao extends DaoBase<Aluno, Long> {
 
 	public void deleta(Aluno aluno) {
 
-		List<MedidaCorporal> medidas = em.createQuery("SELECT mc FROM MedidaCorporal mc WHERE mc.aluno = :aluno", MedidaCorporal.class)
-										 .setParameter("aluno", aluno)
-										 .getResultList();
+		List<MedidaCorporal> medidas = em
+				.createQuery("SELECT mc FROM MedidaCorporal mc WHERE mc.aluno = :aluno", MedidaCorporal.class)
+				.setParameter("aluno", aluno).getResultList();
 
 		if (CollectionUtils.isNotEmpty(medidas)) {
 			medidas.stream().forEach(mc -> em.remove(mc));

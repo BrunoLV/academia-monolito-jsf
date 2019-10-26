@@ -167,6 +167,13 @@ public class Endereco implements Serializable {
 		return complemento;
 	}
 
+	public String getEnderecoCompleto() {
+		if (tipoLogradouro != null && logradouro != null) {
+			return tipoLogradouro.getDescricao() + " " + logradouro;
+		}
+		return null;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -248,13 +255,6 @@ public class Endereco implements Serializable {
 		return "Endereco [id=" + id + ", logradouro=" + logradouro + ", numero=" + numero + ", complemento="
 				+ complemento + ", bairro=" + bairro + ", cep=" + cep + ", tipoEndereco=" + tipoEndereco
 				+ ", tipoLogradouro=" + tipoLogradouro + ", municipio=" + municipio + "]";
-	}
-	
-	public String getEnderecoCompleto() {
-		if (tipoLogradouro != null && logradouro != null) {
-			return tipoLogradouro.getDescricao() + " " + logradouro;
-		}
-		return null;
 	}
 
 }

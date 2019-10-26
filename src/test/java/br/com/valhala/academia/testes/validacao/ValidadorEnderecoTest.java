@@ -28,29 +28,29 @@ import br.com.valhala.academia.validacao.ValidadorEndereco;
 import br.com.valhala.academia.validacao.marcadores.ValidaEndereco;
 
 @EnableAutoWeld
-@AddPackages(value = {Validador.class})
+@AddPackages(value = { Validador.class })
 @DisplayName("Teste do validador de Endereço")
-public class ValidadorEnderecoTest {
+class ValidadorEnderecoTest {
 
 	@BeforeAll
-	public static void setup() {
+	static void setup() {
 		FixtureFactoryLoader.loadTemplates("br.com.valhala.academia.testes.data.templates");
 	}
 
 	@Inject
 	@ValidaEndereco
-	private Validador validador;
+	Validador validador;
 
 	@Test
 	@DisplayName("Deve injetar validador de endereço correto")
-	public void deveInjetarValidadorEnderecoCorreto() {
+	void deveInjetarValidadorEnderecoCorreto() {
 		assertThat(validador, is(notNullValue()));
 		assertThat(validador, instanceOf(ValidadorEndereco.class));
 	}
 
 	@Test
 	@DisplayName("Deve passar sem erro quando endereço estiver completo e com informações válidas")
-	public void devePassarSemErroDeValidacaoComEnderecoCompleto() {
+	void devePassarSemErroDeValidacaoComEnderecoCompleto() {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_endereco_valido");
 		Set<String> validacoes = validador.validar(endereco);
 		assertThat(validacoes, is(empty()));
@@ -58,7 +58,7 @@ public class ValidadorEnderecoTest {
 
 	@Test
 	@DisplayName("Deve validar quando o endereço tiver um municipio informado que não pertença ao estado atrelado a ele")
-	public void deveValidarEnderecoComMunicipioPartencenteAoEstado() {
+	void deveValidarEnderecoComMunicipioPartencenteAoEstado() {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_endereco_municipio_nao_pertencente_estado");
 		Set<String> validacoes = validador.validar(endereco);
 		assertThat(validacoes, is(not(empty())));
@@ -68,7 +68,7 @@ public class ValidadorEnderecoTest {
 
 	@Test
 	@DisplayName("Deve validar quando o endereço tiver complemento informado com tamanho acima que o permitido")
-	public void deveValidarEnderecoComTamanhoComplementoAcimaPermitido() {
+	void deveValidarEnderecoComTamanhoComplementoAcimaPermitido() {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_complemento_invalido_tamanho_acima_permitido");
 		Set<String> validacoes = validador.validar(endereco);
 		assertThat(validacoes, is(not(empty())));
@@ -79,7 +79,7 @@ public class ValidadorEnderecoTest {
 
 	@Test
 	@DisplayName("Deve validar quando o endereço não possuir bairro informado")
-	public void deveValidarEnderecoSemBairro() {
+	void deveValidarEnderecoSemBairro() {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_sem_bairro");
 		Set<String> validacoes = validador.validar(endereco);
 		assertThat(validacoes, is(not(empty())));
@@ -89,7 +89,7 @@ public class ValidadorEnderecoTest {
 
 	@Test
 	@DisplayName("Deve validar quando o endereço não possuir o cep informado")
-	public void deveValidarEnderecoSemCep() {
+	void deveValidarEnderecoSemCep() {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_sem_cep");
 		Set<String> validacoes = validador.validar(endereco);
 		assertThat(validacoes, is(not(empty())));
@@ -99,7 +99,7 @@ public class ValidadorEnderecoTest {
 
 	@Test
 	@DisplayName("Deve validar quando o endereço não tiver nenhuma informação obrigatória preenchida")
-	public void deveValidarEnderecoSemInformacoesObrigatoriasPreenchidas() {
+	void deveValidarEnderecoSemInformacoesObrigatoriasPreenchidas() {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_sem_informacoes_preenchidas");
 		Set<String> validacoes = validador.validar(endereco);
 		assertThat(validacoes, is(not(empty())));
@@ -112,7 +112,7 @@ public class ValidadorEnderecoTest {
 
 	@Test
 	@DisplayName("Deve validar quando o endereço não possuir logradouro informado")
-	public void deveValidarEnderecoSemLogradouro() {
+	void deveValidarEnderecoSemLogradouro() {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_sem_logradouro");
 		Set<String> validacoes = validador.validar(endereco);
 		assertThat(validacoes, is(not(empty())));
@@ -122,7 +122,7 @@ public class ValidadorEnderecoTest {
 
 	@Test
 	@DisplayName("Deve validar quando o endereço não possuir município informado")
-	public void deveValidarEnderecoSemMunicipio() {
+	void deveValidarEnderecoSemMunicipio() {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_sem_municipio");
 		Set<String> validacoes = validador.validar(endereco);
 		assertThat(validacoes, is(not(empty())));
@@ -132,7 +132,7 @@ public class ValidadorEnderecoTest {
 
 	@Test
 	@DisplayName("Deve validar quando o endereço não possuir número informado")
-	public void deveValidarEnderecoSemNumero() {
+	void deveValidarEnderecoSemNumero() {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_sem_numero");
 		Set<String> validacoes = validador.validar(endereco);
 		assertThat(validacoes, is(not(empty())));
@@ -142,7 +142,7 @@ public class ValidadorEnderecoTest {
 
 	@Test
 	@DisplayName("Deve validar quando o endereço não possuir o tipo informado")
-	public void deveValidarEnderecoSemTipo() {
+	void deveValidarEnderecoSemTipo() {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_sem_tipo_endereco");
 		Set<String> validacoes = validador.validar(endereco);
 		assertThat(validacoes, is(not(empty())));
@@ -152,7 +152,7 @@ public class ValidadorEnderecoTest {
 
 	@Test
 	@DisplayName("Deve validar quando o endereço não possuir tipo de logradouro informado")
-	public void deveValidarEnderecoSemTipoLogradouro() {
+	void deveValidarEnderecoSemTipoLogradouro() {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("cenario_sem_tipo_logradouro");
 		Set<String> validacoes = validador.validar(endereco);
 		assertThat(validacoes, is(not(empty())));
